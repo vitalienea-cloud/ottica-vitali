@@ -43,6 +43,7 @@ table.h td:first-child{font-weight:600;color:var(--brand)}table.h tr.today td{ba
 table.h small{font-weight:400;color:var(--mute);font-size:.8rem}table.h td.sp{color:var(--accent);font-weight:600}table.h td.sp s{color:var(--mute);font-weight:400;font-size:.85rem}
 .closed{color:var(--mute)}.note{color:var(--mute);font-size:.9rem;margin:10px 0 0}
 .card img{display:block;width:100%;height:auto;max-height:340px;object-fit:cover;border-radius:10px;margin-bottom:12px}
+.card h3 a{color:inherit;text-decoration:none}.card h3 a:hover{text-decoration:underline}
 .card a.go{display:inline-block;margin-top:8px;font-weight:600;font-size:.9rem}
 footer{background:var(--brand);color:var(--bg);padding:30px 0;font-size:.9rem}
 footer a{color:var(--bg)}
@@ -120,7 +121,8 @@ function render(D){
     p => `<div class="card prod"><svg viewBox="0 0 100 40"><use href="#gl"/></svg><span class="tag">${esc(p.brand)}</span><h3>${esc(p.name)}</h3><p class="price">${esc(p.price)}</p></div>`, "Vetrina in aggiornamento.");
   const safe = u => /^https:\/\//.test(u||"") ? esc(u) : "";
   put("posts", [...L("social")].sort((a,b)=>(b.date||"").localeCompare(a.date||"")),
-    s => `<div class="card"><span class="tag">${esc(s.network||"Social")}${s.date?" · "+fmt(s.date):""}</span><h3>${esc(s.title)}</h3><p>${esc(s.text)}</p>${safe(s.url)?`<a class="go" href="${safe(s.url)}" target="_blank" rel="noopener">Apri il post</a>`:""}</div>`, "Presto qui i nostri post.");
+    s => { const u = safe(s.url), open = u ? `<a href="${u}" target="_blank" rel="noopener">` : "", close = u ? "</a>" : "";
+      return `<div class="card">${img(s) ? open+img(s)+close : ""}<span class="tag">${esc(s.network||"Social")}${s.date?" · "+fmt(s.date):""}</span><h3>${open}${esc(s.title)}${close}</h3><p>${esc(s.text)}</p>${u?`<a class="go" href="${u}" target="_blank" rel="noopener">Apri il post</a>`:""}</div>`; }, "Presto qui i nostri post.");
   const H = D.hours && typeof D.hours==="object" ? D.hours : null;
   const days = [["monday","Lunedì"],["tuesday","Martedì"],["wednesday","Mercoledì"],["thursday","Giovedì"],["friday","Venerdì"],["saturday","Sabato"],["sunday","Domenica"]];
   const names = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"];

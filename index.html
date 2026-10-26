@@ -40,6 +40,7 @@ ul.s{padding-left:20px;margin:0}ul.s li{margin:8px 0}
 table.h{border-collapse:collapse;width:100%;max-width:460px;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
 table.h td{padding:9px 16px;border-top:1px solid var(--line)}table.h tr:first-child td{border-top:0}
 table.h td:first-child{font-weight:600;color:var(--brand)}table.h tr.today td{background:var(--line)}
+table.h small{font-weight:400;color:var(--mute);font-size:.8rem}table.h td.sp{color:var(--accent);font-weight:600}table.h td.sp s{color:var(--mute);font-weight:400;font-size:.85rem}
 .closed{color:var(--mute)}.note{color:var(--mute);font-size:.9rem;margin:10px 0 0}
 .card img{display:block;width:100%;height:auto;max-height:340px;object-fit:cover;border-radius:10px;margin-bottom:12px}
 .card a.go{display:inline-block;margin-top:8px;font-weight:600;font-size:.9rem}
@@ -61,7 +62,7 @@ footer a{color:var(--bg)}
 
 <section id="notizie"><div class="wrap"><h2>Notizie</h2><p class="sub">Novità dal negozio.</p><div class="grid" id="news"></div></div></section>
 <section id="eventi"><div class="wrap"><h2>Eventi</h2><p class="sub">Prossimi appuntamenti.</p><div class="grid" id="events"></div></div></section>
-<section id="chiusure"><div class="wrap"><h2>Chiusure</h2><p class="sub">Giorni in cui il negozio resta chiuso.</p><div class="grid" id="closures"></div></div></section>
+<section id="chiusure"><div class="wrap"><h2>Chiusure e orari speciali</h2><p class="sub">Giorni di chiusura e variazioni rispetto al solito orario.</p><div class="grid" id="closures"></div></div></section>
 <section id="vetrina"><div class="wrap"><h2>Vetrina</h2><p class="sub">Alcune proposte del momento.</p><div class="grid" id="products"></div></div></section>
 
 <section id="orari"><div class="wrap"><h2>Orari</h2><p class="sub">Orari di apertura, su appuntamento.</p><div id="hours"></div></div></section>
@@ -93,7 +94,8 @@ footer a{color:var(--bg)}
 
 <script>
 /* I contenuti vivono in content.json (stessa cartella). Date: AAAA-MM-GG. */
-const today = new Date().toISOString().slice(0,10);
+const ymd = d => d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+const today = ymd(new Date());
 const fmt = d => new Date(d+"T12:00:00").toLocaleDateString("it-IT",{day:"numeric",month:"long",year:"numeric"});
 const esc = s => String(s==null?"":s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const put = (id, items, tpl, empty) => {
@@ -108,8 +110,12 @@ function render(D){
     n => `<div class="card"><span class="tag">${fmt(n.date)}</span><h3>${esc(n.title)}</h3><p>${esc(n.text)}</p></div>`, "Nessuna notizia al momento.");
   put("events", L("events").filter(e=>e.date>=today).sort((a,b)=>a.date.localeCompare(b.date)),
     e => `<div class="card">${img(e)}<span class="date">${fmt(e.date)}</span><h3>${esc(e.title)}</h3><p>${esc(e.text)}</p></div>`, "Nessun evento in programma.");
-  put("closures", L("closures").filter(c=>(c.to||c.from)>=today).sort((a,b)=>a.from.localeCompare(b.from)),
-    c => `<div class="card"><span class="date">${(!c.to||c.from===c.to)?fmt(c.from):"dal "+fmt(c.from)+" al "+fmt(c.to)}</span><h3>${esc(c.reason)}</h3></div>`, "Nessuna chiusura programmata.");
+  const items = [
+    ...L("closures").filter(c=>(c.to||c.from)>=today).map(c=>({from:c.from,to:c.to||c.from,label:"Chiuso",title:c.reason})),
+    ...L("exceptions").filter(x=>x.date>=today).map(x=>({from:x.date,to:x.date,label:"Orario speciale",title:x.text}))
+  ].sort((a,b)=>a.from.localeCompare(b.from));
+  put("closures", items,
+    c => `<div class="card"><span class="date">${c.from===c.to?fmt(c.from):"dal "+fmt(c.from)+" al "+fmt(c.to)}</span> <span class="tag">${c.label}</span><h3>${esc(c.title)}</h3></div>`, "Nessuna chiusura o variazione programmata.");
   put("products", L("products"),
     p => `<div class="card prod"><svg viewBox="0 0 100 40"><use href="#gl"/></svg><span class="tag">${esc(p.brand)}</span><h3>${esc(p.name)}</h3><p class="price">${esc(p.price)}</p></div>`, "Vetrina in aggiornamento.");
   const safe = u => /^https:\/\//.test(u||"") ? esc(u) : "";
@@ -120,13 +126,26 @@ function render(D){
   const names = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"];
   const hoursEl = document.getElementById("hours");
   if (H) {
+    /* Per ogni giorno della settimana, la prossima data entro 7 giorni (oggi incluso). */
+    const nextDate = {};
+    for (let i = 0; i < 7; i++) { const d = new Date(); d.setDate(d.getDate()+i); nextDate[names[d.getDay()]] = ymd(d); }
+    const exc = {}; L("exceptions").forEach(x => { exc[x.date] = x.text; });
+    const clo = dt => L("closures").find(c => c.from <= dt && dt <= (c.to||c.from));
     hoursEl.innerHTML = '<table class="h">' + days.map(([k,l]) => {
       const v = H[k] == null ? "" : String(H[k]);
       const closed = !v || /chius/i.test(v);
-      return `<tr${names[new Date().getDay()]===k?' class="today"':''}><td>${l}</td><td${closed?' class="closed"':''}>${closed?"Chiuso":esc(v)}</td></tr>`;
+      const dt = nextDate[k], isToday = dt === today;
+      const regular = closed ? "Chiuso" : esc(v);
+      let cell = `<td${closed?' class="closed"':''}>${regular}</td>`;
+      let extra = "";
+      if (clo(dt)) {
+        cell = `<td class="sp">Chiuso <small>${esc(clo(dt).reason||"")}</small>${closed?"":` <s>${regular}</s>`}</td>`; extra = ' class="special"';
+      } else if (exc[dt]) {
+        cell = `<td class="sp">${esc(exc[dt])}${closed?"":` <s>${regular}</s>`}</td>`; extra = ' class="special"';
+      }
+      const when = `<br><small>${new Date(dt+"T12:00:00").toLocaleDateString("it-IT",{day:"numeric",month:"short"})}</small>`;
+      return `<tr${isToday?' class="today"':''}${extra&&!isToday?extra:''}><td>${l}${when}</td>${cell}</tr>`;
     }).join("") + '</table>'
-    + L("exceptions").filter(x=>x.date>=today).sort((a,b)=>a.date.localeCompare(b.date))
-        .map(x => `<p class="note"><b>${fmt(x.date)}</b>: ${esc(x.text)}</p>`).join("")
     + (D.hours_note ? `<p class="note">${esc(D.hours_note)}</p>` : "");
   } else {
     hoursEl.innerHTML = '<p class="empty">Orari in aggiornamento.</p>';

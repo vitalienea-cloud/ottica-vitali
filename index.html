@@ -101,7 +101,7 @@ const put = (id, items, tpl, empty) => {
 };
 /* Immagine opzionale: solo file in eventi/ (jpg, png, webp) oppure link https. */
 const okImg = u => /^(eventi\/[\w\-.]+\.(jpe?g|png|webp)|https:\/\/[^\s"'<>]+)$/i.test(u||"") && !/\.\./.test(u);
-const img = x => okImg(x.image) ? `<img src="${esc(x.image)}" alt="${esc(x.alt||x.title)}" loading="lazy">` : "";
+const img = x => okImg(x.image) ? `<img src="${esc(x.image)}" alt="${esc(x.alt||x.title)}" loading="lazy" onerror="this.remove()">` : "";
 function render(D){
   const L = k => Array.isArray(D[k]) ? D[k] : [];
   put("news", [...L("news")].sort((a,b)=>b.date.localeCompare(a.date)),

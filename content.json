@@ -4,7 +4,7 @@
     {"date": "2026-10-26", "title": "Nuova pagina online (esempio)", "text": "Qui compariranno le novità del negozio."}
   ],
   "events": [
-    {"date": "2026-11-14", "title": "Giornata controllo vista (esempio)", "text": "Controllo gratuito su appuntamento. Contenuto di prova."},
+    {"date": "2026-11-14", "title": "Controllo vista gratuito", "text": "Controllo gratuito su appuntamento. Contenuto di prova.", "image": "eventi/controllo-vista.jpg", "alt": "Occhiali su tavolo con luce morbida"},
     {"date": "2026-10-30", "title": "Serata pizza", "text": "Serata pizza di prova in negozio. Tutti invitati.", "image": "eventi/serata-pizza.jpg", "alt": "Pizza intera su tavolo di legno"}
   ],
   "closures": [],

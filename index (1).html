@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Ottica Vitali · Chiavenna</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Ottica Vitali, Viale Maloggia 6/E, Chiavenna. Esami optometrici, contattologia, occhiali su appuntamento.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Inter:wght@400;600&display=swap">
+<style>
+:root{--bg:#faf6ef;--card:#fff;--ink:#1c2433;--mute:#5d6676;--brand:#1f3a5f;--accent:#c8892b;--line:#e6dfd2;--ok:#2f7d4f}
+@media (prefers-color-scheme:dark){:root{--bg:#121821;--card:#1b2431;--ink:#eef1f6;--mute:#a5afbf;--brand:#8fb3e6;--accent:#e0a54e;--line:#2b3647;--ok:#6fcf97}}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,sans-serif}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;line-height:1.2;margin:0}
+a{color:var(--brand)}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);display:flex;gap:18px;align-items:center;padding:12px 20px;overflow-x:auto;white-space:nowrap}
+nav{scrollbar-width:none}nav::-webkit-scrollbar{display:none}
+nav b{font-family:Fraunces,Georgia,serif;font-size:1.1rem;color:var(--brand);margin-right:auto}
+nav a{text-decoration:none;color:var(--mute);font-size:.9rem}
+.wrap{max-width:900px;margin:0 auto;padding:0 20px}
+.hero{padding:56px 0 40px;text-align:center}
+.hero svg{width:96px;height:40px;color:var(--accent)}
+.hero h1{font-size:clamp(2rem,7vw,3.2rem);color:var(--brand);margin:10px 0}
+.hero p{color:var(--mute);max-width:520px;margin:0 auto 22px}
+.btn{display:inline-block;background:var(--brand);color:var(--bg);padding:12px 22px;border-radius:999px;text-decoration:none;font-weight:600;margin:4px}
+.btn.alt{background:transparent;color:var(--brand);border:1.5px solid var(--brand)}
+section{padding:38px 0;border-top:1px solid var(--line)}
+section h2{font-size:1.7rem;color:var(--brand);margin-bottom:6px}
+.sub{color:var(--mute);margin:0 0 20px}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(210px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+.card h3{font-size:1.1rem;margin:6px 0}
+.tag{font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-weight:600}
+.card p{margin:4px 0;color:var(--mute);font-size:.95rem}
+.prod svg{width:100%;height:60px;color:var(--brand)}
+.price{color:var(--ok);font-weight:600}
+.empty{color:var(--mute);font-style:italic}
+.date{display:inline-block;background:var(--brand);color:var(--bg);border-radius:8px;padding:2px 10px;font-size:.85rem;font-weight:600}
+ul.s{padding-left:20px;margin:0}ul.s li{margin:8px 0}
+footer{background:var(--brand);color:var(--bg);padding:30px 0;font-size:.9rem}
+footer a{color:var(--bg)}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute"><symbol id="gl" viewBox="0 0 100 40"><g fill="none" stroke="currentColor" stroke-width="3"><circle cx="26" cy="22" r="16"/><circle cx="74" cy="22" r="16"/><path d="M42 20q8-6 16 0M10 18L2 12M90 18l8-6"/></g></symbol></svg>
+<nav><b>Ottica Vitali</b><a href="#notizie">Notizie</a><a href="#eventi">Eventi</a><a href="#chiusure">Chiusure</a><a href="#vetrina">Vetrina</a><a href="#servizi">Servizi</a><a href="#contatti">Contatti</a></nav>
+
+<header class="hero wrap">
+<svg viewBox="0 0 100 40"><use href="#gl"/></svg>
+<h1>Ottica Vitali</h1>
+<p>Dal 1870 la famiglia Vitali, dal 1960 l’ottica. Oggi a Chiavenna con Enea, ottico di terza generazione. Ogni servizio è su appuntamento.</p>
+<a class="btn" href="https://wa.me/393738155967">Scrivici su WhatsApp</a>
+<a class="btn alt" href="tel:+393738155967">Chiama</a>
+</header>
+
+<section id="notizie"><div class="wrap"><h2>Notizie</h2><p class="sub">Novità dal negozio.</p><div class="grid" id="news"></div></div></section>
+<section id="eventi"><div class="wrap"><h2>Eventi</h2><p class="sub">Prossimi appuntamenti.</p><div class="grid" id="events"></div></div></section>
+<section id="chiusure"><div class="wrap"><h2>Chiusure</h2><p class="sub">Giorni in cui il negozio resta chiuso.</p><div class="grid" id="closures"></div></div></section>
+<section id="vetrina"><div class="wrap"><h2>Vetrina</h2><p class="sub">Alcune proposte del momento.</p><div class="grid" id="products"></div></div></section>
+
+<section id="servizi"><div class="wrap"><h2>Servizi per la tua vista</h2><p class="sub">Solo su appuntamento, senza attese.</p>
+<ul class="s">
+<li><b>Gestione della progressione miopica</b>, per rallentarne l’avanzamento nei più giovani.</li>
+<li><b>Esami optometrici approfonditi</b>, con topografia corneale e studio del film lacrimale.</li>
+<li><b>Progressivi di alta precisione</b>, con lenti ZEISS.</li>
+<li><b>Contattologia specialistica</b>: morbide, semi-rigide, multifocali, sclerali per cheratocono.</li>
+<li><b>Consulenza d’immagine e tecnica</b> per occhiali da vista e da sole.</li>
+<li><b>Assistenza e riparazioni</b>, comprese le saldature.</li>
+</ul></div></section>
+
+<section id="contatti"><div class="wrap"><h2>Vieni a trovarci</h2>
+<p class="sub">Viale Maloggia 6/E, Chiavenna (SO), vicino all’Ospedale. Parcheggio riservato ai clienti.</p>
+<a class="btn" href="https://goo.gl/maps/jgQxH2Yoag4Zpa2G7">Naviga verso di noi</a>
+<a class="btn alt" href="https://g.page/r/CUiJA1qApDAbEBM/review">Lascia una recensione</a>
+<p>Per appuntamenti e ritiri: WhatsApp o chiamata al <a href="tel:+393738155967">373 815 59 67</a>. Se è occupato stiamo servendo altri clienti: ti richiamiamo noi.</p></div></section>
+
+<footer><div class="wrap">
+<b>Ottica di Vitali Enea snc</b> · P. IVA 00965370141<br>
+<a href="mailto:servizioclienti@otticavitali.com">servizioclienti@otticavitali.com</a> ·
+<a href="https://www.instagram.com/ottica_vitali_chiavenna/">Instagram</a> ·
+<a href="https://www.facebook.com/profile.php?id=100087631992649">Facebook</a>
+</div></footer>
+
+<script>
+/* I contenuti vivono in content.json (stessa cartella). Date: AAAA-MM-GG. */
+const today = new Date().toISOString().slice(0,10);
+const fmt = d => new Date(d+"T12:00:00").toLocaleDateString("it-IT",{day:"numeric",month:"long",year:"numeric"});
+const esc = s => String(s==null?"":s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const put = (id, items, tpl, empty) => {
+  document.getElementById(id).innerHTML = items.length ? items.map(tpl).join("") : '<p class="empty">'+empty+'</p>';
+};
+function render(D){
+  const L = k => Array.isArray(D[k]) ? D[k] : [];
+  put("news", [...L("news")].sort((a,b)=>b.date.localeCompare(a.date)),
+    n => `<div class="card"><span class="tag">${fmt(n.date)}</span><h3>${esc(n.title)}</h3><p>${esc(n.text)}</p></div>`, "Nessuna notizia al momento.");
+  put("events", L("events").filter(e=>e.date>=today).sort((a,b)=>a.date.localeCompare(b.date)),
+    e => `<div class="card"><span class="date">${fmt(e.date)}</span><h3>${esc(e.title)}</h3><p>${esc(e.text)}</p></div>`, "Nessun evento in programma.");
+  put("closures", L("closures").filter(c=>(c.to||c.from)>=today).sort((a,b)=>a.from.localeCompare(b.from)),
+    c => `<div class="card"><span class="date">${(!c.to||c.from===c.to)?fmt(c.from):"dal "+fmt(c.from)+" al "+fmt(c.to)}</span><h3>${esc(c.reason)}</h3></div>`, "Nessuna chiusura programmata.");
+  put("products", L("products"),
+    p => `<div class="card prod"><svg viewBox="0 0 100 40"><use href="#gl"/></svg><span class="tag">${esc(p.brand)}</span><h3>${esc(p.name)}</h3><p class="price">${esc(p.price)}</p></div>`, "Vetrina in aggiornamento.");
+}
+fetch("content.json", {cache:"no-store"})
+  .then(r => { if(!r.ok) throw 0; return r.json(); })
+  .then(render)
+  .catch(() => render({}));
+</script>
+</body>
+</html>

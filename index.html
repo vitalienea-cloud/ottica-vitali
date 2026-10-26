@@ -120,7 +120,10 @@ function render(D){
       const v = H[k] == null ? "" : String(H[k]);
       const closed = !v || /chius/i.test(v);
       return `<tr${names[new Date().getDay()]===k?' class="today"':''}><td>${l}</td><td${closed?' class="closed"':''}>${closed?"Chiuso":esc(v)}</td></tr>`;
-    }).join("") + '</table>' + (D.hours_note ? `<p class="note">${esc(D.hours_note)}</p>` : "");
+    }).join("") + '</table>'
+    + L("exceptions").filter(x=>x.date>=today).sort((a,b)=>a.date.localeCompare(b.date))
+        .map(x => `<p class="note"><b>${fmt(x.date)}</b>: ${esc(x.text)}</p>`).join("")
+    + (D.hours_note ? `<p class="note">${esc(D.hours_note)}</p>` : "");
   } else {
     hoursEl.innerHTML = '<p class="empty">Orari in aggiornamento.</p>';
   }

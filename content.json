@@ -5,7 +5,7 @@
   ],
   "events": [
     {"date": "2026-11-14", "title": "Giornata controllo vista (esempio)", "text": "Controllo gratuito su appuntamento. Contenuto di prova."},
-    {"date": "2026-10-30", "title": "Serata pizza", "text": "Serata pizza di prova in negozio. Tutti invitati.", "image": "eventi/serata-pizza.webp", "alt": "Pizza intera su tavolo di legno"}
+    {"date": "2026-10-30", "title": "Serata pizza", "text": "Serata pizza di prova in negozio. Tutti invitati.", "image": "eventi/serata-pizza.jpg", "alt": "Pizza intera su tavolo di legno"}
   ],
   "closures": [],
   "hours": {
@@ -14,9 +14,12 @@
     "wednesday": "9:00–12:30, 16:00–19:30",
     "thursday": "9:00–12:30, 16:00–19:30",
     "friday": "9:00–12:30, 16:00–19:30",
-    "saturday": "9:00–12:00",
+    "saturday": "9:00–14:30",
     "sunday": "chiuso"
   },
+  "exceptions": [
+    {"date": "2026-10-31", "text": "aperti solo dalle 9:00 alle 12:00"}
+  ],
   "products": [
     {"name": "Montatura in acetato (esempio)", "brand": "Marca", "price": "da 150 €"},
     {"name": "Occhiale da sole (esempio)", "brand": "Marca", "price": "da 120 €"},

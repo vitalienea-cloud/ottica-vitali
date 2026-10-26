@@ -50,6 +50,7 @@ table.h small{font-weight:400;color:var(--mute);font-size:.8rem}table.h td.sp{co
 .wa svg{width:26px;height:26px;flex:none}
 body{padding-bottom:80px}
 @media (max-width:380px){.wa span{display:none}.wa{padding:14px}}
+.ig{margin-bottom:16px}button.btn{border:0;font:inherit;font-weight:600;cursor:pointer;margin-left:0}
 .card h3 a{color:inherit;text-decoration:none}.card h3 a:hover{text-decoration:underline}
 .card a.go{display:inline-block;margin-top:8px;font-weight:600;font-size:.9rem}
 footer{background:var(--brand);color:var(--bg);padding:30px 0;font-size:.9rem}
@@ -74,7 +75,11 @@ footer a{color:var(--bg)}
 <section id="vetrina"><div class="wrap"><h2>Vetrina</h2><p class="sub">Alcune proposte del momento.</p><div class="grid" id="products"></div></div></section>
 
 <section id="orari"><div class="wrap"><h2>Orari</h2><p class="sub">Orari di apertura, su appuntamento.</p><div id="hours"></div></div></section>
-<section id="social"><div class="wrap"><h2>Dai nostri social</h2><p class="sub">Ultime dai nostri canali.</p><div class="grid" id="posts"></div>
+<section id="social"><div class="wrap"><h2>Dai nostri social</h2><p class="sub">Ultime dai nostri canali.</p>
+<div class="card ig" id="igbox"><h3>Gli ultimi post su Instagram</h3>
+<p>Per mostrarli si carica un servizio esterno (SnapWidget), che può usare cookie. Parte solo se lo chiedi tu. <a href="privacy.html#widget">Maggiori informazioni</a></p>
+<button class="btn" id="igbtn" type="button">Mostra i post da Instagram</button></div>
+<div class="grid" id="posts"></div>
 <p><a class="btn" href="https://www.instagram.com/ottica_vitali_chiavenna/">Seguici su Instagram</a><a class="btn alt" href="https://www.facebook.com/profile.php?id=100087631992649">Facebook</a></p></div></section>
 
 <section id="servizi"><div class="wrap"><h2>Servizi per la tua vista</h2><p class="sub">Solo su appuntamento, senza attese.</p>
@@ -165,6 +170,17 @@ function render(D){
     hoursEl.innerHTML = '<p class="empty">Orari in aggiornamento.</p>';
   }
 }
+/* Widget Instagram (SnapWidget): si carica solo dopo il click del visitatore. */
+document.getElementById("igbtn").addEventListener("click", () => {
+  const f = document.createElement("iframe");
+  f.src = "https://snapwidget.com/embed/1132501";
+  f.className = "snapwidget-widget";
+  f.title = "Post da Instagram";
+  f.setAttribute("scrolling", "no");
+  f.setAttribute("loading", "lazy");
+  f.style.cssText = "border:none;overflow:hidden;width:100%;max-width:960px;height:529px";
+  document.getElementById("igbox").replaceChildren(f);
+});
 fetch("content.json", {cache:"no-store"})
   .then(r => { if(!r.ok) throw 0; return r.json(); })
   .then(render)

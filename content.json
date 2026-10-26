@@ -20,6 +20,7 @@
   "exceptions": [
     {"date": "2026-10-31", "text": "aperti solo dalle 9:00 alle 12:00"}
   ],
+  "social": [],
   "products": [
     {"name": "Montatura in acetato (esempio)", "brand": "Marca", "price": "da 150 €"},
     {"name": "Occhiale da sole (esempio)", "brand": "Marca", "price": "da 120 €"},

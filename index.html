@@ -53,6 +53,7 @@ table.h small{font-weight:400;color:var(--mute);font-size:.8rem}table.h td.sp{co
 body{padding-bottom:80px}
 @media (max-width:380px){.wa span{display:none}.wa{padding:14px}}
 .ig{margin-bottom:16px}button.btn{border:0;font:inherit;font-weight:600;cursor:pointer;margin-left:0}
+.ico{--sw:5;width:1.25em;height:1.25em;vertical-align:-.28em;margin-right:.4em;flex:none}.tag .ico{width:1.4em;height:1.4em}
 .card h3 a{color:inherit;text-decoration:none}.card h3 a:hover{text-decoration:underline}
 .card a.go{display:inline-block;margin-top:8px;font-weight:600;font-size:.9rem}
 footer{background:var(--brand);color:var(--bg);padding:30px 0;font-size:.9rem}
@@ -61,17 +62,34 @@ footer a{color:var(--bg)}
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute"><symbol id="gl" viewBox="0 0 100 40"><g fill="none" stroke="currentColor" stroke-width="3"><circle cx="26" cy="22" r="16"/><circle cx="74" cy="22" r="16"/><path d="M42 20q8-6 16 0M10 18L2 12M90 18l8-6"/></g></symbol>
-<symbol id="ic-pizza" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 17Q32 4 56 17L32 58Z"/><path d="M13 24Q32 14 51 24"/><circle cx="27" cy="31" r="3.5"/><circle cx="38" cy="29" r="3.5"/><circle cx="32" cy="43" r="3.5"/></g></symbol>
-<symbol id="ic-festa" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="24" cy="24" rx="12" ry="15"/><ellipse cx="43" cy="20" rx="11" ry="14"/><path d="M24 39Q27 50 33 60M43 34Q40 48 33 60"/><path d="M21 39h6l-3 3zM40 34h6l-3 3z"/></g></symbol>
-<symbol id="ic-regalo" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="10" y="28" width="44" height="28" rx="2"/><rect x="6" y="19" width="52" height="10" rx="2"/><path d="M32 19V56"/><path d="M32 19Q20 4 15 12Q14 19 32 19Q50 19 49 12Q44 4 32 19Z"/></g></symbol>
-<symbol id="ic-sole" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="32" r="11"/><path d="M32 6V14M32 50V58M6 32H14M50 32H58M13.6 13.6L19.3 19.3M44.7 44.7L50.4 50.4M13.6 50.4L19.3 44.7M44.7 19.3L50.4 13.6"/></g></symbol>
-<symbol id="ic-cuore" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M32 56L9 31Q3 19 13 12Q24 7 32 20Q40 7 51 12Q61 19 55 31Z"/></g></symbol>
-<symbol id="ic-stella" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M32 6L39 24L58 25L43 37L48 56L32 45L16 56L21 37L6 25L25 24Z"/></g></symbol>
-<symbol id="ic-caffe" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 26H44V40Q44 54 27 54Q10 54 10 40Z"/><path d="M44 30H50Q57 30 57 37Q57 44 47 44"/><path d="M20 20Q16 14 20 8M31 20Q27 14 31 8"/></g></symbol>
-<symbol id="ic-natale" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M32 5L18 25H26L13 41H24L9 55H55L40 41H51L38 25H46Z"/><path d="M28 55V61H36V55"/></g></symbol>
-<symbol id="ic-sconto" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="32" r="25"/><path d="M22 43L42 21"/><circle cx="24" cy="24" r="4.5"/><circle cx="40" cy="40" r="4.5"/></g></symbol>
-<symbol id="ic-novita" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 26H21L45 12V52L21 38H8Z"/><path d="M15 38L19 54H26L23 38"/><path d="M51 24Q58 32 51 40"/></g></symbol>
-<symbol id="ic-calendario" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="14" width="48" height="42" rx="6"/><path d="M8 27H56M20 8V19M44 8V19"/><circle cx="22" cy="38" r="2"/><circle cx="32" cy="38" r="2"/><circle cx="42" cy="38" r="2"/><circle cx="22" cy="48" r="2"/><circle cx="32" cy="48" r="2"/></g></symbol>
+<symbol id="ic-pizza" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" style="stroke-width:var(--sw,2.6)" stroke-linecap="round" stroke-linejoin="round"><path d="M8 17Q32 4 56 17L32 58Z"/><path d="M13 24Q32 14 51 24"/><circle cx="27" cy="31" r="3.5"/><circle cx="38" cy="29" r="3.5"/><circle cx="32" cy="43" r="3.5"/></g></symbol>
+<symbol id="ic-festa" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" style="stroke-width:var(--sw,2.6)" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="24" cy="24" rx="12" ry="15"/><ellipse cx="43" cy="20" rx="11" ry="14"/><path d="M24 39Q27 50 33 60M43 34Q40 48 33 60"/><path d="M21 39h6l-3 3zM40 34h6l-3 3z"/></g></symbol>
+<symbol id="ic-regalo" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" style="stroke-width:var(--sw,2.6)" stroke-linecap="round" stroke-linejoin="round"><rect x="10" y="28" width="44" height="28" rx="2"/><rect x="6" y="19" width="52" height="10" rx="2"/><path d="M32 19V56"/><path d="M32 19Q20 4 15 12Q14 19 32 19Q50 19 49 12Q44 4 32 19Z"/></g></symbol>
+<symbol id="ic-sole" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" style="stroke-width:var(--sw,2.6)" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="32" r="11"/><path d="M32 6V14M32 50V58M6 32H14M50 32H58M13.6 13.6L19.3 19.3M44.7 44.7L50.4 50.4M13.6 50.4L19.3 44.7M44.7 19.3L50.4 13.6"/></g></symbol>
+<symbol id="ic-cuore" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" style="stroke-width:var(--sw,2.6)" stroke-linecap="round" stroke-linejoin="round"><path d="M32 56L9 31Q3 19 13 12Q24 7 32 20Q40 7 51 12Q61 19 55 31Z"/></g></symbol>
+<symbol id="ic-stella" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" style="stroke-width:var(--sw,2.6)" stroke-linecap="round" stroke-linejoin="round"><path d="M32 6L39 24L58 25L43 37L48 56L32 45L16 56L21 37L6 25L25 24Z"/></g></symbol>
+<symbol id="ic-caffe" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" style="stroke-width:var(--sw,2.6)" stroke-linecap="round" stroke-linejoin="round"><path d="M10 26H44V40Q44 54 27 54Q10 54 10 40Z"/><path d="M44 30H50Q57 30 57 37Q57 44 47 44"/><path d="M20 20Q16 14 20 8M31 20Q27 14 31 8"/></g></symbol>
+<symbol id="ic-natale" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" style="stroke-width:var(--sw,2.6)" stroke-linecap="round" stroke-linejoin="round"><path d="M32 5L18 25H26L13 41H24L9 55H55L40 41H51L38 25H46Z"/><path d="M28 55V61H36V55"/></g></symbol>
+<symbol id="ic-sconto" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" style="stroke-width:var(--sw,2.6)" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="32" r="25"/><path d="M22 43L42 21"/><circle cx="24" cy="24" r="4.5"/><circle cx="40" cy="40" r="4.5"/></g></symbol>
+<symbol id="ic-novita" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" style="stroke-width:var(--sw,2.6)" stroke-linecap="round" stroke-linejoin="round"><path d="M8 26H21L45 12V52L21 38H8Z"/><path d="M15 38L19 54H26L23 38"/><path d="M51 24Q58 32 51 40"/></g></symbol>
+<symbol id="ic-calendario" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" style="stroke-width:var(--sw,2.6)" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="14" width="48" height="42" rx="6"/><path d="M8 27H56M20 8V19M44 8V19"/><circle cx="22" cy="38" r="2"/><circle cx="32" cy="38" r="2"/><circle cx="42" cy="38" r="2"/><circle cx="22" cy="48" r="2"/><circle cx="32" cy="48" r="2"/></g></symbol>
+<symbol id="ic-occhio" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" style="stroke-width:var(--sw,2.6)" stroke-linecap="round" stroke-linejoin="round"><path d="M4 32Q32 8 60 32Q32 56 4 32Z"/><circle cx="32" cy="32" r="9"/><circle cx="32" cy="32" r="3"/></g></symbol>
+<symbol id="ic-lente" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" style="stroke-width:var(--sw,2.6)" stroke-linecap="round" stroke-linejoin="round"><circle cx="27" cy="27" r="17"/><path d="M40 40L58 58"/></g></symbol>
+<symbol id="ic-orologio" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" style="stroke-width:var(--sw,2.6)" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="32" r="25"/><path d="M32 17V32L43 39"/></g></symbol>
+<symbol id="ic-pin" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" style="stroke-width:var(--sw,2.6)" stroke-linecap="round" stroke-linejoin="round"><path d="M32 58Q12 38 12 26A20 20 0 0 1 52 26Q52 38 32 58Z"/><circle cx="32" cy="26" r="7"/></g></symbol>
+<symbol id="ic-telefono" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" style="stroke-width:var(--sw,2.6)" stroke-linecap="round" stroke-linejoin="round"><rect x="18" y="6" width="28" height="52" rx="5"/><path d="M28 50H36"/></g></symbol>
+<symbol id="ic-torta" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" style="stroke-width:var(--sw,2.6)" stroke-linecap="round" stroke-linejoin="round"><path d="M10 34H54V56H10Z"/><path d="M10 44Q18 38 26 44T42 44T54 44"/><path d="M32 34V26"/><path d="M32 26Q28 20 32 14Q36 20 32 26Z"/></g></symbol>
+<symbol id="ic-brindisi" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" style="stroke-width:var(--sw,2.6)" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8H46Q46 30 32 34Q18 30 18 8Z"/><path d="M32 34V54M22 56H42"/></g></symbol>
+<symbol id="ic-musica" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" style="stroke-width:var(--sw,2.6)" stroke-linecap="round" stroke-linejoin="round"><path d="M24 46V12L50 8V42"/><circle cx="17" cy="47" r="7"/><circle cx="43" cy="43" r="7"/></g></symbol>
+<symbol id="ic-fiore" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" style="stroke-width:var(--sw,2.6)" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="26" r="5"/><circle cx="32" cy="12" r="7"/><circle cx="46" cy="26" r="7"/><circle cx="32" cy="40" r="7"/><circle cx="18" cy="26" r="7"/><path d="M32 47V60M32 54Q42 50 46 54"/></g></symbol>
+<symbol id="ic-foto" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" style="stroke-width:var(--sw,2.6)" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="16" width="52" height="38" rx="6"/><circle cx="32" cy="35" r="10"/><path d="M22 16L26 9H38L42 16"/></g></symbol>
+<symbol id="ic-trofeo" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" style="stroke-width:var(--sw,2.6)" stroke-linecap="round" stroke-linejoin="round"><path d="M20 8H44V26Q44 38 32 38Q20 38 20 26Z"/><path d="M20 12H10Q10 24 20 26M44 12H54Q54 24 44 26"/><path d="M32 38V50M22 56H42M26 50H38"/></g></symbol>
+<symbol id="ic-lampadina" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" style="stroke-width:var(--sw,2.6)" stroke-linecap="round" stroke-linejoin="round"><path d="M22 44V38Q12 30 12 22A20 20 0 0 1 52 22Q52 30 42 38V44Z"/><path d="M24 52H40M27 58H37"/></g></symbol>
+<symbol id="ic-ombrello" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" style="stroke-width:var(--sw,2.6)" stroke-linecap="round" stroke-linejoin="round"><path d="M6 32A26 26 0 0 1 58 32Z"/><path d="M32 32V52Q32 58 38 58Q44 58 44 52"/></g></symbol>
+<symbol id="ic-gelato" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" style="stroke-width:var(--sw,2.6)" stroke-linecap="round" stroke-linejoin="round"><path d="M16 28Q16 8 32 8Q48 8 48 28Z"/><path d="M14 28H50L32 60Z"/><path d="M24 36L32 54M40 36L32 54"/></g></symbol>
+<symbol id="ic-chat" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" style="stroke-width:var(--sw,2.6)" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12H56V42H28L16 54V42H8Z"/><path d="M18 24H46M18 32H36"/></g></symbol>
+<symbol id="ic-persone" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" style="stroke-width:var(--sw,2.6)" stroke-linecap="round" stroke-linejoin="round"><circle cx="22" cy="22" r="8"/><path d="M6 54Q6 38 22 38Q38 38 38 54"/><circle cx="44" cy="26" r="6"/><path d="M42 40Q58 40 58 54"/></g></symbol>
+<symbol id="ic-link" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" style="stroke-width:var(--sw,2.6)" stroke-linecap="round" stroke-linejoin="round"><path d="M28 36A9 9 0 0 0 40 36L50 26A9 9 0 0 0 38 14L33 19"/><path d="M36 28A9 9 0 0 0 24 28L14 38A9 9 0 0 0 26 50L31 45"/></g></symbol>
 </svg>
 <nav><b>Ottica Vitali</b><a href="#notizie">Notizie</a><a href="#eventi">Eventi</a><a href="#vetrina">Vetrina</a><a href="#chiusure">Chiusure</a><a href="#orari">Orari</a><a href="#social">Social</a><a href="#servizi">Servizi</a><a href="#contatti">Contatti</a></nav>
 
@@ -94,7 +112,7 @@ footer a{color:var(--bg)}
 <p>Per mostrarli si carica un servizio esterno (SnapWidget), che può usare cookie. Parte solo se lo chiedi tu. <a href="privacy.html#widget">Maggiori informazioni</a></p>
 <button class="btn" id="igbtn" type="button">Mostra i post da Instagram</button></div>
 <div class="grid" id="posts"></div>
-<p><a class="btn" href="https://www.instagram.com/ottica_vitali_chiavenna/">Seguici su Instagram</a><a class="btn alt" href="https://www.facebook.com/profile.php?id=100087631992649">Facebook</a></p></div></section>
+<p><a class="btn" href="https://www.instagram.com/ottica_vitali_chiavenna/"><svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><use href="#ic-foto"/></svg>Seguici su Instagram</a><a class="btn alt" href="https://www.facebook.com/profile.php?id=100087631992649"><svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><use href="#ic-persone"/></svg>Facebook</a></p></div></section>
 
 <section id="servizi"><div class="wrap"><h2>Servizi per la tua vista</h2><p class="sub">Solo su appuntamento, senza attese.</p>
 <ul class="s">
@@ -138,7 +156,9 @@ const okImg = u => /^(eventi|vetrina)\/[\w\-.]+\.(jpe?g|png|webp)$/i.test(u||"")
 const img = x => okImg(x.image) ? `<img src="${esc(x.image)}" alt="${esc(x.alt||x.title||x.name)}" loading="lazy" onerror="this.remove()">` : "";
 /* Locandina SVG generata dai dati dell'evento (data + tema opzionale: blu, ambra, verde). */
 const TEMI = {blu:"#1f3a5f", ambra:"#8a5a14", verde:"#1f6b43"};
-const ICONE = ["pizza","festa","regalo","sole","cuore","stella","caffe","natale","sconto","novita","calendario"]; /* senza "icona" resta il disegno degli occhiali */
+const ICONE = ["pizza","festa","regalo","sole","cuore","stella","caffe","natale","sconto","novita","calendario","occhio","lente","orologio","pin","telefono","torta","brindisi","musica","fiore","foto","trofeo","lampadina","ombrello","gelato","chat","persone","link"]; /* senza "icona" resta il disegno degli occhiali */
+/* Icona piccola per i post social: campo "icona" oppure una generica in base al canale. */
+const icoSocial = s => { const n = ICONE.includes(s.icona) ? s.icona : (/insta/i.test(s.network||"") ? "foto" : /face/i.test(s.network||"") ? "persone" : "link"); return `<svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><use href="#ic-${n}"/></svg>`; };
 const poster = e => {
   const d = new Date(e.date+"T12:00:00");
   if (isNaN(d)) return "";
@@ -164,7 +184,7 @@ function render(D){
   const safe = u => /^https:\/\//.test(u||"") ? esc(u) : "";
   put("posts", [...L("social")].sort((a,b)=>(b.date||"").localeCompare(a.date||"")),
     s => { const u = safe(s.url), open = u ? `<a href="${u}" target="_blank" rel="noopener">` : "", close = u ? "</a>" : "";
-      return `<div class="card">${img(s) ? open+img(s)+close : ""}<span class="tag">${esc(s.network||"Social")}${s.date?" · "+fmt(s.date):""}</span><h3>${open}${esc(s.title)}${close}</h3><p>${esc(s.text)}</p>${u?`<a class="go" href="${u}" target="_blank" rel="noopener">Apri il post</a>`:""}</div>`; }, "Presto qui i nostri post.");
+      return `<div class="card">${img(s) ? open+img(s)+close : ""}<span class="tag">${icoSocial(s)}${esc(s.network||"Social")}${s.date?" · "+fmt(s.date):""}</span><h3>${open}${esc(s.title)}${close}</h3><p>${esc(s.text)}</p>${u?`<a class="go" href="${u}" target="_blank" rel="noopener">Apri il post</a>`:""}</div>`; }, "Presto qui i nostri post.");
   const H = D.hours && typeof D.hours==="object" ? D.hours : null;
   const days = [["monday","Lunedì"],["tuesday","Martedì"],["wednesday","Mercoledì"],["thursday","Giovedì"],["friday","Venerdì"],["saturday","Sabato"],["sunday","Domenica"]];
   const names = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"];

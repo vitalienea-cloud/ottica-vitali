@@ -1,0 +1,18 @@
+{
+  "news": [
+    {"date": "2026-08-12", "title": "Osservare l’eclissi solare in sicurezza", "text": "Usa solo visori certificati ISO 12312-2: i normali occhiali da sole non proteggono. In alternativa, prova la proiezione indiretta."},
+    {"date": "2026-10-26", "title": "Nuova pagina online (esempio)", "text": "Qui compariranno le novità del negozio."}
+  ],
+  "events": [
+    {"date": "2026-11-14", "title": "Giornata controllo vista (esempio)", "text": "Controllo gratuito su appuntamento. Contenuto di prova."}
+  ],
+  "closures": [
+    {"from": "2026-12-08", "to": "2026-12-08", "reason": "Immacolata Concezione"},
+    {"from": "2026-12-24", "to": "2026-12-26", "reason": "Festività natalizie"}
+  ],
+  "products": [
+    {"name": "Montatura in acetato (esempio)", "brand": "Marca", "price": "da 150 €"},
+    {"name": "Occhiale da sole (esempio)", "brand": "Marca", "price": "da 120 €"},
+    {"name": "Montatura in titanio (esempio)", "brand": "Marca", "price": "da 190 €"}
+  ]
+}

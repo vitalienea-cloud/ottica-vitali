@@ -122,7 +122,7 @@ const put = (id, items, tpl, empty) => {
   document.getElementById(id).innerHTML = items.length ? items.map(tpl).join("") : '<p class="empty">'+empty+'</p>';
 };
 /* Immagine opzionale: solo file in eventi/ (jpg, png, webp) oppure link https. */
-const okImg = u => /^((eventi|vetrina)\/[\w\-.]+\.(jpe?g|png|webp)|https:\/\/[^\s"'<>]+)$/i.test(u||"") && !/\.\./.test(u);
+const okImg = u => /^(eventi|vetrina)\/[\w\-.]+\.(jpe?g|png|webp)$/i.test(u||"") && !/\.\./.test(u);
 const img = x => okImg(x.image) ? `<img src="${esc(x.image)}" alt="${esc(x.alt||x.title||x.name)}" loading="lazy" onerror="this.remove()">` : "";
 /* Locandina SVG generata dai dati dell'evento (data + tema opzionale: blu, ambra, verde). */
 const TEMI = {blu:"#1f3a5f", ambra:"#8a5a14", verde:"#1f6b43"};

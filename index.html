@@ -35,6 +35,7 @@ section h2{font-size:1.7rem;color:var(--brand);margin-bottom:6px}
 .tag{font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-weight:600}
 .card p{margin:4px 0;color:var(--mute);font-size:.95rem}
 .prod svg{width:100%;height:60px;color:var(--brand)}
+.prod img{max-height:220px}
 .price{color:var(--ok);font-weight:600}
 .empty{color:var(--mute);font-style:italic}
 .date{display:inline-block;background:var(--brand);color:var(--bg);border-radius:8px;padding:2px 10px;font-size:.85rem;font-weight:600}
@@ -71,7 +72,7 @@ footer a{color:var(--bg)}
 
 <section id="notizie"><div class="wrap"><h2>Notizie</h2><p class="sub">Novità dal negozio.</p><div class="grid" id="news"></div></div></section>
 <section id="eventi"><div class="wrap"><h2>Eventi</h2><p class="sub">Prossimi appuntamenti.</p><div class="grid" id="events"></div></div></section>
-<section id="vetrina"><div class="wrap"><h2>Vetrina</h2><p class="sub">Alcune proposte del momento.</p><div class="grid" id="products"></div></div></section>
+<section id="vetrina"><div class="wrap"><h2>Vetrina</h2><p class="sub">Alcune proposte del momento. I prezzi sono indicativi: per i dettagli contattaci.</p><div class="grid" id="products"></div></div></section>
 <section id="chiusure"><div class="wrap"><h2>Chiusure e orari speciali</h2><p class="sub">Giorni di chiusura e variazioni rispetto al solito orario.</p><div class="grid" id="closures"></div></div></section>
 
 <section id="orari"><div class="wrap"><h2>Orari</h2><p class="sub">Orari di apertura, su appuntamento.</p><div id="hours"></div></div></section>
@@ -120,8 +121,8 @@ const put = (id, items, tpl, empty) => {
   document.getElementById(id).innerHTML = items.length ? items.map(tpl).join("") : '<p class="empty">'+empty+'</p>';
 };
 /* Immagine opzionale: solo file in eventi/ (jpg, png, webp) oppure link https. */
-const okImg = u => /^(eventi\/[\w\-.]+\.(jpe?g|png|webp)|https:\/\/[^\s"'<>]+)$/i.test(u||"") && !/\.\./.test(u);
-const img = x => okImg(x.image) ? `<img src="${esc(x.image)}" alt="${esc(x.alt||x.title)}" loading="lazy" onerror="this.remove()">` : "";
+const okImg = u => /^((eventi|vetrina)\/[\w\-.]+\.(jpe?g|png|webp)|https:\/\/[^\s"'<>]+)$/i.test(u||"") && !/\.\./.test(u);
+const img = x => okImg(x.image) ? `<img src="${esc(x.image)}" alt="${esc(x.alt||x.title||x.name)}" loading="lazy" onerror="this.remove()">` : "";
 function render(D){
   const L = k => Array.isArray(D[k]) ? D[k] : [];
   put("news", [...L("news")].sort((a,b)=>b.date.localeCompare(a.date)),
@@ -135,7 +136,7 @@ function render(D){
   put("closures", items,
     c => `<div class="card"><span class="date">${c.from===c.to?fmt(c.from):"dal "+fmt(c.from)+" al "+fmt(c.to)}</span> <span class="tag">${c.label}</span><h3>${esc(c.title)}</h3></div>`, "Nessuna chiusura o variazione programmata.");
   put("products", L("products"),
-    p => `<div class="card prod"><svg viewBox="0 0 100 40"><use href="#gl"/></svg><span class="tag">${esc(p.brand)}</span><h3>${esc(p.name)}</h3><p class="price">${esc(p.price)}</p></div>`, "Vetrina in aggiornamento.");
+    p => `<div class="card prod">${okImg(p.image) ? img(p) : '<svg viewBox="0 0 100 40"><use href="#gl"/></svg>'}<span class="tag">${esc(p.brand)}</span><h3>${esc(p.name)}</h3>${p.text ? `<p>${esc(p.text)}</p>` : ""}<p class="price">${esc(p.price)}</p></div>`, "Vetrina in aggiornamento.");
   const safe = u => /^https:\/\//.test(u||"") ? esc(u) : "";
   put("posts", [...L("social")].sort((a,b)=>(b.date||"").localeCompare(a.date||"")),
     s => { const u = safe(s.url), open = u ? `<a href="${u}" target="_blank" rel="noopener">` : "", close = u ? "</a>" : "";

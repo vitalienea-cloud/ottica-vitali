@@ -41,6 +41,7 @@ table.h{border-collapse:collapse;width:100%;max-width:460px;background:var(--car
 table.h td{padding:9px 16px;border-top:1px solid var(--line)}table.h tr:first-child td{border-top:0}
 table.h td:first-child{font-weight:600;color:var(--brand)}table.h tr.today td{background:var(--line)}
 .closed{color:var(--mute)}.note{color:var(--mute);font-size:.9rem;margin:10px 0 0}
+.card img{display:block;width:100%;height:auto;max-height:340px;object-fit:cover;border-radius:10px;margin-bottom:12px}
 .card a.go{display:inline-block;margin-top:8px;font-weight:600;font-size:.9rem}
 footer{background:var(--brand);color:var(--bg);padding:30px 0;font-size:.9rem}
 footer a{color:var(--bg)}
@@ -98,12 +99,15 @@ const esc = s => String(s==null?"":s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":
 const put = (id, items, tpl, empty) => {
   document.getElementById(id).innerHTML = items.length ? items.map(tpl).join("") : '<p class="empty">'+empty+'</p>';
 };
+/* Immagine opzionale: solo file in eventi/ (jpg, png, webp) oppure link https. */
+const okImg = u => /^(eventi\/[\w\-.]+\.(jpe?g|png|webp)|https:\/\/[^\s"'<>]+)$/i.test(u||"") && !/\.\./.test(u);
+const img = x => okImg(x.image) ? `<img src="${esc(x.image)}" alt="${esc(x.alt||x.title)}" loading="lazy">` : "";
 function render(D){
   const L = k => Array.isArray(D[k]) ? D[k] : [];
   put("news", [...L("news")].sort((a,b)=>b.date.localeCompare(a.date)),
     n => `<div class="card"><span class="tag">${fmt(n.date)}</span><h3>${esc(n.title)}</h3><p>${esc(n.text)}</p></div>`, "Nessuna notizia al momento.");
   put("events", L("events").filter(e=>e.date>=today).sort((a,b)=>a.date.localeCompare(b.date)),
-    e => `<div class="card"><span class="date">${fmt(e.date)}</span><h3>${esc(e.title)}</h3><p>${esc(e.text)}</p></div>`, "Nessun evento in programma.");
+    e => `<div class="card">${img(e)}<span class="date">${fmt(e.date)}</span><h3>${esc(e.title)}</h3><p>${esc(e.text)}</p></div>`, "Nessun evento in programma.");
   put("closures", L("closures").filter(c=>(c.to||c.from)>=today).sort((a,b)=>a.from.localeCompare(b.from)),
     c => `<div class="card"><span class="date">${(!c.to||c.from===c.to)?fmt(c.from):"dal "+fmt(c.from)+" al "+fmt(c.to)}</span><h3>${esc(c.reason)}</h3></div>`, "Nessuna chiusura programmata.");
   put("products", L("products"),

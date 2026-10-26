@@ -5,7 +5,7 @@
   ],
   "events": [
     {"date": "2026-11-14", "title": "Controllo vista gratuito", "text": "Controllo gratuito su appuntamento. Contenuto di prova.", "tema": "blu"},
-    {"date": "2026-10-30", "title": "Serata pizza", "text": "Serata pizza di prova in negozio. Tutti invitati.", "image": "eventi/serata-pizza.jpg", "alt": "Pizza intera su tavolo di legno"}
+    {"date": "2026-10-30", "title": "Serata pizza", "text": "Serata pizza di prova in negozio. Tutti invitati.", "tema": "ambra", "icona": "pizza"}
   ],
   "closures": [],
   "hours": {

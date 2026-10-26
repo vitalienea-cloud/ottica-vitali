@@ -37,13 +37,18 @@ section h2{font-size:1.7rem;color:var(--brand);margin-bottom:6px}
 .empty{color:var(--mute);font-style:italic}
 .date{display:inline-block;background:var(--brand);color:var(--bg);border-radius:8px;padding:2px 10px;font-size:.85rem;font-weight:600}
 ul.s{padding-left:20px;margin:0}ul.s li{margin:8px 0}
+table.h{border-collapse:collapse;width:100%;max-width:460px;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+table.h td{padding:9px 16px;border-top:1px solid var(--line)}table.h tr:first-child td{border-top:0}
+table.h td:first-child{font-weight:600;color:var(--brand)}table.h tr.today td{background:var(--line)}
+.closed{color:var(--mute)}.note{color:var(--mute);font-size:.9rem;margin:10px 0 0}
+.card a.go{display:inline-block;margin-top:8px;font-weight:600;font-size:.9rem}
 footer{background:var(--brand);color:var(--bg);padding:30px 0;font-size:.9rem}
 footer a{color:var(--bg)}
 </style>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute"><symbol id="gl" viewBox="0 0 100 40"><g fill="none" stroke="currentColor" stroke-width="3"><circle cx="26" cy="22" r="16"/><circle cx="74" cy="22" r="16"/><path d="M42 20q8-6 16 0M10 18L2 12M90 18l8-6"/></g></symbol></svg>
-<nav><b>Ottica Vitali</b><a href="#notizie">Notizie</a><a href="#eventi">Eventi</a><a href="#chiusure">Chiusure</a><a href="#vetrina">Vetrina</a><a href="#servizi">Servizi</a><a href="#contatti">Contatti</a></nav>
+<nav><b>Ottica Vitali</b><a href="#notizie">Notizie</a><a href="#eventi">Eventi</a><a href="#chiusure">Chiusure</a><a href="#vetrina">Vetrina</a><a href="#orari">Orari</a><a href="#social">Social</a><a href="#servizi">Servizi</a><a href="#contatti">Contatti</a></nav>
 
 <header class="hero wrap">
 <svg viewBox="0 0 100 40"><use href="#gl"/></svg>
@@ -57,6 +62,10 @@ footer a{color:var(--bg)}
 <section id="eventi"><div class="wrap"><h2>Eventi</h2><p class="sub">Prossimi appuntamenti.</p><div class="grid" id="events"></div></div></section>
 <section id="chiusure"><div class="wrap"><h2>Chiusure</h2><p class="sub">Giorni in cui il negozio resta chiuso.</p><div class="grid" id="closures"></div></div></section>
 <section id="vetrina"><div class="wrap"><h2>Vetrina</h2><p class="sub">Alcune proposte del momento.</p><div class="grid" id="products"></div></div></section>
+
+<section id="orari"><div class="wrap"><h2>Orari</h2><p class="sub">Orari di apertura, su appuntamento.</p><div id="hours"></div></div></section>
+<section id="social"><div class="wrap"><h2>Dai nostri social</h2><p class="sub">Ultime dai nostri canali.</p><div class="grid" id="posts"></div>
+<p><a class="btn" href="https://www.instagram.com/ottica_vitali_chiavenna/">Seguici su Instagram</a><a class="btn alt" href="https://www.facebook.com/profile.php?id=100087631992649">Facebook</a></p></div></section>
 
 <section id="servizi"><div class="wrap"><h2>Servizi per la tua vista</h2><p class="sub">Solo su appuntamento, senza attese.</p>
 <ul class="s">
@@ -99,6 +108,22 @@ function render(D){
     c => `<div class="card"><span class="date">${(!c.to||c.from===c.to)?fmt(c.from):"dal "+fmt(c.from)+" al "+fmt(c.to)}</span><h3>${esc(c.reason)}</h3></div>`, "Nessuna chiusura programmata.");
   put("products", L("products"),
     p => `<div class="card prod"><svg viewBox="0 0 100 40"><use href="#gl"/></svg><span class="tag">${esc(p.brand)}</span><h3>${esc(p.name)}</h3><p class="price">${esc(p.price)}</p></div>`, "Vetrina in aggiornamento.");
+  const safe = u => /^https:\/\//.test(u||"") ? esc(u) : "";
+  put("posts", [...L("social")].sort((a,b)=>(b.date||"").localeCompare(a.date||"")),
+    s => `<div class="card"><span class="tag">${esc(s.network||"Social")}${s.date?" · "+fmt(s.date):""}</span><h3>${esc(s.title)}</h3><p>${esc(s.text)}</p>${safe(s.url)?`<a class="go" href="${safe(s.url)}" target="_blank" rel="noopener">Apri il post</a>`:""}</div>`, "Presto qui i nostri post.");
+  const H = D.hours && typeof D.hours==="object" ? D.hours : null;
+  const days = [["monday","Lunedì"],["tuesday","Martedì"],["wednesday","Mercoledì"],["thursday","Giovedì"],["friday","Venerdì"],["saturday","Sabato"],["sunday","Domenica"]];
+  const names = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"];
+  const hoursEl = document.getElementById("hours");
+  if (H) {
+    hoursEl.innerHTML = '<table class="h">' + days.map(([k,l]) => {
+      const v = H[k] == null ? "" : String(H[k]);
+      const closed = !v || /chius/i.test(v);
+      return `<tr${names[new Date().getDay()]===k?' class="today"':''}><td>${l}</td><td${closed?' class="closed"':''}>${closed?"Chiuso":esc(v)}</td></tr>`;
+    }).join("") + '</table>' + (D.hours_note ? `<p class="note">${esc(D.hours_note)}</p>` : "");
+  } else {
+    hoursEl.innerHTML = '<p class="empty">Orari in aggiornamento.</p>';
+  }
 }
 fetch("content.json", {cache:"no-store"})
   .then(r => { if(!r.ok) throw 0; return r.json(); })

@@ -20,7 +20,17 @@
   "exceptions": [
     {"date": "2026-10-31", "text": "aperti solo dalle 9:00 alle 12:00"}
   ],
-  "social": [],
+  "social": [
+    {
+      "network": "Instagram",
+      "date": "2026-10-17",
+      "title": "Gel antiappannante",
+      "text": "Gel antiappannante + microfibra per tutti i tipi di lenti. Senza alcool. Non rovina i trattamenti. Euro 13,00",
+      "url": "https://www.instagram.com/ottica_vitali_chiavenna/",
+      "image": "eventi/antifog-polaroid.jpg",
+      "alt": "Occhiali con lente appannata in cornice Polaroid con scritta ANTI-FOG"
+    }
+  ],
   "products": [
     {"name": "Montatura in acetato (esempio)", "brand": "Marca", "price": "da 150 €"},
     {"name": "Occhiale da sole (esempio)", "brand": "Marca", "price": "da 120 €"},

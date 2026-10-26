@@ -7,6 +7,15 @@
     {"date": "2026-11-14", "title": "Giornata controllo vista (esempio)", "text": "Controllo gratuito su appuntamento. Contenuto di prova."}
   ],
   "closures": [],
+  "hours": {
+    "monday": "chiuso",
+    "tuesday": "9:00–12:30, 16:00–19:30",
+    "wednesday": "9:00–12:30, 16:00–19:30",
+    "thursday": "9:00–12:30, 16:00–19:30",
+    "friday": "9:00–12:30, 16:00–19:30",
+    "saturday": "9:00–12:00",
+    "sunday": "chiuso"
+  },
   "products": [
     {"name": "Montatura in acetato (esempio)", "brand": "Marca", "price": "da 150 €"},
     {"name": "Occhiale da sole (esempio)", "brand": "Marca", "price": "da 120 €"},

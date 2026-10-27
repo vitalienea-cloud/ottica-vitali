@@ -97,6 +97,7 @@ footer a{color:var(--bg)}
 <symbol id="ic-scudo" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" style="stroke-width:var(--sw,2.6)" stroke-linecap="round" stroke-linejoin="round"><path d="M32 6L12 14V30Q12 48 32 58Q52 48 52 30V14Z"/><path d="M22 32L30 40L43 24"/></g></symbol>
 <symbol id="ic-auto" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" style="stroke-width:var(--sw,2.6)" stroke-linecap="round" stroke-linejoin="round"><path d="M8 40V32L14 22H50L56 32V40Z"/><path d="M8 32H56"/><circle cx="18" cy="42" r="5"/><circle cx="46" cy="42" r="5"/></g></symbol>
 <symbol id="ic-libro" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" style="stroke-width:var(--sw,2.6)" stroke-linecap="round" stroke-linejoin="round"><path d="M32 14Q22 8 8 10V50Q22 48 32 54Q42 48 56 50V10Q42 8 32 14Z"/><path d="M32 14V54"/></g></symbol>
+<symbol id="ic-forottero" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" style="stroke-width:var(--sw,2.6)" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="20" width="52" height="24" rx="5"/><circle cx="21" cy="32" r="8"/><circle cx="43" cy="32" r="8"/><circle cx="21" cy="32" r="3"/><circle cx="43" cy="32" r="3"/><path d="M18 20V13H46V20M32 44V54M22 56H42M28 32H36"/></g></symbol>
 <symbol id="ic-spunta" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" style="stroke-width:var(--sw,2.6)" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="32" r="24"/><path d="M20 33L29 42L45 23"/></g></symbol>
 <symbol id="ic-link" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" style="stroke-width:var(--sw,2.6)" stroke-linecap="round" stroke-linejoin="round"><path d="M28 36A9 9 0 0 0 40 36L50 26A9 9 0 0 0 38 14L33 19"/><path d="M36 28A9 9 0 0 0 24 28L14 38A9 9 0 0 0 26 50L31 45"/></g></symbol>
 </svg>
@@ -165,7 +166,7 @@ const okImg = u => /^(eventi|vetrina)\/[\w\-.]+\.(jpe?g|png|webp)$/i.test(u||"")
 const img = x => okImg(x.image) ? `<img src="${esc(x.image)}" alt="${esc(x.alt||x.title||x.name)}" loading="lazy" onerror="this.remove()">` : "";
 /* Locandina SVG generata dai dati dell'evento (data + tema opzionale: blu, ambra, verde). */
 const TEMI = {blu:"#1f3a5f", ambra:"#8a5a14", verde:"#1f6b43"};
-const ICONE = ["pizza","festa","regalo","sole","cuore","stella","caffe","natale","sconto","novita","calendario","occhio","lente","orologio","pin","telefono","torta","brindisi","musica","fiore","foto","trofeo","lampadina","ombrello","gelato","chat","persone","link","occhiali","occhialisole","bambino","schermo","eclissi","scudo","auto","libro","spunta"]; /* senza "icona" resta il disegno degli occhiali */
+const ICONE = ["pizza","festa","regalo","sole","cuore","stella","caffe","natale","sconto","novita","calendario","occhio","lente","orologio","pin","telefono","torta","brindisi","musica","fiore","foto","trofeo","lampadina","ombrello","gelato","chat","persone","link","occhiali","occhialisole","bambino","schermo","eclissi","scudo","auto","libro","spunta","forottero"]; /* senza "icona" resta il disegno degli occhiali */
 /* Icona piccola per i post social: campo "icona" oppure una generica in base al canale. */
 const icoSocial = s => { const n = ICONE.includes(s.icona) ? s.icona : (/insta/i.test(s.network||"") ? "foto" : /face/i.test(s.network||"") ? "persone" : "link"); return `<svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><use href="#ic-${n}"/></svg>`; };
 const poster = e => {
@@ -180,7 +181,7 @@ function render(D){
   const L = k => Array.isArray(D[k]) ? D[k] : [];
   put("news", [...L("news")].sort((a,b)=>b.date.localeCompare(a.date)),
     n => { const u = /^https:\/\//.test(n.url||"") ? esc(n.url) : ""; const ic = ICONE.includes(n.icona) ? n.icona : "novita";
-      return `<div class="card"><span class="tag"><svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><use href="#ic-${ic}"/></svg>${n.source?esc(n.source)+" · ":""}${fmt(n.date)}</span><h3>${esc(n.title)}</h3><p>${esc(n.text)}</p>${u?`<a class="go" href="${u}" target="_blank" rel="noopener">Leggi la fonte</a>`:""}</div>`; }, "Nessuna notizia al momento.");
+      return `<div class="card"><div class="pic">${img(n)}${poster({...n, icona: ic})}</div><span class="date">${n.source?esc(n.source)+" · ":""}${fmt(n.date)}</span><h3>${esc(n.title)}</h3><p>${esc(n.text)}</p>${u?`<a class="go" href="${u}" target="_blank" rel="noopener">Leggi la fonte</a>`:""}</div>`; }, "Nessuna notizia al momento.");
   put("events", L("events").filter(e=>e.date>=today).sort((a,b)=>a.date.localeCompare(b.date)),
     e => `<div class="card"><div class="pic">${img(e)}${poster(e)}</div><span class="date">${fmt(e.date)}</span><h3>${esc(e.title)}</h3><p>${esc(e.text)}</p></div>`, "Nessun evento in programma.");
   const items = [

@@ -1,8 +1,8 @@
 {
   "news": [
-    {"date": "2026-10-06", "title": "Giornata Mondiale della Vista 2026: ZEISS ricorda l’importanza dei controlli", "text": "In occasione della Giornata Mondiale della Vista, ZEISS sottolinea quanto sia importante fare controlli regolari della vista per tutti, non solo per chi ha già problemi. Un buon controllo può aiutare a prevenire o gestire meglio molte difficoltà visive.", "icona": "forottero", "source": "Zeiss", "url": "https://www.zeiss.com/vision-care/en/newsroom/news/2026/zeiss-highlights-the-importance-of-access-to-eye-care-on-world-sight-day-2026.html"},
+    {"date": "2026-10-06", "title": "Giornata Mondiale della Vista 2026: ZEISS ricorda l’importanza dei controlli", "text": "In occasione della Giornata Mondiale della Vista, ZEISS sottolinea quanto sia importante fare controlli regolari della vista per tutti, non solo per chi ha già problemi. Un buon controllo può aiutare a prevenire o gestire meglio molte difficoltà visive.", "icona": "forottero", "source": "Zeiss", "url": "https://www.zeiss.com/vision-care/en/newsroom/news/2026/zeiss-supports-world-sight-day-2026.html"},
     {"date": "2026-10-01", "title": "Nuove lenti ZEISS MyoActive per rallentare la miopia nei bambini", "text": "ZEISS ha presentato MyoActive, una lente pensata per i bambini che aiuta a rallentare la progressione della miopia. I risultati clinici mostrano un buon controllo dell’avanzamento della miopia rispetto alle lenti tradizionali.", "icona": "bambino", "source": "Zeiss", "url": "https://www.zeiss.com/vision-care/en/newsroom/news/2026/zeiss-introduces-myoactive.html"},
-    {"date": "2026-09-15", "title": "Lenti ZEISS ClearMind: visione nitida con meno sforzo mentale", "text": "Le lenti ClearMind combinano design ottico e studi sul modo in cui il cervello elabora le immagini. L’obiettivo è offrire una visione molto nitida riducendo lo sforzo cognitivo, utile soprattutto per chi usa molto gli schermi.", "icona": "schermo", "source": "Zeiss", "url": "https://www.zeiss.it/vision-care/cerchi-nuove-lenti/lenti-clearmind.html"},
+    {"date": "2026-09-15", "title": "Lenti ZEISS ClearMind: visione nitida con meno sforzo mentale", "text": "Le lenti ClearMind combinano design ottico e studi sul modo in cui il cervello elabora le immagini. L’obiettivo è offrire una visione molto nitida riducendo lo sforzo cognitivo, utile soprattutto per chi usa molto gli schermi.", "icona": "schermo", "source": "Zeiss", "url": "https://www.zeiss.com/vision-care/en/newsroom/news/2026/zeiss-clearmind-consumers-focused-on-well-being.html"},
     {"date": "2026-08-12", "title": "Osservare l’eclissi solare in sicurezza", "text": "Usa solo visori certificati ISO 12312-2: i normali occhiali da sole non proteggono. In alternativa, prova la proiezione indiretta.", "icona": "eclissi", "tema": "ambra"},
     {"date": "2026-10-26", "title": "Nuova pagina online (esempio)", "text": "Qui compariranno le novità del negozio."}
   ],
@@ -40,9 +40,12 @@
     {"name": "Montatura in titanio (esempio)", "brand": "Marca", "price": "da 190 €"}
   ],
   "servizi": [
-    {"titolo": "Riparazione veloce", "testo": "una riparazione veloce"},
-    {"titolo": "Scelta occhiali", "testo": "una guida esperta nella scelta di occhiali da vista o da sole"},
-    {"titolo": "Consulenza ottica", "testo": "una consulenza completa nel settore ottico"}
+    {"titolo":"Progressione miopica","icona":"bambino","testo":"Gestione della progressione miopica, per rallentarne l’avanzamento nei più giovani."},
+    {"titolo":"Esami optometrici","icona":"forottero","testo":"Esami optometrici approfonditi, con topografia corneale e studio del film lacrimale."},
+    {"titolo":"Progressivi","icona":"lente","testo":"Progressivi di alta precisione, con lenti ZEISS."},
+    {"titolo":"Contattologia","icona":"occhio","testo":"Contattologia specialistica: lenti morbide, semi-rigide, multifocali, sclerali per cheratocono."},
+    {"titolo":"Consulenza","icona":"occhiali","testo":"Consulenza d’immagine e tecnica per occhiali da vista e da sole."},
+    {"titolo":"Assistenza","icona":"spunta","testo":"Assistenza e riparazioni, comprese le saldature."}
   ],
   "organizzazione": [
     {"titolo":"WhatsApp","icona":"chat","testo":"Ottimizziamo la gestione di appuntamenti e ritiri attraverso WhatsApp e chiamate al 373 815 59 67. Per garantire un servizio efficiente per tutti, ti chiediamo la cortesia di evitare chiamate multiple. Se il telefono dovesse risultare occupato, significa che siamo al servizio di altri clienti: ti richiameremo noi nel minor tempo possibile.","link_testo":"Scrivici su WhatsApp","link_url":"https://wa.me/393738155967"},

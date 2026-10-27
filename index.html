@@ -20,10 +20,14 @@ nav{scrollbar-width:none}nav::-webkit-scrollbar{display:none}
 nav b{font-weight:700;letter-spacing:-.02em;font-size:1.1rem;color:var(--brand);margin-right:auto}
 nav a{text-decoration:none;color:var(--mute);font-size:.9rem;padding:6px 12px;border-radius:8px}nav a.on{background:var(--brand);color:var(--bg);font-weight:600}
 .wrap{max-width:900px;margin:0 auto;padding:0 20px}
-.hero{padding:56px 0 40px;text-align:center}
-.hero svg{width:96px;height:40px;color:var(--accent)}
-.hero h1{font-size:clamp(2rem,7vw,3.2rem);color:var(--brand);margin:10px 0}
-.hero p{color:var(--mute);max-width:520px;margin:0 auto 22px}
+.herobg{position:relative;overflow:hidden;background:#444 url(img/hero.webp) center/cover no-repeat;color:#fff}
+.herobg::before{content:"";position:absolute;inset:0;background:rgba(10,12,16,.38)}
+@media (max-width:700px){.herobg{background-size:auto 100%;background-position:center}}
+.hero{position:relative;padding:72px 20px 56px;text-align:center}
+.hero svg.mini{display:none}
+.hero h1{font-size:clamp(2rem,7vw,3.4rem);color:#fff;margin:10px 0;text-shadow:0 2px 18px rgba(0,0,0,.55)}
+.hero p{color:#dfe4ec;max-width:520px;margin:0 auto 22px;text-shadow:0 1px 12px rgba(0,0,0,.6)}
+.hero .btn{background:#fff;color:#1c2433}.hero .btn.alt{background:rgba(0,0,0,.25);color:#fff;border-color:#fff}
 .btn{display:inline-block;background:var(--brand);color:var(--bg);padding:12px 22px;border-radius:999px;text-decoration:none;font-weight:600;margin:4px}
 .btn.alt{background:transparent;color:var(--brand);border:1.5px solid var(--brand)}
 section{padding:38px 0;border-top:1px solid var(--line)}
@@ -103,13 +107,15 @@ footer a{color:var(--bg)}
 </svg>
 <nav><b>otticavitali.com</b><a href="#notizie">Notizie</a><a href="#eventi">Eventi</a><a href="#vetrina">Vetrina</a><a href="#chiusure">Chiusure</a><a href="#orari">Orari</a><a href="#social">Social</a><a href="#servizi">Servizi</a><a href="#contatti">Contatti</a></nav>
 
+<div class="herobg">
 <header class="hero wrap">
-<svg viewBox="0 0 100 40"><use href="#gl"/></svg>
+<svg class="mini" viewBox="0 0 100 40"><use href="#gl"/></svg>
 <h1>Ottica Vitali</h1>
 <p>Dal 1870 la famiglia Vitali, dal 1960 l’ottica. Oggi a Chiavenna con Enea, ottico di terza generazione. Ogni servizio è su appuntamento.</p>
 <a class="btn" href="https://wa.me/393738155967">Scrivici su WhatsApp</a>
 <a class="btn alt" href="tel:+393738155967">Chiama</a>
 </header>
+</div>
 
 <section id="notizie"><div class="wrap"><h2>Notizie</h2><p class="sub">Novità dal negozio.</p><div class="grid" id="news"></div></div></section>
 <section id="eventi"><div class="wrap"><h2>Eventi</h2><p class="sub">Prossimi appuntamenti.</p><div class="grid" id="events"></div></div></section>
@@ -195,7 +201,8 @@ function render(D){
   const safe = u => /^https:\/\//.test(u||"") ? esc(u) : "";
   put("posts", [...L("social")].sort((a,b)=>(b.date||"").localeCompare(a.date||"")),
     s => { const u = safe(s.url), open = u ? `<a href="${u}" target="_blank" rel="noopener">` : "", close = u ? "</a>" : "";
-      return `<div class="card">${img(s) ? open+img(s)+close : ""}<span class="tag">${icoSocial(s)}${esc(s.network||"Social")}${s.date?" · "+fmt(s.date):""}</span><h3>${open}${esc(s.title)}${close}</h3><p>${esc(s.text)}</p>${u?`<a class="go" href="${u}" target="_blank" rel="noopener">Apri il post</a>`:""}</div>`; }, "Presto qui i nostri post.");
+      const ic = ICONE.includes(s.icona) ? s.icona : (/insta/i.test(s.network||"") ? "foto" : /face/i.test(s.network||"") ? "persone" : "link");
+      return `<div class="card"><div class="pic">${open}${img(s)}${poster({...s, icona: ic})}${close}</div><span class="date">${esc(s.network||"Social")}${s.date?" · "+fmt(s.date):""}</span><h3>${open}${esc(s.title)}${close}</h3><p>${esc(s.text)}</p>${u?`<a class="go" href="${u}" target="_blank" rel="noopener">Apri il post</a>`:""}</div>`; }, "Presto qui i nostri post.");
   const H = D.hours && typeof D.hours==="object" ? D.hours : null;
   const days = [["monday","Lunedì"],["tuesday","Martedì"],["wednesday","Mercoledì"],["thursday","Giovedì"],["friday","Venerdì"],["saturday","Sabato"],["sunday","Domenica"]];
   const names = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"];

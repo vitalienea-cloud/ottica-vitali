@@ -38,5 +38,24 @@
     {"name": "Montatura in acetato (esempio)", "brand": "Marca", "price": "da 150 €"},
     {"name": "Occhiale da sole (esempio)", "brand": "Marca", "price": "da 120 €"},
     {"name": "Montatura in titanio (esempio)", "brand": "Marca", "price": "da 190 €"}
+  ],
+  "servizi": [
+    {"titolo":"Gestione della progressione miopica","testo":"per rallentarne l’avanzamento nei più giovani."},
+    {"titolo":"Esami optometrici approfonditi","testo":"con topografia corneale e studio del film lacrimale."},
+    {"titolo":"Progressivi di alta precisione","testo":"con lenti ZEISS."},
+    {"titolo":"Contattologia specialistica","testo":"morbide, semi-rigide, multifocali, sclerali per cheratocono."},
+    {"titolo":"Consulenza d’immagine e tecnica","testo":"per occhiali da vista e da sole."},
+    {"titolo":"Assistenza e riparazioni","testo":"comprese le saldature."}
+  ],
+  "organizzazione": [
+    {"titolo":"WhatsApp","icona":"chat","testo":"Ottimizziamo la gestione di appuntamenti e ritiri attraverso WhatsApp e chiamate al 373 815 59 67. Per garantire un servizio efficiente per tutti, ti chiediamo la cortesia di evitare chiamate multiple. Se il telefono dovesse risultare occupato, significa che siamo al servizio di altri clienti: ti richiameremo noi nel minor tempo possibile.","link_testo":"Scrivici su WhatsApp","link_url":"https://wa.me/393738155967"},
+    {"titolo":"Appuntamenti","icona":"calendario","evidenza":"La Nostra Ottica: Ogni Cliente, il Suo Momento Dedicato","testo":"Organizziamo la tua giornata in ottica con un approccio moderno: ogni servizio è su appuntamento. Che tu abbia bisogno di una riparazione veloce, una guida esperta nella scelta di occhiali da vista o da sole, o una consulenza completa nel settore ottico, ti assicuriamo un'attenzione totale. Così, ti garantiamo un'esperienza fluida, efficiente e completamente priva di attese o perdite di tempo."},
+    {"titolo":"Igiene","icona":"scudo","testo":"Questo è reso possibile da un protocollo di cura meticoloso:\nOgni occhiale provato viene sanificato a fondo: dopo lavaggio e risciacquo, segue una asciugatura e una lucidatura con pezzuola. Viene poi rietichettato, garantendoti la massima igiene e cura.\nPer ogni cliente, utilizziamo una pezzuola di pulizia monouso, che viene poi avviata al lavaggio.\nPer la tua tranquillità, le superfici a contatto con ogni cliente vengono pulite e disinfettate con la massima cura e frequenza. Sono abitudini di igiene che abbiamo adottato con rigore e che, fortunatamente, abbiamo mantenuto salde anche dopo il periodo del COVID-19."},
+    {"titolo":"100% green","icona":"fiore","testo":"Il nostro impegno per un futuro sostenibile si traduce in azioni concrete:","elenco":[
+      {"titolo":"Energia rinnovabile:","testo":"Alimentiamo la nostra attività esclusivamente con energia proveniente da fonti rinnovabili."},
+      {"titolo":"Mobilità sostenibile:","testo":"Le nostre auto aziendali sono elettriche, a impatto zero."},
+      {"titolo":"Scelte consapevoli:","testo":"Privilegiamo l'acquisto di prodotti di consumo compostabili, riducendo al minimo il nostro impatto ambientale."}],
+      "testo_dopo":"Per noi, essere green non è solo un'opzione, ma una scelta di valore quotidiana."},
+    {"titolo":"IA","icona":"lampadina","testo":"La nostra metodologia integra l'IA per accelerare i cicli di R&S e affinare la qualità di contenuti e immagini con una precisione senza precedenti. Questa simbiosi tra esperienza umana e potenza computazionale non è solo un vantaggio competitivo, ma l’anticipazione di un futuro in cui l’innovazione non sarà più limitata dai tempi di esecuzione, ma solo dalla vastità della nostra visione. Resta solo da chiederci: in un mondo dove l’IA può simulare tutto, quale sarà il vero valore dell'unicità?"}
   ]
 }

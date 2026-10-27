@@ -15,10 +15,10 @@
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,sans-serif}
 h1,h2,h3{font-family:Inter,system-ui,sans-serif;font-weight:700;letter-spacing:-.02em;line-height:1.2;margin:0}
 a{color:var(--brand)}
-nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);display:flex;gap:18px;align-items:center;padding:12px 20px;overflow-x:auto;white-space:nowrap}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);display:flex;gap:2px;align-items:center;padding:8px 14px;overflow-x:auto;white-space:nowrap}
 nav{scrollbar-width:none}nav::-webkit-scrollbar{display:none}
 nav b{font-weight:700;letter-spacing:-.02em;font-size:1.1rem;color:var(--brand);margin-right:auto}
-nav a{text-decoration:none;color:var(--mute);font-size:.9rem}
+nav a{text-decoration:none;color:var(--mute);font-size:.9rem;padding:6px 12px;border-radius:8px}nav a.on{background:var(--brand);color:var(--bg);font-weight:600}
 .wrap{max-width:900px;margin:0 auto;padding:0 20px}
 .hero{padding:56px 0 40px;text-align:center}
 .hero svg{width:96px;height:40px;color:var(--accent)}
@@ -101,7 +101,7 @@ footer a{color:var(--bg)}
 <symbol id="ic-spunta" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" style="stroke-width:var(--sw,2.6)" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="32" r="24"/><path d="M20 33L29 42L45 23"/></g></symbol>
 <symbol id="ic-link" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" style="stroke-width:var(--sw,2.6)" stroke-linecap="round" stroke-linejoin="round"><path d="M28 36A9 9 0 0 0 40 36L50 26A9 9 0 0 0 38 14L33 19"/><path d="M36 28A9 9 0 0 0 24 28L14 38A9 9 0 0 0 26 50L31 45"/></g></symbol>
 </svg>
-<nav><b>Ottica Vitali</b><a href="#notizie">Notizie</a><a href="#eventi">Eventi</a><a href="#vetrina">Vetrina</a><a href="#chiusure">Chiusure</a><a href="#orari">Orari</a><a href="#social">Social</a><a href="#servizi">Servizi</a><a href="#contatti">Contatti</a></nav>
+<nav><b>otticavitali.com</b><a href="#notizie">Notizie</a><a href="#eventi">Eventi</a><a href="#vetrina">Vetrina</a><a href="#chiusure">Chiusure</a><a href="#orari">Orari</a><a href="#social">Social</a><a href="#servizi">Servizi</a><a href="#contatti">Contatti</a></nav>
 
 <header class="hero wrap">
 <svg viewBox="0 0 100 40"><use href="#gl"/></svg>
@@ -237,6 +237,22 @@ document.getElementById("igbtn").addEventListener("click", () => {
   f.style.cssText = "border:none;overflow:hidden;width:100%;max-width:960px;height:529px";
   document.getElementById("igbox").replaceChildren(f);
 });
+
+/* evidenzia nel menu la sezione visibile */
+(function(){
+  const nav = document.querySelector("nav"), links = [...nav.querySelectorAll("a[href^='#']")];
+  const secs = links.map(a => document.querySelector(a.getAttribute("href")));
+  let cur = -1;
+  function spy(){
+    let i = -1;
+    secs.forEach((el, k) => { if (el && el.getBoundingClientRect().top <= 90) i = k; });
+    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) i = secs.length - 1;
+    if (i === cur) return; cur = i;
+    links.forEach((a, k) => a.classList.toggle("on", k === i));
+    if (i >= 0) { const a = links[i]; nav.scrollTo({left: a.offsetLeft - (nav.clientWidth - a.offsetWidth) / 2}); }
+  }
+  addEventListener("scroll", spy, {passive:true}); addEventListener("resize", spy); spy();
+})();
 fetch("content.json", {cache:"no-store"})
   .then(r => { if(!r.ok) throw 0; return r.json(); })
   .then(render)

@@ -185,11 +185,11 @@ function render(D){
   put("events", L("events").filter(e=>e.date>=today).sort((a,b)=>a.date.localeCompare(b.date)),
     e => `<div class="card"><div class="pic">${img(e)}${poster(e)}</div><span class="date">${fmt(e.date)}</span><h3>${esc(e.title)}</h3><p>${esc(e.text)}</p></div>`, "Nessun evento in programma.");
   const items = [
-    ...L("closures").filter(c=>(c.to||c.from)>=today).map(c=>({from:c.from,to:c.to||c.from,label:"Chiuso",title:c.reason})),
-    ...L("exceptions").filter(x=>x.date>=today).map(x=>({from:x.date,to:x.date,label:"Orario speciale",title:x.text}))
+    ...L("closures").filter(c=>(c.to||c.from)>=today).map(c=>({from:c.from,to:c.to||c.from,label:"Chiuso",title:c.reason,tema:c.tema||"ambra",icona:c.icona})),
+    ...L("exceptions").filter(x=>x.date>=today).map(x=>({from:x.date,to:x.date,label:"Orario speciale",title:x.text,tema:x.tema||"blu",icona:x.icona}))
   ].sort((a,b)=>a.from.localeCompare(b.from));
   put("closures", items,
-    c => `<div class="card"><span class="date">${c.from===c.to?fmt(c.from):"dal "+fmt(c.from)+" al "+fmt(c.to)}</span> <span class="tag">${c.label}</span><h3>${esc(c.title)}</h3></div>`, "Nessuna chiusura o variazione programmata.");
+    c => `<div class="card"><div class="pic">${poster({date:c.from,title:c.title,tema:c.tema,icona:ICONE.includes(c.icona)?c.icona:"novita"})}</div><span class="date">${c.from===c.to?fmt(c.from):"dal "+fmt(c.from)+" al "+fmt(c.to)}</span> <span class="tag">${c.label}</span><h3>${esc(c.title)}</h3></div>`, "Nessuna chiusura o variazione programmata.");
   put("products", L("products"),
     p => `<div class="card prod">${okImg(p.image) ? img(p) : '<svg viewBox="0 0 100 40"><use href="#gl"/></svg>'}<span class="tag">${esc(p.brand)}</span><h3>${esc(p.name)}</h3>${p.text ? `<p>${esc(p.text)}</p>` : ""}<p class="price">${esc(p.price)}</p></div>`, "Vetrina in aggiornamento.");
   const safe = u => /^https:\/\//.test(u||"") ? esc(u) : "";

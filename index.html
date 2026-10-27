@@ -170,7 +170,8 @@ const poster = e => {
 function render(D){
   const L = k => Array.isArray(D[k]) ? D[k] : [];
   put("news", [...L("news")].sort((a,b)=>b.date.localeCompare(a.date)),
-    n => `<div class="card"><span class="tag">${fmt(n.date)}</span><h3>${esc(n.title)}</h3><p>${esc(n.text)}</p></div>`, "Nessuna notizia al momento.");
+    n => { const u = /^https:\/\//.test(n.url||"") ? esc(n.url) : ""; const ic = ICONE.includes(n.icona) ? n.icona : "novita";
+      return `<div class="card"><span class="tag"><svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><use href="#ic-${ic}"/></svg>${n.source?esc(n.source)+" · ":""}${fmt(n.date)}</span><h3>${esc(n.title)}</h3><p>${esc(n.text)}</p>${u?`<a class="go" href="${u}" target="_blank" rel="noopener">Leggi la fonte</a>`:""}</div>`; }, "Nessuna notizia al momento.");
   put("events", L("events").filter(e=>e.date>=today).sort((a,b)=>a.date.localeCompare(b.date)),
     e => `<div class="card"><div class="pic">${img(e)}${poster(e)}</div><span class="date">${fmt(e.date)}</span><h3>${esc(e.title)}</h3><p>${esc(e.text)}</p></div>`, "Nessun evento in programma.");
   const items = [

@@ -42,10 +42,13 @@ section h2{font-size:1.7rem;color:var(--brand);margin-bottom:6px}
 .empty{color:var(--mute);font-style:italic}
 .date{display:inline-block;background:var(--brand);color:var(--bg);border-radius:8px;padding:2px 10px;font-size:.85rem;font-weight:600}
 ul.s{padding-left:20px;margin:0}ul.s li{margin:8px 0}
-.org{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
-.org .card .ico{--sw:4;display:block;width:2.2rem;height:2.2rem;margin:0 0 8px;color:var(--accent)}
-.org .card p{color:var(--ink);font-size:.97rem}.org .card p.lead{font-weight:600;color:var(--brand)}
-.org .card ul{padding-left:18px;margin:6px 0 0}.org .card li{margin:6px 0;font-size:.97rem}
+.org .card p{color:var(--mute);font-size:.95rem}.org .card p.lead{font-weight:600;color:var(--brand)}
+.org .card ul{padding-left:18px;margin:6px 0 0}.org .card li{margin:6px 0;font-size:.95rem;color:var(--mute)}
+.org{align-items:start}.ot>:last-child{margin-bottom:0}.org .card h3{margin-top:0}
+.ot{position:relative;max-height:9.2em;overflow:hidden}
+.ot.cl::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2.6em;background:linear-gradient(transparent,var(--card));pointer-events:none}
+.card.open .ot{max-height:none}.card.open .ot::after{display:none}
+.more[hidden]{display:none}.more{display:block;margin-top:8px;background:none;border:0;padding:0;font:inherit;font-weight:600;font-size:.9rem;color:var(--brand);text-decoration:underline;cursor:pointer}
 table.h{border-collapse:collapse;width:100%;max-width:460px;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
 table.h td{padding:9px 16px;border-top:1px solid var(--line)}table.h tr:first-child td{border-top:0}
 table.h td:first-child{font-weight:600;color:var(--brand)}table.h tr.today td{background:var(--line)}
@@ -117,7 +120,7 @@ footer a{color:var(--bg)}
 </header>
 
 <section id="organizzazione"><div class="wrap"><h2 data-t="titolo_organizzazione">Organizzazione</h2><p class="sub" data-t="sub_organizzazione">Come lavoriamo.</p>
-<div class="org" id="org"></div></div></section>
+<div class="grid org" id="org"></div></div></section>
 <section id="notizie"><div class="wrap"><h2 data-t="titolo_notizie">Notizie</h2><p class="sub" data-t="sub_notizie">Novità dal negozio.</p><div class="grid" id="news"></div></div></section>
 <section id="eventi"><div class="wrap"><h2 data-t="titolo_eventi">Eventi</h2><p class="sub" data-t="sub_eventi">Prossimi appuntamenti.</p><div class="grid" id="events"></div></div></section>
 <section id="vetrina"><div class="wrap"><h2 data-t="titolo_vetrina">Vetrina</h2><p class="sub" data-t="sub_vetrina">Alcune proposte del momento. I prezzi sono indicativi: per i dettagli contattaci.</p><div class="grid" id="products"></div></div></section>
@@ -132,7 +135,7 @@ footer a{color:var(--bg)}
 <p><a class="btn" href="https://www.instagram.com/ottica_vitali_chiavenna/"><svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><use href="#ic-foto"/></svg>Seguici su Instagram</a><a class="btn alt" href="https://www.facebook.com/profile.php?id=100087631992649"><svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><use href="#ic-persone"/></svg>Facebook</a></p></div></section>
 
 <section id="servizi"><div class="wrap"><h2 data-t="titolo_servizi">Servizi per la tua vista</h2><p class="sub" data-t="sub_servizi">Solo su appuntamento, senza attese.</p>
-<ul class="s" id="svc"></ul></div></section>
+<div class="grid org" id="svc"></div></div></section>
 
 
 <section id="contatti"><div class="wrap"><h2 data-t="titolo_contatti">Vieni a trovarci</h2>
@@ -179,21 +182,34 @@ const poster = e => {
   return `<svg class="poster" viewBox="0 0 320 150" role="img" aria-label="${esc(e.title)}, ${esc(fmt(e.date))}"><rect width="320" height="150" rx="10" fill="${col}"/><g color="#fff" opacity="${ICONE.includes(e.icona) ? ".5" : ".28"}">${ICONE.includes(e.icona) ? `<use href="#ic-${e.icona}" x="206" y="12" width="100" height="100"/>` : `<use href="#gl" x="168" y="14" width="140" height="56"/>`}</g><g fill="#fff" style="font-family:Inter,system-ui,sans-serif"><text x="22" y="40" font-size="14" font-weight="600" letter-spacing="2" opacity=".85">${esc(giorno)}</text><text x="20" y="108" font-size="72" font-weight="700">${d.getDate()}</text><text x="22" y="132" font-size="15" font-weight="600" letter-spacing="2">${esc(mese)}</text></g></svg>`;
 };
 const paras = t => String(t||"").split(/\n+/).filter(x => x.trim()).map(x => `<p>${esc(x)}</p>`).join("");
-const DEF_SERVIZI = [{"titolo": "Gestione della progressione miopica", "testo": "per rallentarne l’avanzamento nei più giovani."}, {"titolo": "Esami optometrici approfonditi", "testo": "con topografia corneale e studio del film lacrimale."}, {"titolo": "Progressivi di alta precisione", "testo": "con lenti ZEISS."}, {"titolo": "Contattologia specialistica", "testo": "morbide, semi-rigide, multifocali, sclerali per cheratocono."}, {"titolo": "Consulenza d’immagine e tecnica", "testo": "per occhiali da vista e da sole."}, {"titolo": "Assistenza e riparazioni", "testo": "comprese le saldature."}];
+const DEF_SERVIZI = [{"titolo": "Progressione miopica", "icona": "bambino", "testo": "Gestione della progressione miopica, per rallentarne l’avanzamento nei più giovani."}, {"titolo": "Esami optometrici", "icona": "forottero", "testo": "Esami optometrici approfonditi, con topografia corneale e studio del film lacrimale."}, {"titolo": "Progressivi", "icona": "lente", "testo": "Progressivi di alta precisione, con lenti ZEISS."}, {"titolo": "Contattologia", "icona": "occhio", "testo": "Contattologia specialistica: lenti morbide, semi-rigide, multifocali, sclerali per cheratocono."}, {"titolo": "Consulenza", "icona": "occhiali", "testo": "Consulenza d’immagine e tecnica per occhiali da vista e da sole."}, {"titolo": "Assistenza", "icona": "spunta", "testo": "Assistenza e riparazioni, comprese le saldature."}];
 const DEF_ORG = [{"titolo": "WhatsApp", "icona": "chat", "testo": "Ottimizziamo la gestione di appuntamenti e ritiri attraverso WhatsApp e chiamate al 373 815 59 67. Per garantire un servizio efficiente per tutti, ti chiediamo la cortesia di evitare chiamate multiple. Se il telefono dovesse risultare occupato, significa che siamo al servizio di altri clienti: ti richiameremo noi nel minor tempo possibile.", "link_testo": "Scrivici su WhatsApp", "link_url": "https://wa.me/393738155967"}, {"titolo": "Appuntamenti", "icona": "calendario", "evidenza": "La Nostra Ottica: Ogni Cliente, il Suo Momento Dedicato", "testo": "Organizziamo la tua giornata in ottica con un approccio moderno: ogni servizio è su appuntamento. Che tu abbia bisogno di una riparazione veloce, una guida esperta nella scelta di occhiali da vista o da sole, o una consulenza completa nel settore ottico, ti assicuriamo un'attenzione totale. Così, ti garantiamo un'esperienza fluida, efficiente e completamente priva di attese o perdite di tempo."}, {"titolo": "Igiene", "icona": "scudo", "testo": "Questo è reso possibile da un protocollo di cura meticoloso:\nOgni occhiale provato viene sanificato a fondo: dopo lavaggio e risciacquo, segue una asciugatura e una lucidatura con pezzuola. Viene poi rietichettato, garantendoti la massima igiene e cura.\nPer ogni cliente, utilizziamo una pezzuola di pulizia monouso, che viene poi avviata al lavaggio.\nPer la tua tranquillità, le superfici a contatto con ogni cliente vengono pulite e disinfettate con la massima cura e frequenza. Sono abitudini di igiene che abbiamo adottato con rigore e che, fortunatamente, abbiamo mantenuto salde anche dopo il periodo del COVID-19."}, {"titolo": "100% green", "icona": "fiore", "testo": "Il nostro impegno per un futuro sostenibile si traduce in azioni concrete:", "elenco": [{"titolo": "Energia rinnovabile:", "testo": "Alimentiamo la nostra attività esclusivamente con energia proveniente da fonti rinnovabili."}, {"titolo": "Mobilità sostenibile:", "testo": "Le nostre auto aziendali sono elettriche, a impatto zero."}, {"titolo": "Scelte consapevoli:", "testo": "Privilegiamo l'acquisto di prodotti di consumo compostabili, riducendo al minimo il nostro impatto ambientale."}], "testo_dopo": "Per noi, essere green non è solo un'opzione, ma una scelta di valore quotidiana."}, {"titolo": "IA", "icona": "lampadina", "testo": "La nostra metodologia integra l'IA per accelerare i cicli di R&S e affinare la qualità di contenuti e immagini con una precisione senza precedenti. Questa simbiosi tra esperienza umana e potenza computazionale non è solo un vantaggio competitivo, ma l’anticipazione di un futuro in cui l’innovazione non sarà più limitata dai tempi di esecuzione, ma solo dalla vastità della nostra visione. Resta solo da chiederci: in un mondo dove l’IA può simulare tutto, quale sarà il vero valore dell'unicità?"}];
 function testi(D){
   const T = D.testi && typeof D.testi === "object" ? D.testi : {};
   document.querySelectorAll("[data-t]").forEach(el => { const v = T[el.dataset.t]; if (typeof v === "string" && v.trim()) el.textContent = v; });
 }
+function mkCard(c, n){
+  const temi = ["blu","ambra","verde"];
+  const ic = ICONE.includes(c.icona) ? c.icona : "novita";
+  const col = TEMI[c.tema] || TEMI[temi[n % 3]];
+  const lu = /^https:\/\//.test(c.link_url||"") ? esc(c.link_url) : "";
+  const el = Array.isArray(c.elenco) && c.elenco.length ? "<ul>" + c.elenco.map(e => `<li><b>${esc(e.titolo)}</b> ${esc(e.testo)}</li>`).join("") + "</ul>" : "";
+  const ban = `<svg class="poster" viewBox="0 0 320 150" role="img" aria-label="${esc(c.titolo)}"><rect width="320" height="150" rx="10" fill="${col}"/><g color="#fff" opacity=".5"><use href="#ic-${ic}" x="206" y="12" width="100" height="100"/></g><text x="22" y="124" fill="#fff" font-size="24" font-weight="700" style="font-family:Inter,system-ui,sans-serif">${esc(c.titolo)}</text></svg>`;
+  return `<div class="card"><div class="pic">${ban}</div>${c.evidenza ? `<p class="lead">${esc(c.evidenza)}</p>` : ""}<div class="ot">${paras(c.testo)}${el}${paras(c.testo_dopo)}</div><button class="more" type="button" hidden>Leggi tutto</button>${lu && c.link_testo ? `<a class="go" href="${lu}" target="_blank" rel="noopener">${esc(c.link_testo)}</a>` : ""}</div>`;
+}
+function wireCards(id){
+  document.querySelectorAll("#" + id + " .card").forEach(card => {
+    const ot = card.querySelector(".ot"), btn = card.querySelector(".more");
+    if (ot.scrollHeight > ot.clientHeight + 2) { ot.classList.add("cl"); btn.hidden = false; }
+    btn.addEventListener("click", () => { const o = card.classList.toggle("open"); btn.textContent = o ? "Riduci" : "Leggi tutto"; btn.setAttribute("aria-expanded", o); });
+  });
+}
 function blocchi(D){
   const A = (k, d) => Array.isArray(D[k]) && D[k].length ? D[k] : d;
-  document.getElementById("svc").innerHTML = A("servizi", DEF_SERVIZI).map(x => `<li><b>${esc(x.titolo)}</b>${x.testo ? " – " + esc(x.testo) : ""}</li>`).join("");
-  document.getElementById("org").innerHTML = A("organizzazione", DEF_ORG).map(c => {
-    const ic = ICONE.includes(c.icona) ? c.icona : "novita";
-    const lu = /^https:\/\//.test(c.link_url||"") ? esc(c.link_url) : "";
-    const el = Array.isArray(c.elenco) && c.elenco.length ? "<ul>" + c.elenco.map(e => `<li><b>${esc(e.titolo)}</b> ${esc(e.testo)}</li>`).join("") + "</ul>" : "";
-    return `<div class="card"><svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><use href="#ic-${ic}"/></svg><h3>${esc(c.titolo)}</h3>${c.evidenza ? `<p class="lead">${esc(c.evidenza)}</p>` : ""}${paras(c.testo)}${el}${paras(c.testo_dopo)}${lu && c.link_testo ? `<a class="go" href="${lu}" target="_blank" rel="noopener">${esc(c.link_testo)}</a>` : ""}</div>`;
-  }).join("");
+  [["svc","servizi",DEF_SERVIZI],["org","organizzazione",DEF_ORG]].forEach(([id,k,def]) => {
+    document.getElementById(id).innerHTML = A(k, def).map(mkCard).join("");
+    wireCards(id);
+  });
 }
 function render(D){
   testi(D); blocchi(D);

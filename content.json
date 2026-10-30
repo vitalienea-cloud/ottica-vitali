@@ -38,7 +38,7 @@
     {"titolo":"Occhiali progressivi","icona":"lente","testo":"Occhiali progressivi di alta precisione, con lenti ZEISS."},
     {"titolo":"Contattologia","icona":"occhio","testo":"Contattologia specialistica: lenti morbide, semi-rigide, multifocali, sclerali per cheratocono."},
     {"titolo":"Consulenza","icona":"occhiali","testo":"Consulenza d’immagine e tecnica per occhiali da vista e da sole."},
-    {"titolo":"Assistenza","icona":"spunta","testo":"Assistenza e riparazioni, comprese le saldature."}
+    {"titolo":"Assistenza","icona":"assistenza","testo":"Assistenza e riparazioni, comprese le saldature."}
   ],
   "organizzazione": [
     {"titolo":"WhatsApp","icona":"chat","testo":"Ottimizziamo la gestione di appuntamenti e ritiri attraverso WhatsApp e chiamate al 373 815 59 67. Per garantire un servizio efficiente per tutti, ti chiediamo la cortesia di evitare chiamate multiple. Se il telefono dovesse risultare occupato, significa che siamo al servizio di altri clienti: ti richiameremo noi nel minor tempo possibile.","link_testo":"Scrivici su WhatsApp","link_url":"https://wa.me/393738155967"},

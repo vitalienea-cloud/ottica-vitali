@@ -24,8 +24,8 @@ Contratto tra chi scrive i contenuti (Grok, che modifica solo `content.json`) e 
 
 **Temi** (`tema`): `blu`, `ambra`, `verde`, `fucsia`, `giallo`. Se manca, il sito sceglie.
 
-**Icone** (`icona`): `pizza`, `festa`, `regalo`, `sole`, `cuore`, `stella`, `caffe`, `natale`, `sconto`, `novita`, `calendario`, `occhio`, `lente`, `orologio`, `pin`, `telefono`, `torta`, `brindisi`, `musica`, `fiore`, `foto`, `trofeo`, `lampadina`, `ombrello`, `gelato`, `chat`, `persone`, `link`, `occhiali`, `occhialisole`, `bambino`, `schermo`, `eclissi`, `scudo`, `auto`, `libro`, `spunta`, `forottero`, `mappa`, `recensione`.
-Quando si parla di visite o controlli: `forottero`. Per avvisi e chiusure: `novita`.
+**Icone** (`icona`): `pizza`, `festa`, `regalo`, `sole`, `cuore`, `stella`, `caffe`, `natale`, `sconto`, `novita`, `calendario`, `occhio`, `lente`, `orologio`, `pin`, `telefono`, `torta`, `brindisi`, `musica`, `fiore`, `foto`, `trofeo`, `lampadina`, `ombrello`, `gelato`, `chat`, `persone`, `link`, `occhiali`, `occhialisole`, `bambino`, `schermo`, `eclissi`, `scudo`, `auto`, `libro`, `spunta`, `forottero`, `mappa`, `recensione`, `antiappannante`.
+Quando si parla di visite o controlli: `forottero`. Per avvisi e chiusure: `novita`. Per antiappannante o lenti appannate: `antiappannante`. Per storia e libri: `libro`.
 
 ## Sezioni
 

@@ -90,7 +90,7 @@ nav a.on{background:transparent;color:#fff;box-shadow:none;text-shadow:0 0 8px r
 #pages{flex:1;min-height:0;display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain}
 #pages::-webkit-scrollbar{display:none}
 #pages>header,#pages>section{flex:0 0 100%;width:100%;min-width:0;scroll-snap-align:start;scroll-snap-stop:always;overflow-y:auto;border-top:0;padding-bottom:90px;-webkit-overflow-scrolling:touch}
-#pages>header.hero{display:none}
+#pages>header.hero{padding-bottom:90px}
 #contatti footer{margin-top:30px}
 }
 
@@ -365,19 +365,19 @@ document.getElementById("igbtn").addEventListener("click", () => {
   const ind = nav.querySelector(".ind");
   function sync(){
     const n = links.length, w = Math.max(1, pages.clientWidth);
-    const x = Math.min(Math.max(pages.scrollLeft / w, 0), n - 1), i = Math.min(Math.floor(x), n - 1), f = x - i, j = Math.min(i + 1, n - 1);
+    const x = Math.min(Math.max(pages.scrollLeft / w, 0), n), i = Math.min(Math.floor(x), n), f = x - i, j = Math.min(i + 1, n);
     const maxL = Math.max(0, nav.scrollWidth - nav.clientWidth);
-    const T = p => p === 0 ? 0 : Math.min(maxL, Math.max(0, links[p].offsetLeft - (nav.clientWidth - links[p].offsetWidth) / 2));
-    const G = p => [links[p].offsetLeft, links[p].offsetWidth];
+    const T = p => p <= 0 ? 0 : Math.min(maxL, Math.max(0, links[p-1].offsetLeft - (nav.clientWidth - links[p-1].offsetWidth) / 2));
+    const G = p => { const a = links[Math.max(0, p - 1)]; return [a.offsetLeft, a.offsetWidth]; };
     const lerp = (a, b) => a + (b - a) * f;
     nav.scrollLeft = lerp(T(i), T(j));
     const g1 = G(i), g2 = G(j);
     ind.style.left = lerp(g1[0], g2[0]) + "px";
     ind.style.width = lerp(g1[1], g2[1]) + "px";
-    ind.style.opacity = 1;
+    ind.style.opacity = i === 0 ? f : 1;
   }
   function spy(){
-    if (mq.matches) { sync(); mark(Math.round(pages.scrollLeft / Math.max(1, pages.clientWidth))); return; }
+    if (mq.matches) { sync(); mark(Math.round(pages.scrollLeft / Math.max(1, pages.clientWidth)) - 1); return; }
     let i = -1;
     secs.forEach((el, k) => { if (el && el.getBoundingClientRect().top <= 90) i = k; });
     if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) i = secs.length - 1;
@@ -385,7 +385,7 @@ document.getElementById("igbtn").addEventListener("click", () => {
   }
   links.forEach((a, k) => a.addEventListener("click", e => {
     if (!mq.matches) return;
-    e.preventDefault(); pages.scrollTo({left: k * pages.clientWidth, behavior: "smooth"});
+    e.preventDefault(); pages.scrollTo({left: (k + 1) * pages.clientWidth, behavior: "smooth"});
   }));
   nav.querySelector("b").addEventListener("click", () => { if (mq.matches) pages.scrollTo({left: 0, behavior: "smooth"}); });
   pages.addEventListener("scroll", spy, {passive:true});

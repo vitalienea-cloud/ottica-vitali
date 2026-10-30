@@ -43,3 +43,4 @@ _Nessuna richiesta aperta._
 **Cosa:** aggiunta la notizia "La nostra storia" (icona `libro`), testo approvato da Enea, con il nome di Sara Ghelfi.
 **Dove:** `news[0]`
 
+<!-- prova scrittura Grok -->

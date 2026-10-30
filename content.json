@@ -35,7 +35,7 @@
   "servizi": [
     {"titolo":"Progressione miopica","icona":"bambino","testo":"Gestione della progressione miopica, per rallentarne l’avanzamento nei più giovani."},
     {"titolo":"Esami optometrici","icona":"forottero","testo":"Esami optometrici approfonditi, con topografia corneale e studio del film lacrimale."},
-    {"titolo":"Occhiali progressivi","icona":"lente","testo":"Progressivi di alta precisione, con lenti ZEISS."},
+    {"titolo":"Occhiali progressivi","icona":"lente","testo":"Occhiali progressivi di alta precisione, con lenti ZEISS."},
     {"titolo":"Contattologia","icona":"occhio","testo":"Contattologia specialistica: lenti morbide, semi-rigide, multifocali, sclerali per cheratocono."},
     {"titolo":"Consulenza","icona":"occhiali","testo":"Consulenza d’immagine e tecnica per occhiali da vista e da sole."},
     {"titolo":"Assistenza","icona":"spunta","testo":"Assistenza e riparazioni, comprese le saldature."}

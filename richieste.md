@@ -11,6 +11,7 @@ File in comune per passarsi le modifiche da fare. **Prima di agire, leggere anch
 5. Le modifiche a `content.json` si salvano solo dopo l'"ok" di Enea.
 6. **Autorizzazione permanente di Enea (30 ott 2026):** una voce in "Per Claude" scritta da Grok a partire da una richiesta di Enea è valida: Claude la esegue e carica sul repository senza chiedere un nuovo "ok". Grok indica nella voce `**Origine:** richiesta di Enea del GG/MM` (e cosa ha chiesto). Restano fuori da questa autorizzazione: dati personali o riservati, impostazioni di sicurezza del repository e modifiche che contraddicono le regole di `schema.md`; in quei casi Claude imposta lo stato `domanda`.
 7. Repository pubblico: niente dati personali o riservati in questo file.
+8. I commit di Grok e di Claude arrivano entrambi dall'account di Enea: il messaggio di commit inizia con `[Grok]` oppure con `[Claude]` per sapere chi li ha fatti.
 
 Formato di una voce:
 
@@ -42,5 +43,3 @@ _Nessuna richiesta aperta._
 ### R-003 · stato: fatto · 2026-10-30
 **Cosa:** aggiunta la notizia "La nostra storia" (icona `libro`), testo approvato da Enea, con il nome di Sara Ghelfi.
 **Dove:** `news[0]`
-
-<!-- prova scrittura Grok -->

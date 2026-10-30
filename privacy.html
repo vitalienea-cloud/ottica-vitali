@@ -9,12 +9,11 @@
 @font-face{font-family:Inter;font-weight:400;font-style:normal;font-display:swap;src:url(fonts/inter-Regular.woff) format("woff")}
 @font-face{font-family:Inter;font-weight:600;font-style:normal;font-display:swap;src:url(fonts/inter-SemiBold.woff) format("woff")}
 @font-face{font-family:Inter;font-weight:700;font-style:normal;font-display:swap;src:url(fonts/inter-Bold.woff) format("woff")}
-:root{--bg:#faf6ef;--card:#fff;--ink:#1c2433;--mute:#5d6676;--brand:#1f3a5f;--line:#e6dfd2}
-@media (prefers-color-scheme:dark){:root{--bg:#121821;--card:#1b2431;--ink:#eef1f6;--mute:#a5afbf;--brand:#8fb3e6;--line:#2b3647}}
+:root{--bg:#050c19;--card:rgba(8,20,42,.88);--ink:#f2f6fb;--mute:#9fb0c6;--brand:#19c8f5;--line:#26344c;color-scheme:dark}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 Inter,system-ui,sans-serif}
+body{margin:0;background-color:var(--bg);background-image:linear-gradient(rgba(60,90,130,.1) 1px,transparent 1px),linear-gradient(90deg,rgba(60,90,130,.1) 1px,transparent 1px);background-size:32px 32px;color:var(--ink);font:16px/1.65 Inter,system-ui,sans-serif}
 .wrap{max-width:760px;margin:0 auto;padding:28px 20px 60px}
-h1,h2{font-weight:700;letter-spacing:-.02em;line-height:1.25;color:var(--brand)}
+h1,h2{font-weight:700;letter-spacing:-.02em;line-height:1.25;color:var(--ink)}
 h1{font-size:1.9rem;margin:18px 0 6px}h2{font-size:1.2rem;margin:30px 0 6px}
 a{color:var(--brand)}
 .mute{color:var(--mute);font-size:.9rem}

@@ -122,6 +122,13 @@ nav a.on{background:transparent;color:#fff;box-shadow:none;text-shadow:0 0 8px r
 
 /* pulsanti fluttuanti: tutti della stessa larghezza */
 .wa .igv .btn,.soc-b .igv .btn{box-sizing:border-box;width:96px;padding-left:0;padding-right:0;text-align:center}
+
+/* la linguetta dei social lampeggia piano finché il cassetto non viene aperto */
+@keyframes soclamp{0%,100%{box-shadow:0 0 10px rgba(25,200,245,.35)}50%{box-shadow:0 0 24px rgba(25,200,245,.95),0 0 4px rgba(255,255,255,.5)}}
+@keyframes socspunta{0%,100%{opacity:.55}50%{opacity:1}}
+.soc:not(.open):not(.visto) .soc-h{animation:soclamp 2.2s ease-in-out infinite}
+.soc:not(.open):not(.visto) .soc-h svg{animation:socspunta 2.2s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.soc .soc-h,.soc .soc-h svg{animation:none!important}}
 </style>
 </head>
 <body>
@@ -191,7 +198,7 @@ nav a.on{background:transparent;color:#fff;box-shadow:none;text-shadow:0 0 8px r
 <p>Per mostrarli si carica un servizio esterno (SnapWidget), che può usare cookie. Parte solo se lo chiedi tu. <a href="privacy.html#widget">Maggiori informazioni</a></p>
 <button class="igv" style="--c:255,79,224" id="igbtn" type="button"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#ic-foto"/></svg><span class="btn">Mostra i post da Instagram</span></button></div>
 <div class="grid" id="posts"></div>
-<p><a class="igv" style="--c:255,79,224" href="https://www.instagram.com/ottica_vitali_chiavenna/"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#ic-foto"/></svg><span class="btn">Seguici su Instagram</span></a><a class="igv" style="--c:90,160,255" href="https://www.facebook.com/profile.php?id=100087631992649"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#ic-persone"/></svg><span class="btn alt">Facebook</span></a></p></div></section>
+</div></section>
 
 <section id="servizi"><div class="wrap"><h2 data-t="titolo_servizi">Servizi per la tua vista</h2><p class="sub" data-t="sub_servizi">Solo su appuntamento, senza attese.</p>
 <div class="grid org" id="svc"></div></div></section>
@@ -459,7 +466,8 @@ fetch("content.json", {cache:"no-store"})
 /* cassetto social: apri/chiudi con click sulla linguetta o trascinando (sinistra = apre, destra = chiude) */
 (function(){
   var soc=document.getElementById("soc"),h=soc.querySelector(".soc-h"),x0=null,moved=false;
-  function set(o){soc.classList.toggle("open",o);h.setAttribute("aria-expanded",o);h.setAttribute("aria-label",o?"Nascondi i social":"Mostra i social");}
+  function set(o){if(o){soc.classList.add("visto");try{localStorage.setItem("socVisto","1")}catch(e){}}soc.classList.toggle("open",o);h.setAttribute("aria-expanded",o);h.setAttribute("aria-label",o?"Nascondi i social":"Mostra i social");}
+  try{if(localStorage.getItem("socVisto")==="1")soc.classList.add("visto");}catch(e){}
   soc.addEventListener("pointerdown",function(e){x0=e.clientX;moved=false;});
   soc.addEventListener("pointerup",function(e){if(x0===null)return;var d=e.clientX-x0;x0=null;if(d<-25){set(true);moved=true;}else if(d>25){set(false);moved=true;}});
   soc.addEventListener("pointercancel",function(){x0=null;});

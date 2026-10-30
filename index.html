@@ -90,7 +90,7 @@ nav a.on{background:transparent;color:#fff;box-shadow:none;text-shadow:0 0 8px r
 #pages{flex:1;min-height:0;display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain}
 #pages::-webkit-scrollbar{display:none}
 #pages>header,#pages>section{flex:0 0 100%;width:100%;min-width:0;scroll-snap-align:start;scroll-snap-stop:always;overflow-y:auto;border-top:0;padding-bottom:90px;-webkit-overflow-scrolling:touch}
-#pages>header.hero{padding-bottom:90px}
+#pages>header.hero{display:none}
 #contatti footer{margin-top:30px}
 }
 
@@ -108,6 +108,17 @@ nav a.on{background:transparent;color:#fff;box-shadow:none;text-shadow:0 0 8px r
 .hero h1 .nm{display:inline-block;animation:sfuoca 7s ease-in-out infinite}
 .hero h1 .loc{animation:cicloloc 24s ease-in-out infinite}
 @media (prefers-reduced-motion:reduce){.hero h1 .nm,.hero h1 .loc{animation:none}}
+
+/* cassetto social: linguetta sul bordo destro, si apre con click o trascinando verso l'interno */
+.soc{position:fixed;right:0;bottom:calc(224px + env(safe-area-inset-bottom,0px));z-index:20;display:flex;align-items:flex-end;transform:translateX(calc(100% - 30px));transition:transform .3s ease}
+.soc.open{transform:none}
+.soc-h{flex:none;width:30px;height:72px;border:1px solid rgba(25,200,245,.65);border-right:0;border-radius:16px 0 0 16px;background:rgba(25,200,245,.2);box-shadow:0 0 14px rgba(25,200,245,.45);backdrop-filter:blur(4px);color:#fff;cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center;touch-action:pan-y}
+.soc-h svg{width:20px;height:20px;transition:transform .3s}.soc.open .soc-h svg{transform:rotate(180deg)}
+.soc-h:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.soc-b{display:flex;flex-direction:column;align-items:flex-end;gap:6px;padding:8px 16px 8px 10px;background:rgba(5,12,25,.82);backdrop-filter:blur(6px);border:1px solid var(--line);border-right:0;border-radius:16px 0 0 16px;max-height:calc(100vh - 260px);overflow-y:auto;touch-action:pan-y;scrollbar-width:none}
+.soc-b::-webkit-scrollbar{display:none}.soc-b .igv{margin:0}.soc-b .igv svg{width:56px;height:44px;margin-bottom:-11px}
+.soc:not(.open) .soc-b{visibility:hidden;transition:visibility 0s .3s}.soc.open .soc-b{visibility:visible}
+@media (prefers-reduced-motion:reduce){.soc,.soc-h svg{transition:none}}
 </style>
 </head>
 <body>
@@ -132,6 +143,8 @@ nav a.on{background:transparent;color:#fff;box-shadow:none;text-shadow:0 0 8px r
 <symbol id="ic-brindisi" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" style="stroke-width:var(--sw,2.6)" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8H46Q46 30 32 34Q18 30 18 8Z"/><path d="M32 34V54M22 56H42"/></g></symbol>
 <symbol id="ic-musica" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" style="stroke-width:var(--sw,2.6)" stroke-linecap="round" stroke-linejoin="round"><path d="M24 46V12L50 8V42"/><circle cx="17" cy="47" r="7"/><circle cx="43" cy="43" r="7"/></g></symbol>
 <symbol id="ic-fiore" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" style="stroke-width:var(--sw,2.6)" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="26" r="5"/><circle cx="32" cy="12" r="7"/><circle cx="46" cy="26" r="7"/><circle cx="32" cy="40" r="7"/><circle cx="18" cy="26" r="7"/><path d="M32 47V60M32 54Q42 50 46 54"/></g></symbol>
+<symbol id="ic-mail" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" style="stroke-width:var(--sw,2.6)" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="14" width="52" height="36" rx="6"/><path d="M9 19L32 37L55 19"/></g></symbol>
+<symbol id="ic-x" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" style="stroke-width:var(--sw,2.6)" stroke-linecap="round" stroke-linejoin="round"><path d="M14 12L50 52M50 12L14 52"/></g></symbol>
 <symbol id="ic-foto" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" style="stroke-width:var(--sw,2.6)" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="16" width="52" height="38" rx="6"/><circle cx="32" cy="35" r="10"/><path d="M22 16L26 9H38L42 16"/></g></symbol>
 <symbol id="ic-trofeo" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" style="stroke-width:var(--sw,2.6)" stroke-linecap="round" stroke-linejoin="round"><path d="M20 8H44V26Q44 38 32 38Q20 38 20 26Z"/><path d="M20 12H10Q10 24 20 26M44 12H54Q54 24 44 26"/><path d="M32 38V50M22 56H42M26 50H38"/></g></symbol>
 <symbol id="ic-lampadina" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" style="stroke-width:var(--sw,2.6)" stroke-linecap="round" stroke-linejoin="round"><path d="M22 44V38Q12 30 12 22A20 20 0 0 1 52 22Q52 30 42 38V44Z"/><path d="M24 52H40M27 58H37"/></g></symbol>
@@ -193,6 +206,7 @@ nav a.on{background:transparent;color:#fff;box-shadow:none;text-shadow:0 0 8px r
 <a href="privacy.html">Privacy</a>
 </div></footer>
 
+<aside class="soc" id="soc" aria-label="Social e contatti"><button class="soc-h" type="button" aria-expanded="false" aria-controls="soc-b" aria-label="Mostra i social"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="soc-b" id="soc-b"><a class="igv" style="--c:255,79,224" href="https://www.instagram.com/ottica_vitali_chiavenna/" target="_blank" rel="noopener"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#ic-foto"/></svg><span class="btn">Instagram</span></a><a class="igv" style="--c:90,160,255" href="https://www.facebook.com/profile.php?id=100087631992649" target="_blank" rel="noopener"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#ic-persone"/></svg><span class="btn">Facebook</span></a><a class="igv" style="--c:25,200,245" href="mailto:servizioclienti@otticavitali.com"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#ic-mail"/></svg><span class="btn">Mail</span></a></div></aside>
 <div class="wa"><a class="igv" style="--c:255,233,77" href="tel:+393738155967" aria-label="Chiama"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#ic-telefono"/></svg><span class="btn">Chiama</span></a><a class="igv" style="--c:57,255,120" href="https://wa.me/393738155967?text=Buongiorno%2C%20vorrei%20informazioni%20o%20un%20appuntamento." target="_blank" rel="noopener" aria-label="Scrivici su WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.7 7.1L4 20.5l1.4-5A8 8 0 1 1 21 12z"/><path d="M9 10c0 2.8 2.2 5 5 5l1.2-1.3-1.8-1-.8.7a3.6 3.6 0 0 1-1.5-1.5l.7-.8-1-1.8z" fill="currentColor" stroke="none"/></svg><span class="btn">Scrivici</span></a></div>
 
 <script>
@@ -256,7 +270,9 @@ function blocchi(D){
 }
 function render(D){
   testi(D); blocchi(D);
-  const L = k => Array.isArray(D[k]) ? D[k] : [];
+  /* Voci non valide (non oggetti, o con data richiesta non AAAA-MM-GG) vengono saltate e segnalate in console: una voce sbagliata non svuota la pagina. Regole: schema.md */
+  const DATED = {news:"date", events:"date", exceptions:"date", closures:"from"};
+  const L = k => { if (!Array.isArray(D[k])) return []; return D[k].filter((x, i) => { const f = DATED[k]; const ok = x && typeof x === "object" && (!f || (/^\d{4}-\d{2}-\d{2}$/.test(x[f] || "") && ymd(new Date(x[f] + "T12:00:00")) === x[f])); if (!ok) console.warn("content.json: voce ignorata in " + k + "[" + i + "] (vedi schema.md)"); return ok; }); };
   put("news", [...L("news")].sort((a,b)=>b.date.localeCompare(a.date)),
     n => { const u = /^https:\/\//.test(n.url||"") ? esc(n.url) : ""; const ic = ICONE.includes(n.icona) ? n.icona : "novita";
       return `<div class="card"><div class="pic">${img(n)}${poster({...n, icona: ic})}</div><span class="date">${n.source?esc(n.source)+" · ":""}${fmt(n.date)}</span><h3>${esc(n.title)}</h3><p>${esc(n.text)}</p>${u?`<a class="go" href="${u}" target="_blank" rel="noopener">Leggi la fonte</a>`:""}</div>`; }, "Nessuna notizia al momento.");
@@ -336,19 +352,19 @@ document.getElementById("igbtn").addEventListener("click", () => {
   const ind = nav.querySelector(".ind");
   function sync(){
     const n = links.length, w = Math.max(1, pages.clientWidth);
-    const x = Math.min(Math.max(pages.scrollLeft / w, 0), n), i = Math.min(Math.floor(x), n), f = x - i, j = Math.min(i + 1, n);
+    const x = Math.min(Math.max(pages.scrollLeft / w, 0), n - 1), i = Math.min(Math.floor(x), n - 1), f = x - i, j = Math.min(i + 1, n - 1);
     const maxL = Math.max(0, nav.scrollWidth - nav.clientWidth);
-    const T = p => p <= 0 ? 0 : Math.min(maxL, Math.max(0, links[p-1].offsetLeft - (nav.clientWidth - links[p-1].offsetWidth) / 2));
-    const G = p => { const a = links[Math.max(0, p - 1)]; return [a.offsetLeft, a.offsetWidth]; };
+    const T = p => p === 0 ? 0 : Math.min(maxL, Math.max(0, links[p].offsetLeft - (nav.clientWidth - links[p].offsetWidth) / 2));
+    const G = p => [links[p].offsetLeft, links[p].offsetWidth];
     const lerp = (a, b) => a + (b - a) * f;
     nav.scrollLeft = lerp(T(i), T(j));
     const g1 = G(i), g2 = G(j);
     ind.style.left = lerp(g1[0], g2[0]) + "px";
     ind.style.width = lerp(g1[1], g2[1]) + "px";
-    ind.style.opacity = i === 0 ? f : 1;
+    ind.style.opacity = 1;
   }
   function spy(){
-    if (mq.matches) { sync(); mark(Math.round(pages.scrollLeft / Math.max(1, pages.clientWidth)) - 1); return; }
+    if (mq.matches) { sync(); mark(Math.round(pages.scrollLeft / Math.max(1, pages.clientWidth))); return; }
     let i = -1;
     secs.forEach((el, k) => { if (el && el.getBoundingClientRect().top <= 90) i = k; });
     if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) i = secs.length - 1;
@@ -356,7 +372,7 @@ document.getElementById("igbtn").addEventListener("click", () => {
   }
   links.forEach((a, k) => a.addEventListener("click", e => {
     if (!mq.matches) return;
-    e.preventDefault(); pages.scrollTo({left: (k + 1) * pages.clientWidth, behavior: "smooth"});
+    e.preventDefault(); pages.scrollTo({left: k * pages.clientWidth, behavior: "smooth"});
   }));
   nav.querySelector("b").addEventListener("click", () => { if (mq.matches) pages.scrollTo({left: 0, behavior: "smooth"}); });
   pages.addEventListener("scroll", spy, {passive:true});
@@ -404,7 +420,7 @@ fetch("content.json", {cache:"no-store"})
   setTimeout(go,1500);
 })();
 
-/* pennello: scia fluo che si dissolve (mouse a tasto premuto, touch sempre) */
+/* pennello: scia fluo che si dissolve (mouse sempre, anche senza click; touch sempre) */
 (function(){
   if (matchMedia("(prefers-reduced-motion:reduce)").matches) return;
   var cv=document.createElement("canvas");cv.setAttribute("aria-hidden","true");
@@ -428,12 +444,24 @@ fetch("content.json", {cache:"no-store"})
     }
     if(pts.length)requestAnimationFrame(draw);else{run=false;cx.clearRect(0,0,innerWidth,innerHeight);}
   }
-  addEventListener("mousedown",function(e){if(e.button===0){down=true;seg++;add(e.clientX,e.clientY);}});
-  addEventListener("mousemove",function(e){if(down&&(e.buttons&1))add(e.clientX,e.clientY);else down=false;});
-  addEventListener("mouseup",function(){down=false;});
+  var last=0;
+  addEventListener("mousemove",function(e){var n=performance.now();if(n-last>120)seg++;last=n;add(e.clientX,e.clientY);});
+  document.addEventListener("mouseleave",function(){seg++;});
   function tc(e){seg++;for(var i=0;i<e.touches.length;i++)add(e.touches[i].clientX,e.touches[i].clientY);}
   addEventListener("touchstart",tc,{passive:true});
   addEventListener("touchmove",function(e){var t=e.touches[0];if(t)add(t.clientX,t.clientY);},{passive:true});
+})();
+
+/* cassetto social: apri/chiudi con click sulla linguetta o trascinando (sinistra = apre, destra = chiude) */
+(function(){
+  var soc=document.getElementById("soc"),h=soc.querySelector(".soc-h"),x0=null,moved=false;
+  function set(o){soc.classList.toggle("open",o);h.setAttribute("aria-expanded",o);h.setAttribute("aria-label",o?"Nascondi i social":"Mostra i social");}
+  soc.addEventListener("pointerdown",function(e){x0=e.clientX;moved=false;});
+  soc.addEventListener("pointerup",function(e){if(x0===null)return;var d=e.clientX-x0;x0=null;if(d<-25){set(true);moved=true;}else if(d>25){set(false);moved=true;}});
+  soc.addEventListener("pointercancel",function(){x0=null;});
+  h.addEventListener("click",function(){if(moved){moved=false;return;}set(!soc.classList.contains("open"));});
+  document.addEventListener("pointerdown",function(e){if(!soc.contains(e.target))set(false);});
+  document.addEventListener("keydown",function(e){if(e.key==="Escape")set(false);});
 })();
 </script>
 </body>

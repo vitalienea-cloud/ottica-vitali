@@ -123,11 +123,11 @@ nav a.on{background:transparent;color:#fff;box-shadow:none;text-shadow:0 0 8px r
 /* pulsanti fluttuanti: tutti della stessa larghezza */
 .wa .igv .btn,.soc-b .igv .btn{box-sizing:border-box;width:96px;padding-left:0;padding-right:0;text-align:center}
 
-/* la linguetta dei social lampeggia piano finché il cassetto non viene aperto */
-@keyframes soclamp{0%,100%{box-shadow:0 0 10px rgba(25,200,245,.35)}50%{box-shadow:0 0 24px rgba(25,200,245,.95),0 0 4px rgba(255,255,255,.5)}}
-@keyframes socspunta{0%,100%{opacity:.55}50%{opacity:1}}
-.soc:not(.open):not(.visto) .soc-h{animation:soclamp 2.2s ease-in-out infinite}
-.soc:not(.open):not(.visto) .soc-h svg{animation:socspunta 2.2s ease-in-out infinite}
+/* la linguetta dei social lampeggia con bloom quando si è nella sezione Social (cassetto chiuso) */
+@keyframes soclamp{0%,100%{box-shadow:0 0 10px rgba(25,200,245,.4)}50%{box-shadow:0 0 28px rgba(25,200,245,1),0 0 6px rgba(255,255,255,.6)}}
+@keyframes socspunta{0%,100%{opacity:.5;transform:translateX(0)}50%{opacity:1;transform:translateX(-3px)}}
+.soc.sul-social:not(.open) .soc-h{animation:soclamp 1.6s ease-in-out infinite}
+.soc.sul-social:not(.open) .soc-h svg{animation:socspunta 1.6s ease-in-out infinite}
 @media (prefers-reduced-motion:reduce){.soc .soc-h,.soc .soc-h svg{animation:none!important}}
 </style>
 </head>
@@ -358,6 +358,7 @@ document.getElementById("igbtn").addEventListener("click", () => {
   function mark(i){
     if (i === cur) return; cur = i;
     links.forEach((a, k) => a.classList.toggle("on", k === i));
+    const sc = document.getElementById("soc"); if (sc) sc.classList.toggle("sul-social", i >= 0 && links[i].getAttribute("href") === "#social");
     if (i >= 0 && !mq.matches) { const a = links[i]; nav.scrollTo({left: a.offsetLeft - (nav.clientWidth - a.offsetWidth) / 2}); }
   }
   const ind = nav.querySelector(".ind");
@@ -466,8 +467,7 @@ fetch("content.json", {cache:"no-store"})
 /* cassetto social: apri/chiudi con click sulla linguetta o trascinando (sinistra = apre, destra = chiude) */
 (function(){
   var soc=document.getElementById("soc"),h=soc.querySelector(".soc-h"),x0=null,moved=false;
-  function set(o){if(o){soc.classList.add("visto");try{localStorage.setItem("socVisto","1")}catch(e){}}soc.classList.toggle("open",o);h.setAttribute("aria-expanded",o);h.setAttribute("aria-label",o?"Nascondi i social":"Mostra i social");}
-  try{if(localStorage.getItem("socVisto")==="1")soc.classList.add("visto");}catch(e){}
+  function set(o){soc.classList.toggle("open",o);h.setAttribute("aria-expanded",o);h.setAttribute("aria-label",o?"Nascondi i social":"Mostra i social");}
   soc.addEventListener("pointerdown",function(e){x0=e.clientX;moved=false;});
   soc.addEventListener("pointerup",function(e){if(x0===null)return;var d=e.clientX-x0;x0=null;if(d<-25){set(true);moved=true;}else if(d>25){set(false);moved=true;}});
   soc.addEventListener("pointercancel",function(){x0=null;});

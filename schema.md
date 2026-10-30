@@ -9,6 +9,7 @@ Contratto tra chi scrive i contenuti (Grok, che modifica solo `content.json`) e 
 3. Grok modifica solo `content.json`; Claude modifica `index.html`, `privacy.html`, `scripts/`, `.github/` e questo file.
 4. Se un campo serve e non esiste, **non inventarlo**: si propone la modifica allo schema e si aspetta che il sito la supporti. Un campo sconosciuto è un errore, non viene ignorato.
 5. Il repository è pubblico: niente dati personali o riservati.
+6. Le richieste di modifica tra Claude e Grok si scrivono in `richieste.md` (voci con stato, eseguite poi spostate in archivio). Prima di agire si legge anche quel file.
 
 ## Formato generale
 

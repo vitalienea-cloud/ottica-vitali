@@ -29,6 +29,7 @@ Formato di una voce:
 **Cosa:** sostituire i contenuti di prova con contenuti reali, quando Enea li fornisce: notizia "Nuova pagina online (esempio)" (2026-10-26) e i tre prodotti "(esempio)" in `products`.
 **Dove:** `news`, `products`
 **Note:** non inventare testi, prezzi o marche.
+**Aggiornamento 02/11:** Enea ha chiesto a Claude di provare la rotazione con l'occhiale della home: Claude ha aggiunto in cima a `products` il prodotto di prova "Occhiale neon (prova rotazione)" (fotogrammi in `vetrina/occhiale-neon/`). Da togliere quando arrivano i prodotti veri.
 
 ### R-005 · stato: da fare · 2026-11-02
 **Cosa:** quando Enea carica i fotogrammi di un prodotto, aggiungere a quel prodotto in `products` i campi `rotazione` e `fotogrammi` (e, se Enea li dà, `dettagli` e `image`).

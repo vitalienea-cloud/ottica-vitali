@@ -124,7 +124,7 @@ Compare nella sezione Chiusure e modifica la riga del giorno nella tabella orari
 I fotogrammi sono immagini già presenti nel repository (Grok non le carica):
 - cartella `vetrina/<nome>/` con `<nome>` in minuscolo, senza spazi (lettere, numeri, `-`, `_`);
 - file `01.webp`, `02.webp`, … `NN.webp`, **sempre a due cifre, senza buchi**, con `NN` uguale a `fotogrammi`;
-- tutti quadrati e della stessa dimensione (consigliato 576×576 px, WebP), in senso orario o antiorario ma coerenti; il peso totale dovrebbe stare sotto 1,5 MB (con 36 fotogrammi, circa 25 KB ciascuno);
+- tutti della stessa dimensione e proporzioni (di norma quadrati, consigliato 576×576 px; per oggetti larghi come gli occhiali va bene anche 576×288), WebP, sempre nello stesso senso di rotazione; il peso totale dovrebbe stare sotto 1,5 MB (con 36 fotogrammi, circa 25 KB ciascuno);
 - `scripts/crea_fotogrammi.sh` li ricava da un breve video (giro completo dell'oggetto) e scrive i file con i nomi giusti.
 
 Il controllo "Valida contenuto" verifica che la cartella esista e che ci siano tutti i file da `01.webp` a `NN.webp`.

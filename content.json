@@ -28,6 +28,7 @@
     {"network": "Instagram", "date": "2026-10-17", "title": "Gel antiappannante", "text": "Gel antiappannante + microfibra per tutti i tipi di lenti. Senza alcool. Non rovina i trattamenti. Euro 13,00", "url": "https://www.instagram.com/p/Demws7FDXOM/", "icona": "antiappannante"}
   ],
   "products": [
+    {"name": "Occhiale neon (prova rotazione)", "brand": "Ottica Vitali", "text": "Trascina o inclina il telefono per farlo girare.", "dettagli": "Prova della rotazione a 360°: l'occhiale è quello della nostra home, ricostruito a strati per dargli spessore.\nQuando avremo le foto dei prodotti veri, funzionerà allo stesso modo.", "rotazione": "vetrina/occhiale-neon", "fotogrammi": 36},
     {"name": "Montatura in acetato (esempio)", "brand": "Marca", "price": "da 150 €"},
     {"name": "Occhiale da sole (esempio)", "brand": "Marca", "price": "da 120 €"},
     {"name": "Montatura in titanio (esempio)", "brand": "Marca", "price": "da 190 €"}

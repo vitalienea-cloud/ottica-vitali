@@ -30,11 +30,30 @@ Formato di una voce:
 **Dove:** `news`, `products`
 **Note:** non inventare testi, prezzi o marche.
 
+### R-005 · stato: da fare · 2026-11-02
+**Cosa:** quando Enea carica i fotogrammi di un prodotto, aggiungere a quel prodotto in `products` i campi `rotazione` e `fotogrammi` (e, se Enea li dà, `dettagli` e `image`).
+**Dove:** `products[n]`
+**Come compilare:**
+- `rotazione`: la cartella dei fotogrammi, es. `"vetrina/acetato"` (formato `vetrina/<nome>`, senza barra finale, senza sottocartelle).
+- `fotogrammi`: quanti file ci sono, es. `36` (numero intero da 8 a 72, senza virgolette).
+- `dettagli` (facoltativo): testo lungo per la scheda ingrandita; `\n` = nuovo paragrafo. `text` resta il testo breve della card.
+- `image` (facoltativo): foto ferma `vetrina/<nome>.webp`; se manca, la card mostra il fotogramma `01.webp` prima che parta la rotazione.
+- Esempio completo: `{"name": "Montatura in acetato", "brand": "Marca", "price": "da 150 €", "text": "Colore tartaruga.", "dettagli": "Disponibile in tre misure.\nLenti graduate su richiesta.", "rotazione": "vetrina/acetato", "fotogrammi": 36}`
+- **Prima di scrivere i campi, verificare con Enea che la cartella esista davvero nel repository** con tutti i file `01.webp` … `NN.webp` (due cifre, senza buchi): se manca anche un solo file, la Action "Valida contenuto" diventa rossa.
+**File che servono (li carica Enea, non Grok):** per ogni prodotto la cartella `vetrina/<nome>/` con `01.webp`, `02.webp`, … `NN.webp`. Esempio per 36 fotogrammi: `vetrina/acetato/01.webp` … `vetrina/acetato/36.webp`. Immagini quadrate, tutte della stessa dimensione (consigliato 576×576 px), peso totale sotto 1,5 MB. Per ricavarli da un video con un giro completo: `scripts/crea_fotogrammi.sh giro.mp4 acetato 36` (richiede ffmpeg sul computer di Enea).
+**Note:** nessuna foto reale è ancora nel repository, quindi per ora nessun prodotto ha la rotazione. Un prodotto senza questi campi funziona come prima (immagine ferma) e si apre comunque nella scheda ingrandita.
+
 ## Per Claude (HTML, schema, grafica)
 
 _Nessuna richiesta aperta._
 
 ## Archivio
+
+### R-004 · stato: fatto · 2026-11-02
+**Cosa:** Vetrina interattiva. Rotazione a 360° dei prodotti con una sequenza di fotogrammi WebP (inclinazione del telefono, trascinamento e mouse, cursore sotto l'immagine per tastiera), scheda prodotto ingrandita (dialog) con dettagli e pulsante WhatsApp, inclinazione leggera delle card con il mouse, comparsa morbida delle sezioni. Rispetta `prefers-reduced-motion`, caricamento lazy, nessuna libreria. Nuovi campi in `products`: `rotazione`, `fotogrammi`, `dettagli`; schema, validatore (cartella e file `01.webp`…`NN.webp` presenti, peso) e script `scripts/crea_fotogrammi.sh` aggiornati nella stessa commit.
+**Dove:** `index.html`, `schema.md`, `scripts/validate_content.py`, `scripts/crea_fotogrammi.sh`
+**Origine:** richiesta di Enea del 02/11 (tramite Grok)
+**Note:** scelti i fotogrammi invece del video mp4: scorrere `currentTime` è lento e a scatti, soprattutto su iPhone, e richiede video con un fotogramma chiave per ogni immagine. I fotogrammi si leggono subito, funzionano ovunque e si caricano a gradi. Resta da compilare R-005 quando Enea carica le immagini.
 
 ### R-001 · stato: fatto · 2026-10-30
 **Cosa:** post "Gel antiappannante": tolti `image` e `alt` (foto non disponibile), messo il link al post vero e la nuova icona `antiappannante` (lente appannata, disegnata da Claude sulla descrizione di Grok).

@@ -32,7 +32,7 @@ RULES = {
   "events":     {"date": (DATE, True), "title": (STR, True), "text": (STR, False), **COMMON_VIS, **IMGF},
   "closures":   {"from": (DATE, True), "to": (DATE, False), "reason": (STR, True), **COMMON_VIS},
   "exceptions": {"date": (DATE, True), "text": (STR, True), **COMMON_VIS},
-  "products":   {"name": (STR, True), "brand": (STR, False), "price": (STR, False), "text": (STR, False), **IMGF},
+  "products":   {"name": (STR, True), "brand": (STR, False), "price": (STR, False), "text": (STR, False), "dettagli": (STR, False), "rotazione": ("rot", False), "fotogrammi": ("int", False), **IMGF},
   "social":     {"title": (STR, True), "network": (STR, False), "date": (DATE, False), "url": (HTTPS, False), "text": (STR, False), **COMMON_VIS, **IMGF},
 }
 CARD = {"titolo": (STR, True), "icona": (ICON, False), "tema": (TEMA, False), "evidenza": (STR, False), "testo": (STR, False),
@@ -62,6 +62,14 @@ def check_value(path, kind, v):
         if v not in ICONE: err(path, f"icona {v!r} inesistente. Valide: {', '.join(ICONE)}")
     elif kind == TEMA:
         if v not in TEMI: err(path, f"tema {v!r} inesistente. Validi: {', '.join(TEMI)}")
+    elif kind == "rot":
+        if not (isinstance(v, str) and re.fullmatch(r"vetrina/[A-Za-z0-9_\-]+", v)):
+            err(path, "rotazione: cartella del tipo vetrina/nome-prodotto (lettere, numeri, - e _; niente sottocartelle)")
+        elif not os.path.isdir(os.path.join(os.path.dirname(os.path.abspath(CONTENT)), v)):
+            err(path, f"la cartella {v} non esiste nel repository")
+    elif kind == "int":
+        if not (isinstance(v, int) and not isinstance(v, bool) and 8 <= v <= 72):
+            err(path, "deve essere un numero intero da 8 a 72 (quanti fotogrammi ci sono nella cartella)")
     elif kind == IMG:
         if not (isinstance(v, str) and re.fullmatch(r"(eventi|vetrina)/[\w\-.]+\.(jpe?g|png|webp)", v, re.I) and ".." not in v):
             err(path, "immagine: solo file in eventi/ o vetrina/ (jpg, png, webp)")
@@ -103,6 +111,22 @@ for sec, rules in RULES.items():
     if sec in D:
         if not isinstance(D[sec], list): err(sec, "deve essere una lista [ ... ]"); continue
         for i, it in enumerate(D[sec]): check_obj(f"{sec}[{i}]", it, rules)
+ROOTDIR = os.path.dirname(os.path.abspath(CONTENT))
+for i, pr in enumerate(D.get("products", []) if isinstance(D.get("products"), list) else []):
+    if not isinstance(pr, dict): continue
+    p = f"products[{i}]"
+    if ("rotazione" in pr) != ("fotogrammi" in pr):
+        err(p, "rotazione e fotogrammi vanno insieme: altrimenti la rotazione non parte")
+    elif "rotazione" in pr and isinstance(pr["rotazione"], str) and isinstance(pr.get("fotogrammi"), int) and 8 <= pr["fotogrammi"] <= 72 \
+            and re.fullmatch(r"vetrina/[A-Za-z0-9_\-]+", pr["rotazione"]) and os.path.isdir(os.path.join(ROOTDIR, pr["rotazione"])):
+        tot, mancanti = 0, []
+        for n in range(1, pr["fotogrammi"] + 1):
+            fp = os.path.join(ROOTDIR, pr["rotazione"], f"{n:02d}.webp")
+            if os.path.isfile(fp): tot += os.path.getsize(fp)
+            else: mancanti.append(f"{n:02d}.webp")
+        if mancanti: err(f"{p}.fotogrammi", f"in {pr['rotazione']}/ mancano: {', '.join(mancanti[:6])}{' …' if len(mancanti) > 6 else ''} (servono 01.webp … {pr['fotogrammi']:02d}.webp)")
+        elif tot > 1_500_000: warn(p, f"i fotogrammi pesano {tot/1e6:.1f} MB in totale: meglio sotto 1,5 MB (ridurre dimensione o qualità)")
+
 for sec in CARDS:
     if sec in D:
         if not isinstance(D[sec], list): err(sec, "deve essere una lista [ ... ]"); continue

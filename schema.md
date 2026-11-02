@@ -16,7 +16,7 @@ Contratto tra chi scrive i contenuti (Grok, che modifica solo `content.json`) e 
 - File UTF-8, JSON valido (virgolette doppie, niente virgole finali, niente commenti, niente chiavi ripetute).
 - **Date:** `AAAA-MM-GG`, giorno esistente (es. `2026-11-14`).
 - **Link:** devono iniziare con `https://`. Solo nei link delle card è ammesso anche `tel:+39…`.
-- **Immagini:** solo file già presenti nel repository in `eventi/` o `vetrina/` (jpg, png, webp). Il file deve esistere.
+- **Immagini:** solo file già presenti nel repository in `eventi/` o `vetrina/` (jpg, png, webp). Il file deve esistere. I fotogrammi della rotazione 360° stanno in `vetrina/<nome>/` (vedi `products`).
 - **Testi:** testo semplice, niente HTML. `\n` va a capo (nelle card).
 - Ogni sezione è facoltativa: se manca o è vuota, il sito mostra un messaggio ("Nessuna notizia…").
 
@@ -108,13 +108,26 @@ Compare nella sezione Chiusure e modifica la riga del giorno nella tabella orari
 | `name` | testo | sì | |
 | `brand` | testo | no | |
 | `price` | testo | no | testo libero, es. "da 150 €" |
-| `text` | testo | no | |
-| `image` | percorso | no | |
-| `alt` | testo | no | |
+| `text` | testo | no | breve, compare nella card |
+| `dettagli` | testo | no | testo più lungo, compare solo nella scheda ingrandita; `\n` = nuovo paragrafo |
+| `image` | percorso | no | foto ferma, `vetrina/…`. Senza rotazione è l'unica immagine; con la rotazione è quella mostrata prima che parta |
+| `alt` | testo | no | descrizione dell'immagine |
+| `rotazione` | cartella | no | cartella dei fotogrammi, es. `vetrina/rb3025`. Va insieme a `fotogrammi` |
+| `fotogrammi` | intero 8–72 | no | quanti fotogrammi ci sono nella cartella. Va insieme a `rotazione` |
 
 ```json
-{"name": "Montatura in acetato", "brand": "Marca", "price": "da 150 €"}
+{"name": "Montatura in acetato", "brand": "Marca", "price": "da 150 €", "text": "Colore tartaruga.", "dettagli": "Disponibile in tre misure.\nLenti graduate su richiesta.", "image": "vetrina/acetato.webp", "rotazione": "vetrina/acetato", "fotogrammi": 36}
 ```
+
+**Rotazione a 360°.** Se un prodotto ha `rotazione` e `fotogrammi`, l'immagine ruota: su smartphone inclinando il telefono (su iPhone serve toccare "Attiva rotazione"), su computer trascinando o muovendo il mouse sopra l'immagine, con tastiera o cursore sotto l'immagine. Senza questi campi si vede l'immagine ferma.
+
+I fotogrammi sono immagini già presenti nel repository (Grok non le carica):
+- cartella `vetrina/<nome>/` con `<nome>` in minuscolo, senza spazi (lettere, numeri, `-`, `_`);
+- file `01.webp`, `02.webp`, … `NN.webp`, **sempre a due cifre, senza buchi**, con `NN` uguale a `fotogrammi`;
+- tutti quadrati e della stessa dimensione (consigliato 576×576 px, WebP), in senso orario o antiorario ma coerenti; il peso totale dovrebbe stare sotto 1,5 MB (con 36 fotogrammi, circa 25 KB ciascuno);
+- `scripts/crea_fotogrammi.sh` li ricava da un breve video (giro completo dell'oggetto) e scrive i file con i nomi giusti.
+
+Il controllo "Valida contenuto" verifica che la cartella esista e che ci siano tutti i file da `01.webp` a `NN.webp`.
 
 ### `social` — Post dei social (lista)
 

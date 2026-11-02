@@ -150,6 +150,34 @@ body{padding-bottom:0}
 .wa .igv svg,.soc-b .igv svg{width:48px;height:38px;margin-bottom:-10px}
 .wa .igv .btn,.soc-b .igv .btn{width:var(--cw)}
 }
+
+/* interattività: comparsa allo scorrimento, inclinazione delle card, rotazione 360° e scheda prodotto */
+.card{transition:transform .25s ease-out}
+.rv{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease;transition-delay:var(--rd,0ms)}
+.rv.in{opacity:1;transform:none}
+.card.tl{transform:perspective(800px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .08s linear;box-shadow:0 0 0 1px rgba(25,200,245,.12),0 10px 30px rgba(0,0,0,.35),0 0 22px rgba(25,200,245,.18)}
+.prod{cursor:pointer}
+.rot{margin-bottom:12px}
+.rot-v{position:relative;aspect-ratio:var(--ar,1/1);border-radius:10px;overflow:hidden;background:rgba(25,200,245,.05);touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.rot-v:active{cursor:grabbing}
+.rot-v img,.rot-v canvas{position:absolute;inset:0;width:100%;height:100%;max-height:none;margin:0;border-radius:0;object-fit:contain;pointer-events:none}
+.rot-c{display:none}.rot.on .rot-c{display:block}.rot.on .rot-still{visibility:hidden}
+.rot-hint{position:absolute;right:8px;bottom:8px;font-size:.75rem;font-weight:600;color:#fff;padding:3px 10px;border-radius:999px;background:rgba(5,12,25,.7);border:1px solid rgba(25,200,245,.6);box-shadow:0 0 10px rgba(25,200,245,.4)}
+.rot-r{display:block;width:100%;margin:8px 0 0;height:22px;accent-color:#19c8f5;cursor:pointer}
+.rot-t{display:block;margin:6px auto 0;font:inherit;font-weight:600;font-size:.85rem;color:#fff;background:rgba(25,200,245,.2);border:1px solid rgba(25,200,245,.65);border-radius:999px;padding:7px 16px;box-shadow:0 0 12px rgba(25,200,245,.45);cursor:pointer}
+.rot-t[hidden]{display:none}
+dialog#pd{padding:0;border:1px solid rgba(25,200,245,.55);border-radius:18px;background:#07111f;color:var(--ink);width:min(560px,94vw);max-height:92dvh;box-shadow:0 0 34px rgba(25,200,245,.35)}
+dialog#pd::backdrop{background:rgba(2,6,14,.8);backdrop-filter:blur(3px)}
+dialog#pd[open]{animation:pdin .25s ease-out}
+@keyframes pdin{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
+.pd-in{position:relative;padding:18px;max-height:92dvh;overflow:auto;overscroll-behavior:contain}
+.pd-x{position:absolute;top:8px;right:10px;z-index:3;width:36px;height:36px;border-radius:50%;border:1px solid rgba(25,200,245,.6);background:rgba(5,12,25,.8);color:#fff;font-size:1.3rem;line-height:1;cursor:pointer}
+.pd-in h2{font-size:1.5rem;margin:6px 0}.pd-in h2::after{display:none}
+.pd-in p{color:var(--mute);margin:6px 0}.pd-in p.price{color:var(--ok);font-weight:600}
+.pd-in>img,#pd-b>img{display:block;width:100%;max-height:60dvh;object-fit:contain;border-radius:10px;margin-bottom:10px}
+.pd-go{margin:12px 0 0;--c:57,255,120}
+#pd .rot-v{width:min(100%,52dvh);margin:0 auto}
+@media (prefers-reduced-motion:reduce){.card,.rv,.card.tl,dialog#pd[open]{transition:none;animation:none}.rv{opacity:1;transform:none}}
 </style>
 </head>
 <body>
@@ -241,6 +269,8 @@ body{padding-bottom:0}
 <a href="privacy.html">Privacy</a>
 </div></footer>
 
+<dialog id="pd" aria-labelledby="pd-t"><div class="pd-in"><button class="pd-x" type="button" aria-label="Chiudi">×</button><div id="pd-b"></div></div></dialog>
+
 <aside class="soc" id="soc" aria-label="Social e contatti"><button class="soc-h" type="button" aria-expanded="false" aria-controls="soc-b" aria-label="Mostra i social"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="soc-b" id="soc-b"><a class="igv" style="--c:255,79,224" href="https://www.instagram.com/ottica_vitali_chiavenna/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#ic-foto"/></svg><span class="btn">Insta</span></a><a class="igv" style="--c:90,160,255" href="https://www.facebook.com/profile.php?id=100087631992649" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#ic-persone"/></svg><span class="btn">fb</span></a><a class="igv" style="--c:25,200,245" href="mailto:servizioclienti@otticavitali.com" aria-label="Mail"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#ic-mail"/></svg><span class="btn">Mail</span></a></div></aside>
 <div class="wa"><a class="igv" style="--c:255,233,77" href="tel:+393738155967" aria-label="Chiama"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#ic-telefono"/></svg><span class="btn">Chiama</span></a><a class="igv" style="--c:57,255,120" href="https://wa.me/393738155967?text=Buongiorno%2C%20vorrei%20informazioni%20o%20un%20appuntamento." target="_blank" rel="noopener" aria-label="Scrivici su WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.7 7.1L4 20.5l1.4-5A8 8 0 1 1 21 12z"/><path d="M9 10c0 2.8 2.2 5 5 5l1.2-1.3-1.8-1-.8.7a3.6 3.6 0 0 1-1.5-1.5l.7-.8-1-1.8z" fill="currentColor" stroke="none"/></svg><span class="btn">Scrivi</span></a></div>
 
@@ -303,6 +333,156 @@ function blocchi(D){
     wireCards(id);
   });
 }
+/* ===== Vetrina: rotazione 360° a fotogrammi WebP su canvas, scheda ingrandita, effetti leggeri ===== */
+const RM = matchMedia("(prefers-reduced-motion:reduce)");
+const COARSE = matchMedia("(pointer:coarse)");
+const FR = new Map(), ROTS = new Set();
+let PRODS = [], dragEnd = 0, raf = 0, tilt = "off", lastV = null; /* tilt: off | on | dead */
+const hasOri = typeof DeviceOrientationEvent !== "undefined" && COARSE.matches;
+const needPerm = hasOri && typeof DeviceOrientationEvent.requestPermission === "function";
+const kick = () => { if (!raf) raf = requestAnimationFrame(loop); };
+function loop(){ raf = 0; let busy = false; ROTS.forEach(r => { if (r.step()) busy = true; }); if (busy) kick(); }
+const frameUrl = (b, i) => b + "/" + String(i + 1).padStart(2, "0") + ".webp";
+const rotInfo = p => { const n = Number(p.fotogrammi); return /^vetrina\/[\w\-]+$/.test(p.rotazione || "") && Number.isInteger(n) && n >= 8 && n <= 72 ? {base: p.rotazione, n} : null; };
+function frames(base, n){
+  let f = FR.get(base);
+  if (!f) { f = {n, imgs: new Array(n), ok: new Array(n).fill(false), subs: new Set(), started: false}; FR.set(base, f); }
+  return f;
+}
+/* Carica prima un fotogramma ogni 4 (la rotazione è subito usabile, a scatti), poi gli altri; 4 richieste alla volta. */
+function loadFrames(f, base){
+  if (f.started) return; f.started = true;
+  const order = []; for (let i = 0; i < f.n; i += 4) order.push(i); for (let i = 0; i < f.n; i++) if (i % 4) order.push(i);
+  let k = 0;
+  const next = () => {
+    if (k >= order.length) return; const i = order[k++], im = new Image(); im.decoding = "async";
+    im.onload = () => { f.imgs[i] = im; f.ok[i] = true; f.subs.forEach(s => s()); next(); };
+    im.onerror = () => next();
+    im.src = frameUrl(base, i);
+  };
+  for (let c = 0; c < 4; c++) next();
+}
+function onOri(e){
+  const a = (screen.orientation && screen.orientation.angle) || window.orientation || 0;
+  const v = a === 90 ? e.beta : (a === 270 || a === -90) ? -e.beta : e.gamma;
+  if (v == null) { tilt = "dead"; removeEventListener("deviceorientation", onOri); ROTS.forEach(r => r.hint()); return; }
+  if (lastV !== null) { const d = v - lastV; if (Math.abs(d) < 60) ROTS.forEach(r => { if (r.active()) r.nudge(d * r.n / 70); }); }
+  lastV = v;
+}
+function enableTilt(byUser){
+  if (tilt !== "off" || !hasOri) return;
+  const on = () => { tilt = "on"; lastV = null; addEventListener("deviceorientation", onOri); ROTS.forEach(r => r.hint()); };
+  const off = () => { tilt = "dead"; ROTS.forEach(r => r.hint()); };
+  if (needPerm) { if (byUser) DeviceOrientationEvent.requestPermission().then(s => s === "granted" ? on() : off()).catch(off); }
+  else on();
+}
+function mkRot(root, eager){
+  const base = root.dataset.base, n = +root.dataset.n;
+  const v = root.querySelector(".rot-v"), cv = root.querySelector(".rot-c"), sl = root.querySelector(".rot-r"), bt = root.querySelector(".rot-t"), ht = root.querySelector(".rot-hint");
+  const ctx = cv.getContext("2d"), f = frames(base, n);
+  let pos = 0, target = 0, shown = -1, vis = !!eager, drag = null, lastX = null, io = null;
+  const load = () => loadFrames(f, base);
+  const near = i => { if (f.ok[i]) return i; for (let d = 1; d <= n / 2; d++) { const a = (i + d) % n, b = (i - d + n) % n; if (f.ok[a]) return a; if (f.ok[b]) return b; } return -1; };
+  function draw(){
+    const i = ((Math.round(pos) % n) + n) % n, j = near(i);
+    if (sl.valueAsNumber !== i) { sl.value = i; sl.setAttribute("aria-valuetext", Math.round(i * 360 / n) + " gradi"); }
+    if (j < 0 || j === shown) return;
+    const im = f.imgs[j];
+    if (cv.width !== im.naturalWidth || cv.height !== im.naturalHeight) { cv.width = im.naturalWidth; cv.height = im.naturalHeight; root.style.setProperty("--ar", im.naturalWidth + "/" + im.naturalHeight); }
+    ctx.drawImage(im, 0, 0); shown = j; root.classList.add("on");
+  }
+  const r = {
+    n,
+    step(){ const d = target - pos; if (RM.matches || Math.abs(d) < .02) pos = target; else pos += d * .22; draw(); return pos !== target; },
+    nudge(d){ target += d; kick(); },
+    active: () => vis && (!DLG.open || DLG.contains(root)),
+    hint(){ ht.textContent = tilt === "on" ? "↻ Inclina o trascina" : "↻ Trascina"; bt.hidden = !(hasOri && tilt === "off" && (needPerm || RM.matches) && vis); },
+    destroy(){ f.subs.delete(draw); ROTS.delete(r); if (io) io.disconnect(); }
+  };
+  f.subs.add(draw);
+  v.addEventListener("pointerdown", e => { if (e.pointerType === "mouse" && e.button !== 0) return; drag = {x: e.clientX, moved: 0}; try { v.setPointerCapture(e.pointerId); } catch (_) {} load(); });
+  v.addEventListener("pointermove", e => {
+    const w = v.clientWidth || 1;
+    if (drag) { const dx = e.clientX - drag.x; drag.x = e.clientX; drag.moved += Math.abs(dx); r.nudge(dx / w * n); }
+    else if (e.pointerType === "mouse") { if (lastX != null) r.nudge((e.clientX - lastX) / w * n); lastX = e.clientX; load(); }
+  });
+  v.addEventListener("pointerup", () => { if (drag && drag.moved > 6) dragEnd = performance.now(); drag = null; });
+  v.addEventListener("pointercancel", () => { drag = null; });
+  v.addEventListener("pointerleave", () => { lastX = null; });
+  sl.addEventListener("input", () => { load(); target = pos = +sl.value; draw(); });
+  sl.addEventListener("focus", load);
+  bt.addEventListener("click", () => enableTilt(true));
+  ROTS.add(r);
+  if (eager) { load(); if (hasOri && !needPerm && !RM.matches) enableTilt(); }
+  else if ("IntersectionObserver" in window) {
+    io = new IntersectionObserver(es => {
+      vis = es[0].isIntersecting;
+      if (vis && COARSE.matches && !(navigator.connection && navigator.connection.saveData)) load();
+      if (vis && hasOri && !needPerm && !RM.matches) enableTilt();
+      r.hint();
+    }, {threshold: .35});
+    io.observe(root);
+  } else vis = true;
+  r.hint(); draw();
+  return r;
+}
+const initRots = (box, eager) => [...box.querySelectorAll(".rot[data-base]")].map(el => mkRot(el, eager));
+function rotHTML(p, r, big){
+  const still = okImg(p.image) ? p.image : frameUrl(r.base, 0);
+  return `<div class="rot" data-base="${esc(r.base)}" data-n="${r.n}"><div class="rot-v"><img class="rot-still" src="${esc(still)}" alt="${esc(p.alt || p.name)}" loading="${big ? "eager" : "lazy"}" decoding="async"><canvas class="rot-c" aria-hidden="true"></canvas><span class="rot-hint" aria-hidden="true">↻ Trascina</span></div><input class="rot-r" type="range" min="0" max="${r.n - 1}" value="0" aria-label="Ruota il prodotto ${esc(p.name)}"><button class="rot-t" type="button" hidden>Attiva rotazione</button></div>`;
+}
+function prodCard(p, i){
+  const r = rotInfo(p), pic = r ? rotHTML(p, r) : okImg(p.image) ? img(p) : '<svg viewBox="0 0 100 40"><use href="#gl"/></svg>';
+  return `<div class="card prod" data-i="${i}"><div class="pic">${pic}</div>${p.brand ? `<span class="tag">${esc(p.brand)}</span>` : ""}<h3>${esc(p.name)}</h3>${p.text ? `<p>${esc(p.text)}</p>` : ""}${p.price ? `<p class="price">${esc(p.price)}</p>` : ""}<button class="more det" type="button" aria-haspopup="dialog">Dettagli</button></div>`;
+}
+const DLG = document.getElementById("pd"), PDB = document.getElementById("pd-b");
+let pdRots = [], pdFrom = null;
+function openProd(i){
+  const p = PRODS[i]; if (!p) return; pdFrom = document.activeElement;
+  const r = rotInfo(p), msg = encodeURIComponent("Buongiorno, vorrei informazioni su: " + p.name + (p.brand ? " (" + p.brand + ")" : ""));
+  PDB.innerHTML = (r ? rotHTML(p, r, true) : okImg(p.image) ? img(p).replace('loading="lazy"', 'loading="eager"') : "") +
+    (p.brand ? `<span class="tag">${esc(p.brand)}</span>` : "") + `<h2 id="pd-t">${esc(p.name)}</h2>` + (p.price ? `<p class="price">${esc(p.price)}</p>` : "") +
+    paras(p.text) + paras(p.dettagli) + `<a class="btn pd-go" href="https://wa.me/393738155967?text=${msg}" target="_blank" rel="noopener">Chiedi informazioni su WhatsApp</a>`;
+  pdRots = initRots(PDB, true);
+  if (DLG.showModal) DLG.showModal(); else DLG.setAttribute("open", "");
+}
+const closePd = () => { if (DLG.close) DLG.close(); else { DLG.removeAttribute("open"); DLG.dispatchEvent(new Event("close")); } };
+DLG.addEventListener("close", () => { pdRots.forEach(r => r.destroy()); pdRots = []; PDB.innerHTML = ""; if (pdFrom && pdFrom.focus) pdFrom.focus(); });
+DLG.addEventListener("click", e => { if (e.target === DLG) closePd(); });
+DLG.querySelector(".pd-x").addEventListener("click", closePd);
+document.getElementById("products").addEventListener("click", e => {
+  const c = e.target.closest(".prod[data-i]");
+  if (!c || e.target.closest(".rot-r,.rot-t,a") || performance.now() - dragEnd < 350) return;
+  openProd(+c.dataset.i);
+});
+/* comparsa morbida allo scorrimento: la classe la aggiunge solo JS, quindi senza JS (o con movimento ridotto) tutto resta visibile */
+function reveal(){
+  if (RM.matches || !("IntersectionObserver" in window)) return;
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) return;
+    e.target.classList.add("in"); io.unobserve(e.target);
+    setTimeout(() => e.target.classList.remove("rv", "in"), 950);
+  }), {threshold: .12});
+  document.querySelectorAll("section .wrap > h2, section .wrap > .sub, section .card, #hours table").forEach((el, i) => { el.classList.add("rv"); el.style.setProperty("--rd", (i % 4) * 60 + "ms"); io.observe(el); });
+}
+/* leggera inclinazione delle card sotto il mouse (solo mouse, solo senza movimento ridotto; le card prodotto ruotano già da sole) */
+if (matchMedia("(hover:hover) and (pointer:fine)").matches && !RM.matches) {
+  let cur = null, pend = null, tr = 0;
+  const reset = c => { if (c) { c.classList.remove("tl"); c.style.removeProperty("--rx"); c.style.removeProperty("--ry"); } };
+  document.addEventListener("pointermove", e => {
+    if (e.pointerType !== "mouse") return;
+    const c = e.target.closest ? e.target.closest("#pages .card:not(.prod)") : null;
+    if (c !== cur) { reset(cur); cur = c; }
+    if (!c) return;
+    pend = e;
+    if (!tr) tr = requestAnimationFrame(() => {
+      tr = 0; if (!cur || !pend) return;
+      const b = cur.getBoundingClientRect(), x = (pend.clientX - b.left) / b.width - .5, y = (pend.clientY - b.top) / b.height - .5;
+      cur.classList.add("tl"); cur.style.setProperty("--ry", (x * 7).toFixed(2) + "deg"); cur.style.setProperty("--rx", (-y * 7).toFixed(2) + "deg");
+    });
+  }, {passive: true});
+  document.documentElement.addEventListener("pointerleave", () => { reset(cur); cur = null; });
+}
 function render(D){
   testi(D); blocchi(D);
   /* Voci non valide (non oggetti, o con data richiesta non AAAA-MM-GG) vengono saltate e segnalate in console: una voce sbagliata non svuota la pagina. Regole: schema.md */
@@ -319,8 +499,8 @@ function render(D){
   ].sort((a,b)=>a.from.localeCompare(b.from));
   put("closures", items,
     c => `<div class="card"><div class="pic">${poster({date:c.from,title:c.title,tema:c.tema,icona:ICONE.includes(c.icona)?c.icona:"novita"})}</div><span class="date">${c.from===c.to?fmt(c.from):"dal "+fmt(c.from)+" al "+fmt(c.to)}</span> <span class="tag">${c.label}</span><h3>${esc(c.title)}</h3></div>`, "Nessuna chiusura o variazione programmata.");
-  put("products", L("products"),
-    p => `<div class="card prod">${okImg(p.image) ? img(p) : '<svg viewBox="0 0 100 40"><use href="#gl"/></svg>'}<span class="tag">${esc(p.brand)}</span><h3>${esc(p.name)}</h3>${p.text ? `<p>${esc(p.text)}</p>` : ""}<p class="price">${esc(p.price)}</p></div>`, "Vetrina in aggiornamento.");
+  put("products", PRODS = L("products"), prodCard, "Vetrina in aggiornamento.");
+  initRots(document.getElementById("products"));
   const safe = u => /^https:\/\//.test(u||"") ? esc(u) : "";
   put("posts", [...L("social")].sort((a,b)=>(b.date||"").localeCompare(a.date||"")),
     s => { const u = safe(s.url), open = u ? `<a href="${u}" target="_blank" rel="noopener">` : "", close = u ? "</a>" : "";
@@ -425,8 +605,8 @@ const bloom = () => document.querySelectorAll(".card").forEach(c => { const r = 
 const NEON_BLOOM = {"#0d4f7a":"#19c8f5","#6e0f5c":"#ff2bd6","#0f6150":"#3dffb0","#6e4f0c":"#ffe94d","#5e5200":"#ffe94d"};
 fetch("content.json", {cache:"no-store"})
   .then(r => { if(!r.ok) throw 0; return r.json(); })
-  .then(D => { render(D); bloom(); })
-  .catch(() => { render({}); bloom(); });
+  .then(D => { render(D); bloom(); reveal(); })
+  .catch(() => { render({}); bloom(); reveal(); });
 
 /* battito: effetti brevi a turno e asincroni, nel colore originale di ciascun elemento */
 (function(){

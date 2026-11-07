@@ -175,6 +175,43 @@ Oggetto con chiavi `titolo_<sezione>` e `sub_<sezione>`, valore testo. Sezioni: 
 "testi": {"titolo_notizie": "Novità", "sub_notizie": "Dal negozio e dai nostri fornitori."}
 ```
 
+### `ricorrenze` — Giornate e ricorrenze verificate (lista)
+
+Compaiono come etichetta sotto il titolo della home nei giorni indicati. **Solo ricorrenze pertinenti all'ottica o alla vista, con fonte ufficiale controllata**: il sito non ne inventa e non ne aggiunge da solo (le festività nazionali e il Natale cambiano solo i colori, senza testo). Se più ricorrenze coincidono vince quella con `from` più recente.
+
+| Campo | Tipo | Obbl. | Note |
+|---|---|---|---|
+| `from` | data | sì | primo giorno |
+| `to` | data | no | ultimo giorno; senza, solo `from` |
+| `title` | testo | sì | es. "Giornata mondiale della vista" |
+| `text` | testo | no | se presente, l'etichetta apre una scheda con il testo (`\n` = nuovo paragrafo) |
+| `url` | link | sì | fonte ufficiale, `https://…` (mostrata come "fonte") |
+| `verificata_il` | data | sì | quando Claude o Grok hanno controllato data e fonte |
+| `atmosfera` | tema atmosfera | no | colori da usare in quei giorni (vedi sotto) |
+
+```json
+"ricorrenze": [{"from": "2026-10-08", "title": "Giornata mondiale della vista", "url": "https://www.iapb.it/", "verificata_il": "2026-11-07", "atmosfera": "vista"}]
+```
+
+### `atmosfera` — Tema manuale dell'home (oggetto, facoltativo)
+
+Forza i colori della home per un periodo. Priorità dei colori: `atmosfera` manuale → `atmosfera` di una ricorrenza → festività nazionali/Natale → stagione (meteorologica, data di Roma). Gli avvisi di chiusura e orario speciale restano sempre in cima, qualunque tema.
+
+| Campo | Tipo | Obbl. | Note |
+|---|---|---|---|
+| `tema` | tema atmosfera | no | uno tra `neutro`, `inverno`, `primavera`, `estate`, `autunno`, `natale`, `vista`, `amore`, `festa` |
+| `dal` | data | no | primo giorno di validità (senza: subito) |
+| `al` | data | no | ultimo giorno di validità (senza: nessun limite) |
+| `effetti` | testo | no | `auto` (predefinito), `calmi` (meno particelle) oppure `spenti` (nessuna animazione) per tutti i visitatori |
+
+```json
+"atmosfera": {"tema": "natale", "dal": "2026-12-01", "al": "2027-01-06", "effetti": "calmi"}
+```
+
+### `meteo.json` — Meteo di Chiavenna (automatico, non si modifica a mano)
+
+File scritto ogni ora dal workflow `Aggiorna meteo` (`scripts/aggiorna_meteo.py`) con i dati di MET Norway (gratuiti, licenza CC BY 4.0, nessuna chiave; credito nel fondo pagina). Campi: `aggiornato` (UTC), `cielo` (`sereno`, `nuvoloso`, `pioggia`, `neve`, `nebbia`), `temp_c`, `vento_kmh`. Il sito non chiede la posizione al visitatore. Se il file manca, non è valido o ha più di 4 ore, la home usa solo il tema stagionale e non mostra il meteo. Con il tema `natale` si accendono anche le luci; con `prefers-reduced-motion` o `?atm=off` le animazioni sono spente.
+
 ## Come funziona il controllo
 
 `scripts/validate_content.py` gira a ogni push (workflow `.github/workflows/valida-contenuto.yml`, controllo "Valida contenuto"). Segnala come **errore**: JSON rotto, chiavi ripetute, campi o sezioni sconosciuti, campi obbligatori mancanti, date inesistenti, icone o temi inesistenti, link non https, immagini mancanti, `closures` con fine prima dell'inizio, campi del codice non documentati qui. Segnala come **avviso**: liste di card vuote, `link_testo` senza `link_url` (o viceversa), giorni mancanti negli orari.

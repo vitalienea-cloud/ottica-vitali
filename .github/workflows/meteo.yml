@@ -1,0 +1,32 @@
+name: Aggiorna meteo
+
+# Ogni ora scrive meteo.json con il tempo di Chiavenna (MET Norway, nessuna chiave).
+# Il sito legge il file; se è più vecchio di 4 ore usa il tema stagionale.
+on:
+  schedule:
+    - cron: "17 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: meteo
+  cancel-in-progress: false
+
+jobs:
+  meteo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Scarica il meteo
+        run: python3 scripts/aggiorna_meteo.py meteo.json
+      - name: Salva se cambiato
+        run: |
+          git config user.name "meteo-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add meteo.json
+          git diff --cached --quiet || (git commit -m "[meteo] aggiornamento automatico" && git push)

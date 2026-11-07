@@ -44,11 +44,17 @@ Formato di una voce:
 **File che servono (li carica Enea, non Grok):** per ogni prodotto la cartella `vetrina/<nome>/` con `01.webp`, `02.webp`, … `NN.webp`. Esempio per 36 fotogrammi: `vetrina/acetato/01.webp` … `vetrina/acetato/36.webp`. Immagini quadrate, tutte della stessa dimensione (consigliato 576×576 px), peso totale sotto 1,5 MB. Per ricavarli da un video con un giro completo: `scripts/crea_fotogrammi.sh giro.mp4 acetato 36` (richiede ffmpeg sul computer di Enea).
 **Note:** nessuna foto reale è ancora nel repository, quindi per ora nessun prodotto ha la rotazione. Un prodotto senza questi campi funziona come prima (immagine ferma) e si apre comunque nella scheda ingrandita.
 
+### R-006 · stato: da fare · 2026-11-07
+**Home viva: ricorrenze verificate (decide Enea quali).** Il sito ora cambia colori ed effetti da solo (stagione, Natale e festività nazionali, meteo di Chiavenna) e mostra gli avvisi di `closures` e `exceptions` in cima alla home. Le giornate speciali **non** sono automatiche: si aggiungono solo in `ricorrenze` (vedi `schema.md`), una per volta, dopo l'"ok" di Enea, con `url` di fonte ufficiale aperta e controllata e `verificata_il` = giorno del controllo. Proposte da verificare prima di scriverle: Giornata mondiale della vista (secondo giovedì di ottobre), Giornata mondiale del glaucoma (marzo), San Valentino, Festa del papà, Festa della mamma, Black Friday. Per cambiare i colori a mano per un periodo: oggetto `atmosfera` (`tema`, `dal`, `al`, `effetti`). Non toccare `meteo.json` (lo scrive l'Action ogni ora).
+
 ## Per Claude (HTML, schema, grafica)
 
 _Nessuna richiesta aperta._
 
 ## Archivio
+
+### R-007 · stato: fatto · 2026-11-07
+**Home viva (richiesta di Enea del 07/11).** Livello `#atm` in `index.html` (colori per stagione/Natale/festività, sole/luna, nuvole, pioggia, neve, nebbia, vento, freddo/caldo, ghirlanda natalizia), etichette in home (avviso del negozio in cima, ricorrenza, meteo), controllo "Effetti" nel fondo pagina, `?atm=off`, `prefers-reduced-motion`. Meteo: `scripts/aggiorna_meteo.py` + `.github/workflows/meteo.yml` (MET Norway, nessuna chiave, ogni ora) → `meteo.json`; oltre 4 ore o file non valido = tema stagionale. Schema e validatore estesi (`ricorrenze`, `atmosfera`, `meteo.json`).
 
 ### R-004 · stato: fatto · 2026-11-02
 **Cosa:** Vetrina interattiva. Rotazione a 360° dei prodotti con una sequenza di fotogrammi WebP (inclinazione del telefono, trascinamento e mouse, cursore sotto l'immagine per tastiera), scheda prodotto ingrandita (dialog) con dettagli e pulsante WhatsApp, inclinazione leggera delle card con il mouse, comparsa morbida delle sezioni. Rispetta `prefers-reduced-motion`, caricamento lazy, nessuna libreria. Nuovi campi in `products`: `rotazione`, `fotogrammi`, `dettagli`; schema, validatore (cartella e file `01.webp`…`NN.webp` presenti, peso) e script `scripts/crea_fotogrammi.sh` aggiornati nella stessa commit.

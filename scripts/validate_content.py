@@ -19,7 +19,9 @@ m = re.search(r"const ICONE = \[(.*?)\];", html, re.S)
 ICONE = re.findall(r'"([a-z0-9]+)"', m.group(1)) if m else []
 m = re.search(r"const TEMI = \{(.*?)\};", html, re.S)
 TEMI = re.findall(r"([a-z]+):\"#", m.group(1)) if m else []
-if not ICONE or not TEMI:
+m = re.search(r"const ATM_TEMI = \[(.*?)\];", html, re.S)
+ATM_TEMI = re.findall(r'"([a-z]+)"', m.group(1)) if m else []
+if not ICONE or not TEMI or not ATM_TEMI:
     print("::error::Impossibile leggere ICONE/TEMI da index.html (struttura cambiata?)"); sys.exit(1)
 SEZIONI = ["notizie","eventi","vetrina","chiusure","orari","social","servizi","organizzazione","contatti"]
 
@@ -33,6 +35,7 @@ RULES = {
   "closures":   {"from": (DATE, True), "to": (DATE, False), "reason": (STR, True), **COMMON_VIS},
   "exceptions": {"date": (DATE, True), "text": (STR, True), **COMMON_VIS},
   "products":   {"name": (STR, True), "brand": (STR, False), "price": (STR, False), "text": (STR, False), "dettagli": (STR, False), "rotazione": ("rot", False), "fotogrammi": ("int", False), **IMGF},
+  "ricorrenze": {"from": (DATE, True), "to": (DATE, False), "title": (STR, True), "text": (STR, False), "url": (HTTPS, True), "verificata_il": (DATE, True), "atmosfera": ("atm", False)},
   "social":     {"title": (STR, True), "network": (STR, False), "date": (DATE, False), "url": (HTTPS, False), "text": (STR, False), **COMMON_VIS, **IMGF},
 }
 CARD = {"titolo": (STR, True), "icona": (ICON, False), "tema": (TEMA, False), "evidenza": (STR, False), "testo": (STR, False),
@@ -41,7 +44,8 @@ CARD_ITEM = {"titolo": (STR, True), "testo": (STR, True)}
 CARDS = ["servizi", "organizzazione", "contatti"]
 DAYS = ["monday","tuesday","wednesday","thursday","friday","saturday","sunday"]
 TESTI_OK = {f"{p}_{s}" for s in SEZIONI for p in ("titolo","sub")}
-TOP = set(RULES) | set(CARDS) | {"testi","hours","hours_note"}
+ATMOSFERA = {"tema": ("atm", False), "dal": (DATE, False), "al": (DATE, False), "effetti": ("fx", False)}
+TOP = set(RULES) | set(CARDS) | {"testi","hours","hours_note","atmosfera"}
 
 def isdate(v):
     if not isinstance(v, str) or not re.fullmatch(r"\d{4}-\d{2}-\d{2}", v): return False
@@ -56,6 +60,10 @@ def check_value(path, kind, v):
         if not isdate(v): err(path, f"data non valida ({v!r}): usare AAAA-MM-GG, giorno esistente")
     elif kind == HTTPS:
         if not (isinstance(v, str) and re.match(r"https://[^\s]+$", v)): err(path, "deve essere un link che inizia con https://")
+    elif kind == "atm":
+        if v not in ATM_TEMI: err(path, f"tema non valido ({v!r}). Validi: {', '.join(ATM_TEMI)}")
+    elif kind == "fx":
+        if v not in ("auto", "calmi", "spenti"): err(path, "valori ammessi: auto, calmi, spenti")
     elif kind == "link":
         if not (isinstance(v, str) and re.match(r"(https://[^\s]+|tel:\+?\d+)$", v)): err(path, "deve iniziare con https:// oppure essere tel:+numero")
     elif kind == ICON:
@@ -154,6 +162,15 @@ if "hours" in D:
             elif not isinstance(v, str): err(f"hours.{k}", "deve essere testo (es. \"9:00-12:30, 15:00-19:00\" oppure \"Chiuso\")")
         for d in DAYS:
             if d not in D["hours"]: warn(f"hours.{d}", "giorno mancante: verrà mostrato \"Chiuso\"")
+if "atmosfera" in D:
+    check_obj("atmosfera", D["atmosfera"], ATMOSFERA)
+    a = D["atmosfera"] if isinstance(D["atmosfera"], dict) else {}
+    if isdate(a.get("dal")) and isdate(a.get("al")) and a["al"] < a["dal"]: err("atmosfera.al", "la data di fine è prima di quella di inizio")
+for i, r in enumerate(D.get("ricorrenze", []) if isinstance(D.get("ricorrenze"), list) else []):
+    if isinstance(r, dict) and isdate(r.get("from")) and isdate(r.get("to")) and r["to"] < r["from"]:
+        err(f"ricorrenze[{i}].to", "la data di fine è prima di quella di inizio")
+    if isinstance(r, dict) and isdate(r.get("verificata_il")) and r["verificata_il"] > datetime.date.today().isoformat():
+        warn(f"ricorrenze[{i}].verificata_il", "data di verifica nel futuro")
 if "hours_note" in D and not isinstance(D["hours_note"], str): err("hours_note", "deve essere testo")
 for i, c in enumerate(D.get("closures", []) if isinstance(D.get("closures"), list) else []):
     if isinstance(c, dict) and isdate(c.get("from")) and isdate(c.get("to")) and c["to"] < c["from"]:
@@ -162,13 +179,27 @@ for i, c in enumerate(D.get("closures", []) if isinstance(D.get("closures"), lis
 # ---------- coerenza con schema.md ----------
 try:
     S = open(os.path.join(ROOT, "schema.md"), encoding="utf-8").read()
-    need = set(RULES) | set(CARDS) | {"testi", "hours", "hours_note"} | set(ICONE) | set(TEMI)
+    need = set(RULES) | set(CARDS) | {"testi", "hours", "hours_note", "atmosfera", "meteo.json"} | set(ICONE) | set(TEMI) | set(ATM_TEMI)
+    need |= set(ATMOSFERA)
     for rules in list(RULES.values()) + [CARD, CARD_ITEM]: need |= set(rules)
     need |= set(DAYS)
     for n in sorted(need):
         if f"`{n}`" not in S: err("schema.md", f"non documenta `{n}`: aggiornare schema.md nella stessa commit")
 except OSError:
     err("schema.md", "file mancante nella root")
+
+# ---------- meteo.json (scritto dall'Action, facoltativo) ----------
+MP = os.path.join(os.path.dirname(os.path.abspath(CONTENT)), "meteo.json")
+if os.path.isfile(MP):
+    try:
+        M = json.load(open(MP, encoding="utf-8"))
+        if not isinstance(M, dict): raise ValueError("deve essere un oggetto")
+        if M.get("cielo") not in ("sereno", "nuvoloso", "pioggia", "neve", "nebbia"): err("meteo.json.cielo", "valore non ammesso")
+        for k in ("temp_c", "vento_kmh"):
+            if not isinstance(M.get(k), (int, float)) or isinstance(M.get(k), bool): err(f"meteo.json.{k}", "deve essere un numero")
+        if not re.fullmatch(r"\d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ", str(M.get("aggiornato"))): err("meteo.json.aggiornato", "data/ora UTC attesa: AAAA-MM-GGThh:mm:ssZ")
+    except (ValueError, OSError) as e:
+        err("meteo.json", f"non valido: {e}")
 
 for w in warnings: print(f"::warning file=content.json::{w}")
 for e in errors: print(f"::error file=content.json::{e}")

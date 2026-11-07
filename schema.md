@@ -208,9 +208,26 @@ Forza i colori della home per un periodo. Priorità dei colori: `atmosfera` manu
 "atmosfera": {"tema": "natale", "dal": "2026-12-01", "al": "2027-01-06", "effetti": "calmi"}
 ```
 
+### `passi` — Stato dei passi (lista, scritto a mano con fonte)
+
+Per avvisare se il passo del Maloja (o altro) è chiuso, con catene/limitazioni o aperto. **Non è automatico**: lo stato si scrive solo guardando una fonte ufficiale e si mostra in home per 3 giorni dalla `verificata_il`, poi sparisce da solo (meglio nessuna informazione che una vecchia). Massimo 2 passi mostrati.
+
+| Campo | Tipo | Obbl. | Note |
+|---|---|---|---|
+| `nome` | testo | sì | es. "Passo del Maloja" |
+| `stato` | testo | sì | `chiuso`, `limitato` (catene o restrizioni) oppure `aperto` |
+| `testo` | testo | no | dettaglio breve, es. "neve, obbligo di catene" |
+| `al` | data | no | ultimo giorno di validità, se la fonte indica la fine |
+| `url` | link | sì | fonte ufficiale `https://…` (mostrata come "fonte") |
+| `verificata_il` | data | sì | giorno in cui è stata guardata la fonte |
+
+```json
+"passi": [{"nome": "Passo del Maloja", "stato": "chiuso", "testo": "neve", "url": "https://www.strassen.gr.ch", "verificata_il": "2026-11-08"}]
+```
+
 ### `meteo.json` — Meteo di Chiavenna (automatico, non si modifica a mano)
 
-File scritto ogni ora dal workflow `Aggiorna meteo` (`scripts/aggiorna_meteo.py`) con i dati di MET Norway (gratuiti, licenza CC BY 4.0, nessuna chiave; credito nel fondo pagina). Campi: `aggiornato` (UTC), `cielo` (`sereno`, `nuvoloso`, `pioggia`, `neve`, `nebbia`), `temp_c`, `vento_kmh`. Il sito non chiede la posizione al visitatore. Se il file manca, non è valido o ha più di 4 ore, la home usa solo il tema stagionale e non mostra il meteo. Con il tema `natale` si accendono anche le luci; con `prefers-reduced-motion` o `?atm=off` le animazioni sono spente.
+File scritto ogni ora dal workflow `Aggiorna meteo` (`scripts/aggiorna_meteo.py`) con i dati di MET Norway (gratuiti, licenza CC BY 4.0, nessuna chiave; credito nel fondo pagina). Campi: `aggiornato` (UTC), `cielo` (`sereno`, `nuvoloso`, `pioggia`, `neve`, `nebbia`), `temp_c`, `vento_kmh`, più `maloja` (stessi campi, Engadina a 1.815 m, facoltativo) con link "stato strada" alla scheda TCS. Il sito non chiede la posizione al visitatore. Se il file manca, non è valido o ha più di 4 ore, la home usa solo il tema stagionale e non mostra il meteo. Con il tema `natale` si accendono anche le luci; con `prefers-reduced-motion` o `?atm=off` le animazioni sono spente.
 
 ## Come funziona il controllo
 

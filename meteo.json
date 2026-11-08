@@ -1,9 +1,9 @@
 {
-  "aggiornato": "2026-11-08T11:54:54Z",
+  "aggiornato": "2026-11-08T13:13:31Z",
   "cielo": "pioggia",
-  "temp_c": 10.9,
-  "vento_kmh": 5,
-  "simbolo": "lightrainshowers_day",
+  "temp_c": 10.3,
+  "vento_kmh": 4,
+  "simbolo": "lightrain",
   "maloja": {
     "cielo": "sereno",
     "temp_c": 0.3,

@@ -1,12 +1,12 @@
 {
-  "aggiornato": "2026-11-08T22:53:38Z",
+  "aggiornato": "2026-11-08T23:51:10Z",
   "cielo": "nuvoloso",
-  "temp_c": 8.4,
-  "vento_kmh": 3,
+  "temp_c": 8.2,
+  "vento_kmh": 4,
   "simbolo": "cloudy",
   "maloja": {
     "cielo": "sereno",
-    "temp_c": -4.4,
+    "temp_c": -4.2,
     "vento_kmh": 5,
     "simbolo": "fair_night"
   },

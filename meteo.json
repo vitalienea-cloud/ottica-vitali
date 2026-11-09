@@ -1,14 +1,14 @@
 {
-  "aggiornato": "2026-11-09T19:15:32Z",
-  "cielo": "pioggia",
-  "temp_c": 9.6,
+  "aggiornato": "2026-11-09T20:12:32Z",
+  "cielo": "nuvoloso",
+  "temp_c": 9.8,
   "vento_kmh": 6,
-  "simbolo": "lightrain",
+  "simbolo": "cloudy",
   "maloja": {
-    "cielo": "neve",
-    "temp_c": 1.4,
-    "vento_kmh": 8,
-    "simbolo": "sleet"
+    "cielo": "nebbia",
+    "temp_c": 1.7,
+    "vento_kmh": 9,
+    "simbolo": "fog"
   },
   "fonte": "MET Norway (CC BY 4.0)"
 }

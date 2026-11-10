@@ -1,13 +1,13 @@
 {
-  "aggiornato": "2026-11-10T18:00:01Z",
+  "aggiornato": "2026-11-10T19:17:35Z",
   "cielo": "sereno",
-  "temp_c": 11.7,
+  "temp_c": 11.1,
   "vento_kmh": 1,
-  "simbolo": "fair_night",
+  "simbolo": "clearsky_night",
   "maloja": {
     "cielo": "sereno",
-    "temp_c": 2.5,
-    "vento_kmh": 2,
+    "temp_c": 2.3,
+    "vento_kmh": 3,
     "simbolo": "fair_night"
   },
   "fonte": "MET Norway (CC BY 4.0)"

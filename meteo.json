@@ -1,12 +1,12 @@
 {
-  "aggiornato": "2026-11-11T19:20:52Z",
-  "cielo": "pioggia",
-  "temp_c": 13.0,
+  "aggiornato": "2026-11-11T21:50:08Z",
+  "cielo": "nebbia",
+  "temp_c": 11.1,
   "vento_kmh": 4,
-  "simbolo": "lightrain",
+  "simbolo": "fog",
   "maloja": {
     "cielo": "nebbia",
-    "temp_c": 4.1,
+    "temp_c": 3.2,
     "vento_kmh": 5,
     "simbolo": "fog"
   },

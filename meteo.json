@@ -1,12 +1,12 @@
 {
-  "aggiornato": "2026-11-12T18:06:23Z",
+  "aggiornato": "2026-11-12T19:16:04Z",
   "cielo": "pioggia",
-  "temp_c": 12.0,
-  "vento_kmh": 3,
-  "simbolo": "heavyrain",
+  "temp_c": 11.9,
+  "vento_kmh": 4,
+  "simbolo": "rain",
   "maloja": {
     "cielo": "pioggia",
-    "temp_c": 3.7,
+    "temp_c": 3.8,
     "vento_kmh": 3,
     "simbolo": "heavyrain"
   },

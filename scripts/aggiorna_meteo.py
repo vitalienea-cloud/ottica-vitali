@@ -7,7 +7,7 @@ Se la richiesta fallisce il file precedente resta com'è e il sito, dopo 4 ore, 
 """
 import json, sys, urllib.request, datetime as dt
 
-PUNTI = {"chiavenna": (46.3195, 9.4017, 333), "maloja": (46.4045, 9.6955, 1815)}  # Maloja: Engadina, appena oltre il confine
+PUNTI = {"chiavenna": (46.3195, 9.4017, 333), "maloja": (46.4045, 9.6955, 1815), "spluga": (46.5035, 9.3325, 2113)}  # Maloja (Engadina) e Spluga: i due passi oltre confine
 UA = "OtticaVitaliSito/1.0 github.com/vitalienea-cloud/ottica-vitali servizioclienti@otticavitali.com"
 URL = "https://api.met.no/weatherapi/locationforecast/2.0/compact?lat={}&lon={}&altitude={}"
 OUT = sys.argv[1] if len(sys.argv) > 1 else "meteo.json"
@@ -45,10 +45,11 @@ def leggi(lat, lon, alt):
 
 def main():
     out = leggi(*PUNTI["chiavenna"])  # se fallisce, il file precedente resta e la Action diventa rossa
-    try:
-        out["maloja"] = leggi(*PUNTI["maloja"])  # facoltativo: senza, il sito mostra solo Chiavenna
-    except Exception as e:
-        print("Maloja non disponibile:", e)
+    for nome in ("maloja", "spluga"):
+        try:
+            out[nome] = leggi(*PUNTI[nome])  # facoltativi: senza, il sito non li mostra
+        except Exception as e:
+            print(f"{nome} non disponibile:", e)
     out = {"aggiornato": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"), **out, "fonte": "MET Norway (CC BY 4.0)"}
     with open(OUT, "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, indent=2)

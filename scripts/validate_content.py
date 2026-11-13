@@ -188,7 +188,7 @@ for i, c in enumerate(D.get("closures", []) if isinstance(D.get("closures"), lis
 # ---------- coerenza con schema.md ----------
 try:
     S = open(os.path.join(ROOT, "schema.md"), encoding="utf-8").read()
-    need = set(RULES) | set(CARDS) | {"testi", "hours", "hours_note", "atmosfera", "meteo.json", "cantiere", "cantiere_titolo", "cantiere_testo"} | set(ICONE) | set(TEMI) | set(ATM_TEMI)
+    need = set(RULES) | set(CARDS) | {"testi", "hours", "hours_note", "atmosfera", "meteo.json", "cantiere", "cantiere_titolo", "cantiere_testo", "spluga"} | set(ICONE) | set(TEMI) | set(ATM_TEMI)
     need |= set(ATMOSFERA)
     for rules in list(RULES.values()) + [CARD, CARD_ITEM]: need |= set(rules)
     need |= set(DAYS)
@@ -204,9 +204,10 @@ if os.path.isfile(MP):
         M = json.load(open(MP, encoding="utf-8"))
         if not isinstance(M, dict): raise ValueError("deve essere un oggetto")
         if M.get("cielo") not in ("sereno", "nuvoloso", "pioggia", "neve", "nebbia"): err("meteo.json.cielo", "valore non ammesso")
-        if "maloja" in M:
-            mj = M["maloja"]
-            if not isinstance(mj, dict) or mj.get("cielo") not in ("sereno", "nuvoloso", "pioggia", "neve", "nebbia") or not isinstance(mj.get("temp_c"), (int, float)): err("meteo.json.maloja", "oggetto con cielo valido e temp_c numerico")
+        for k in ("maloja", "spluga"):
+            if k in M:
+                mj = M[k]
+                if not isinstance(mj, dict) or mj.get("cielo") not in ("sereno", "nuvoloso", "pioggia", "neve", "nebbia") or not isinstance(mj.get("temp_c"), (int, float)): err(f"meteo.json.{k}", "oggetto con cielo valido e temp_c numerico")
         for k in ("temp_c", "vento_kmh"):
             if not isinstance(M.get(k), (int, float)) or isinstance(M.get(k), bool): err(f"meteo.json.{k}", "deve essere un numero")
         if not re.fullmatch(r"\d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ", str(M.get("aggiornato"))): err("meteo.json.aggiornato", "data/ora UTC attesa: AAAA-MM-GGThh:mm:ssZ")

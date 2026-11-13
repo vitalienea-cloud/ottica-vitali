@@ -227,6 +227,8 @@ html[data-atm] body{background-image:linear-gradient(var(--grid) 1px,transparent
 #home.atm-2 svg.art{width:min(560px,56%);margin-bottom:8px}
 #home.atm-2 h1{margin-top:2px}
 #home.atm-on .atm-bar{margin-bottom:6px}
+#home.atm-3{padding-top:30px}
+#home.atm-3 svg.art{width:min(560px,44%);margin-bottom:4px}
 }
 </style>
 </head>
@@ -725,7 +727,7 @@ const atmInit = D => {
   const off = /[?&]atm=off\b/.test(location.search), cn = navigator.connection;
   const lowEnd = (cn && cn.saveData) || (matchMedia("(pointer:coarse)").matches && ((navigator.deviceMemory && navigator.deviceMemory <= 2) || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4)));
   const fxEff = () => RMQ.matches || off || siteFx === "spenti" || pref === "spenti" ? "off" : siteFx === "calmi" || pref === "calma" || (!pref && lowEnd) ? "calma" : "on";
-  let M = null, MM = null; /* meteo valido e recente: Chiavenna e Maloja */
+  let M = null, PS = []; /* meteo valido e recente: Chiavenna e passi (Maloja, Spluga) */
   const chip = (cls, icon, html) => `<span class="chip ${cls}"><svg viewBox="0 0 64 64" aria-hidden="true">${icon}</svg><span>${html}</span></span>`;
   function apply() {
     const pal = man || (ric && ATM_TEMI.includes(ric.atmosfera) ? ric.atmosfera : null) || festa(oggi) || stagione, P = PAL[pal], day = M ? (isDay(Date.now()) ? 1 : 0) : 1;
@@ -739,10 +741,10 @@ const atmInit = D => {
     let h = "";
     if (ric) h += chip("ri", '<use href="#ic-occhio"/>', (ric.from === (isYmd(ric.to) ? ric.to : ric.from) ? "Oggi: " : "In corso: ") + esc(ric.title) + ' <small>' + (ric.text ? '<button type="button" data-ric>dettagli</button> · ' : "") + '<a href="' + esc(ric.url) + '" target="_blank" rel="noopener">fonte</a></small>');
     if (M) h += chip("me", ICO[M.cielo], "Chiavenna · " + String(Math.round(M.temp_c)).replace("-", "−") + " °C · " + CIELI[M.cielo] + (vento === "calmo" ? "" : " · vento " + (vento === "forte" ? "forte" : "moderato")));
-    if (MM) h += chip("me", ICO[MM.cielo], "Maloja · " + String(Math.round(MM.temp_c)).replace("-", "−") + " °C · " + CIELI[MM.cielo] + ' <small><a href="https://www.tcs.ch/de/tools/verkehrsinfo-verkehrslage/maloja.php" target="_blank" rel="noopener">stato strada</a></small>');
+    if (PS.length) h += chip("me", ICO[PS[0].cielo], PS.map(p => p.nome + " " + String(Math.round(p.temp_c)).replace("-", "−") + " °C · " + CIELI[p.cielo]).join(" · ") + ' <small><a href="https://www.tcs.ch/de/tools/verkehrsinfo-verkehrslage/paesse-in-der-schweiz.php" target="_blank" rel="noopener">stato strade</a></small>');
     passi.forEach(p => { h += chip(p.stato === "aperto" ? "me" : "av", ICO.nebbia, esc(p.nome) + " " + p.stato + (p.testo ? ": " + esc(p.testo) : "") + ' <small>verificato il ' + fmtS(p.verificata_il) + ' · <a href="' + esc(p.url) + '" target="_blank" rel="noopener">fonte</a></small>'); });
     $("#atmbar").innerHTML = h;
-    const n = $("#atmbar").children.length; const home = $("#home"); home.classList.toggle("atm-on", n > 0); home.classList.toggle("atm-2", n > 1);
+    const n = $("#atmbar").children.length; const home = $("#home"); home.classList.toggle("atm-on", n > 0); home.classList.toggle("atm-2", n > 1); home.classList.toggle("atm-3", n > 2);
     const cm = $("#credit-meteo"); if (cm) cm.hidden = !M;
     ctl(); build();
   }
@@ -810,7 +812,7 @@ const atmInit = D => {
   fetch("meteo.json", {cache:"no-store"}).then(r => { if (!r.ok) throw 0; return r.json(); }).then(m => {
     const t = Date.parse(m && m.aggiornato);
     if (m && Number.isFinite(t) && Date.now() - t < 4 * 3600e3 && Date.now() - t > -600e3 && CIELI[m.cielo] && Number.isFinite(m.temp_c) && Number.isFinite(m.vento_kmh) && m.vento_kmh >= 0) { M = {cielo:m.cielo, temp_c:m.temp_c, vento_kmh:m.vento_kmh};
-      const x = m.maloja; MM = x && CIELI[x.cielo] && Number.isFinite(x.temp_c) ? {cielo:x.cielo, temp_c:x.temp_c} : null; apply(); }
+      PS = [["maloja", "Maloja"], ["spluga", "Spluga"]].map(([k, n]) => { const x = m[k]; return x && CIELI[x.cielo] && Number.isFinite(x.temp_c) ? {nome:n, cielo:x.cielo, temp_c:x.temp_c} : null; }).filter(Boolean); apply(); }
   }).catch(() => {});
 };
 

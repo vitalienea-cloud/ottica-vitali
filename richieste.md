@@ -47,6 +47,9 @@ Formato di una voce:
 ### R-006 · stato: da fare · 2026-11-07
 **Home viva: ricorrenze verificate (decide Enea quali).** Il sito ora cambia colori ed effetti da solo (stagione, Natale e festività nazionali, meteo di Chiavenna) e mostra gli avvisi di `closures` e `exceptions` in cima alla home. Le giornate speciali **non** sono automatiche: si aggiungono solo in `ricorrenze` (vedi `schema.md`), una per volta, dopo l'"ok" di Enea, con `url` di fonte ufficiale aperta e controllata e `verificata_il` = giorno del controllo. Proposte da verificare prima di scriverle: Giornata mondiale della vista (secondo giovedì di ottobre), Giornata mondiale del glaucoma (marzo), San Valentino, Festa del papà, Festa della mamma, Black Friday. Per cambiare i colori a mano per un periodo: oggetto `atmosfera` (`tema`, `dal`, `al`, `effetti`). Non toccare `meteo.json` (lo scrive l'Action ogni ora).
 
+### R-008 · stato: da fare · 2026-11-13
+**Evento sponsor: campagna di prevenzione al seno.** Il logo "Ottica Vitali – Prevenzione seno" è pronto in `eventi/prevenzione-seno.webp` (sorgente vettoriale `eventi/prevenzione-seno.svg`). Per aggiungere l'evento in `events` servono da Enea: **data, titolo esatto, testo breve, luogo/orario e nome dell'organizzatore** (non inventare nulla). Poi campi `date`, `title`, `text`, `image` = `eventi/prevenzione-seno.webp`, `alt` = "Logo Ottica Vitali – Prevenzione seno", `icona` = `cuore`, `tema` = `fucsia`.
+
 ## Per Claude (HTML, schema, grafica)
 
 _Nessuna richiesta aperta._

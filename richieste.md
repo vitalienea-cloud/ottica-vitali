@@ -69,6 +69,12 @@ _Nessuna richiesta aperta._
 
 ## Archivio
 
+### R-012 · stato: fatto · 2026-11-13
+**Cosa:** stato dei passi in `passi` (richiesta di Claude del 13/11; Enea ha deciso il 13/11 che Grok aggiorni lo stato ogni mattina senza chiedere conferma e lo avvisi solo se il Maloja chiude o è limitato).
+**Dove:** `passi`: "Passo del Maloja" `aperto` e "Passo dello Spluga" `aperto`, con `verificata_il` 2026-11-13.
+**Fonte:** TCS Pässe in der Schweiz (aggiornato il 13.11.2026 alle 17:37: "offen für alle Fahrzeuge" per entrambi); riscontro valtellina.it come da controllo di Claude del 13/11.
+**Da ora:** controllo automatico ogni giorno verso le 7:30 con rinnovo di `verificata_il`; alla chiusura invernale dello Spluga si usa `chiuso`, "chiusura invernale" e `stagionale: true`.
+
 ### R-011 · stato: fatto · 2026-11-13
 **Cosa:** controllo dello stato del Passo del Maloja per il campo `passi` (richiesta di Enea del 13/11, regole di Claude).
 **Esito:** passo aperto e normalmente transitabile, senza neve, catene obbligatorie o lavori. **Nessuna voce inserita** in `passi`, e `content.json` è invariato.

@@ -1,5 +1,9 @@
 {
   "cantiere": ["vetrina", "social"],
+  "passi": [
+    {"nome": "Passo del Maloja", "stato": "aperto", "url": "https://www.tcs.ch/de/tools/verkehrsinfo-verkehrslage/paesse-in-der-schweiz.php", "verificata_il": "2026-11-13"},
+    {"nome": "Passo dello Spluga", "stato": "aperto", "url": "https://www.tcs.ch/de/tools/verkehrsinfo-verkehrslage/paesse-in-der-schweiz.php", "verificata_il": "2026-11-13"}
+  ],
   "news": [
     {"date": "2026-10-30", "title": "La nostra storia", "text": "La storia della famiglia Vitali inizia nel 1870 a Morbegno, con una solida tradizione nel campo dell'oreficeria. Nel 1949 un ramo della famiglia si è trasferito in Valchiavenna e negli anni '60 l'attività si è arricchita della divisione ottica. Oggi la continuità dell'azienda è garantita da Enea Vitali, ottico di terza generazione, e da Sara Ghelfi, responsabile amministrativa.", "icona": "libro"},
     {"date": "2026-10-06", "title": "Giornata Mondiale della Vista 2026: ZEISS ricorda l’importanza dei controlli", "text": "In occasione della Giornata Mondiale della Vista, ZEISS sottolinea quanto sia importante fare controlli regolari della vista per tutti, non solo per chi ha già problemi. Un buon controllo può aiutare a prevenire o gestire meglio molte difficoltà visive.", "icona": "forottero", "source": "Zeiss", "url": "https://www.zeiss.com/vision-care/en/newsroom/news/2026/zeiss-supports-world-sight-day-2026.html"},

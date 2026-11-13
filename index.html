@@ -229,6 +229,9 @@ html[data-atm] body{background-image:linear-gradient(var(--grid) 1px,transparent
 #home.atm-on .atm-bar{margin-bottom:6px}
 #home.atm-3{padding-top:30px}
 #home.atm-3 svg.art{width:min(560px,44%);margin-bottom:4px}
+#home.atm-3 .atm-bar{gap:3px 5px}
+#home.atm-3 .chip{padding:2px 10px;font-size:.76rem}
+#home.atm-3 h1{font-size:92%}
 }
 </style>
 </head>
@@ -741,10 +744,10 @@ const atmInit = D => {
     let h = "";
     if (ric) h += chip("ri", '<use href="#ic-occhio"/>', (ric.from === (isYmd(ric.to) ? ric.to : ric.from) ? "Oggi: " : "In corso: ") + esc(ric.title) + ' <small>' + (ric.text ? '<button type="button" data-ric>dettagli</button> · ' : "") + '<a href="' + esc(ric.url) + '" target="_blank" rel="noopener">fonte</a></small>');
     if (M) h += chip("me", ICO[M.cielo], "Chiavenna · " + String(Math.round(M.temp_c)).replace("-", "−") + " °C · " + CIELI[M.cielo] + (vento === "calmo" ? "" : " · vento " + (vento === "forte" ? "forte" : "moderato")));
-    if (PS.length) h += chip("me", ICO[PS[0].cielo], PS.map(p => p.nome + " " + String(Math.round(p.temp_c)).replace("-", "−") + " °C · " + CIELI[p.cielo]).join(" · ") + ' <small><a href="https://www.tcs.ch/de/tools/verkehrsinfo-verkehrslage/paesse-in-der-schweiz.php" target="_blank" rel="noopener">stato strade</a></small>');
+    PS.forEach((p, i) => { h += chip("me", ICO[p.cielo], p.nome + " " + String(Math.round(p.temp_c)).replace("-", "−") + " °C · " + CIELI[p.cielo] + (i === PS.length - 1 ? ' <small><a href="https://www.tcs.ch/de/tools/verkehrsinfo-verkehrslage/paesse-in-der-schweiz.php" target="_blank" rel="noopener">stato strade</a></small>' : "")); });
     passi.forEach(p => { h += chip(p.stato === "aperto" ? "me" : "av", ICO.nebbia, esc(p.nome) + " " + p.stato + (p.testo ? ": " + esc(p.testo) : "") + ' <small>verificato il ' + fmtS(p.verificata_il) + ' · <a href="' + esc(p.url) + '" target="_blank" rel="noopener">fonte</a></small>'); });
     $("#atmbar").innerHTML = h;
-    const n = $("#atmbar").children.length; const home = $("#home"); home.classList.toggle("atm-on", n > 0); home.classList.toggle("atm-2", n > 1); home.classList.toggle("atm-3", n > 2);
+    const n = $("#atmbar").children.length; const home = $("#home"); home.classList.toggle("atm-on", n > 0); home.classList.toggle("atm-2", n > 1); home.classList.toggle("atm-3", n > 3);
     const cm = $("#credit-meteo"); if (cm) cm.hidden = !M;
     ctl(); build();
   }

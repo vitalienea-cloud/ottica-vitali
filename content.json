@@ -12,7 +12,11 @@
     {"date": "2026-11-14", "title": "Controllo vista gratuito", "text": "Controllo gratuito su appuntamento. Contenuto di prova.", "tema": "blu", "icona": "forottero"},
     {"date": "2026-10-30", "title": "Serata pizza", "text": "Serata pizza di prova in negozio. Tutti invitati.", "tema": "ambra", "icona": "pizza"}
   ],
-  "closures": [],
+  "closures": [
+    {"from": "2026-12-08", "to": "2026-12-08", "reason": "Chiuso per la festa dell'Immacolata", "icona": "novita"},
+    {"from": "2026-12-25", "to": "2026-12-25", "reason": "Chiuso per Natale", "icona": "natale"},
+    {"from": "2026-12-26", "to": "2026-12-26", "reason": "Santo Stefano", "icona": "natale"}
+  ],
   "hours": {
     "monday": "chiuso",
     "tuesday": "9:00–12:30, 16:00–19:30",
@@ -23,7 +27,8 @@
     "sunday": "chiuso"
   },
   "exceptions": [
-    {"date": "2026-10-31", "text": "aperti solo dalle 9:00 alle 12:00"}
+    {"date": "2026-10-31", "text": "aperti solo dalle 9:00 alle 12:00"},
+    {"date": "2026-12-24", "text": "Vigilia di Natale: aperti dalle 9:00 alle 14:30", "icona": "orologio"}
   ],
   "social": [
     {"network": "Instagram", "date": "2026-10-17", "title": "Gel antiappannante", "text": "Gel antiappannante + microfibra per tutti i tipi di lenti. Senza alcool. Non rovina i trattamenti. Euro 13,00", "url": "https://www.instagram.com/p/Demws7FDXOM/", "icona": "antiappannante"}

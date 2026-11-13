@@ -56,6 +56,12 @@ _Nessuna richiesta aperta._
 
 ## Archivio
 
+### R-009 · stato: fatto · 2026-11-13
+**Cosa:** chiusure e orari speciali futuri inseriti in `content.json` (richiesta di Claude del 13/11, approvata da Enea).
+**Dove:** `closures`: 2026-12-08 ("Chiuso per la festa dell'Immacolata", icona `novita`), 2026-12-25 ("Chiuso per Natale", icona `natale`), 2026-12-26 ("Santo Stefano", icona `natale`). `exceptions`: 2026-12-24 ("Vigilia di Natale: aperti dalle 9:00 alle 14:30", icona `orologio`).
+**Fonte:** 08/12, 24/12 e 25/12 letti dalla scheda Google Business Profile di Ottica Vitali (orari speciali) il 2026-11-13; 26/12 aggiunto su indicazione diretta di Enea del 13/11. `hours`, `cantiere` (`vetrina`, `social`) e `passi` invariati (nessuna fonte ufficiale per il Maloja). R-006 e R-008 restano in attesa di Enea.
+**Commit:** vedi messaggio "[Grok] Chiusure e orari speciali di dicembre da Google Maps".
+
 ### R-007 · stato: fatto · 2026-11-07
 **Home viva (richiesta di Enea del 07/11).** Livello `#atm` in `index.html` (colori per stagione/Natale/festività, sole/luna, nuvole, pioggia, neve, nebbia, vento, freddo/caldo, ghirlanda natalizia), etichette in home (avviso del negozio in cima, ricorrenza, meteo), controllo "Effetti" nel fondo pagina, `?atm=off`, `prefers-reduced-motion`. Meteo: `scripts/aggiorna_meteo.py` + `.github/workflows/meteo.yml` (MET Norway, nessuna chiave, ogni ora) → `meteo.json`; oltre 4 ore o file non valido = tema stagionale. Schema e validatore estesi (`ricorrenze`, `atmosfera`, `meteo.json`).
 

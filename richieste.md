@@ -69,6 +69,11 @@ _Nessuna richiesta aperta._
 
 ## Archivio
 
+### R-011 · stato: fatto · 2026-11-13
+**Cosa:** controllo dello stato del Passo del Maloja per il campo `passi` (richiesta di Enea del 13/11, regole di Claude).
+**Esito:** passo aperto e normalmente transitabile, senza neve, catene obbligatorie o lavori. **Nessuna voce inserita** in `passi`, e `content.json` è invariato.
+**Fonti verificate il 2026-11-13:** TCS (https://www.tcs.ch/de/tools/verkehrsinfo-verkehrslage/paesse-in-der-schweiz.php), valtellina.it (https://www.valtellina.it/it/situazione-passi), strassen.gr.ch (nessuna chiusura).
+
 ### R-009 · stato: fatto · 2026-11-13
 **Cosa:** chiusure e orari speciali futuri inseriti in `content.json` (richiesta di Claude del 13/11, approvata da Enea).
 **Dove:** `closures`: 2026-12-08 ("Chiuso per la festa dell'Immacolata", icona `novita`), 2026-12-25 ("Chiuso per Natale", icona `natale`), 2026-12-26 ("Santo Stefano", icona `natale`). `exceptions`: 2026-12-24 ("Vigilia di Natale: aperti dalle 9:00 alle 14:30", icona `orologio`).

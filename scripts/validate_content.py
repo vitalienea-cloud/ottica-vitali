@@ -44,9 +44,10 @@ CARD = {"titolo": (STR, True), "icona": (ICON, False), "tema": (TEMA, False), "e
 CARD_ITEM = {"titolo": (STR, True), "testo": (STR, True)}
 CARDS = ["servizi", "organizzazione", "contatti"]
 DAYS = ["monday","tuesday","wednesday","thursday","friday","saturday","sunday"]
-TESTI_OK = {f"{p}_{s}" for s in SEZIONI for p in ("titolo","sub")}
+TESTI_OK = {f"{p}_{s}" for s in SEZIONI for p in ("titolo","sub")} | {"cantiere_titolo","cantiere_testo"}
+CANTIERE_OK = ["notizie","eventi","vetrina","chiusure","social"]
 ATMOSFERA = {"tema": ("atm", False), "dal": (DATE, False), "al": (DATE, False), "effetti": ("fx", False)}
-TOP = set(RULES) | set(CARDS) | {"testi","hours","hours_note","atmosfera"}
+TOP = set(RULES) | set(CARDS) | {"testi","hours","hours_note","atmosfera","cantiere"}
 
 def isdate(v):
     if not isinstance(v, str) or not re.fullmatch(r"\d{4}-\d{2}-\d{2}", v): return False
@@ -150,6 +151,11 @@ for sec in CARDS:
                     else:
                         for j, e in enumerate(c["elenco"]): check_obj(f"{p}.elenco[{j}]", e, CARD_ITEM)
                 if bool(c.get("link_testo")) != bool(c.get("link_url")): warn(p, "link_testo e link_url vanno insieme: altrimenti il link non appare")
+if "cantiere" in D:
+    if not isinstance(D["cantiere"], list): err("cantiere", "deve essere una lista di sezioni")
+    else:
+        for i, x in enumerate(D["cantiere"]):
+            if x not in CANTIERE_OK: err(f"cantiere[{i}]", f"sezione non valida ({x!r}). Valide: {', '.join(CANTIERE_OK)}")
 if "testi" in D:
     if not isinstance(D["testi"], dict): err("testi", "deve essere un oggetto")
     else:
@@ -182,7 +188,7 @@ for i, c in enumerate(D.get("closures", []) if isinstance(D.get("closures"), lis
 # ---------- coerenza con schema.md ----------
 try:
     S = open(os.path.join(ROOT, "schema.md"), encoding="utf-8").read()
-    need = set(RULES) | set(CARDS) | {"testi", "hours", "hours_note", "atmosfera", "meteo.json"} | set(ICONE) | set(TEMI) | set(ATM_TEMI)
+    need = set(RULES) | set(CARDS) | {"testi", "hours", "hours_note", "atmosfera", "meteo.json", "cantiere", "cantiere_titolo", "cantiere_testo"} | set(ICONE) | set(TEMI) | set(ATM_TEMI)
     need |= set(ATMOSFERA)
     for rules in list(RULES.values()) + [CARD, CARD_ITEM]: need |= set(rules)
     need |= set(DAYS)

@@ -169,7 +169,7 @@ Tre liste con la stessa struttura. **Se la lista è presente sostituisce tutte l
 
 ### `testi` — Titoli e sottotitoli delle sezioni
 
-Oggetto con chiavi `titolo_<sezione>` e `sub_<sezione>`, valore testo. Sezioni: `notizie`, `eventi`, `vetrina`, `chiusure`, `orari`, `social`, `servizi`, `organizzazione`, `contatti`. Esempio: `"titolo_eventi": "Prossimi appuntamenti"`. La chiave `hero_sottotitolo` non è più usata.
+Oggetto con chiavi `titolo_<sezione>` e `sub_<sezione>`, valore testo. Sezioni: `notizie`, `eventi`, `vetrina`, `chiusure`, `orari`, `social`, `servizi`, `organizzazione`, `contatti`. Chiavi extra: `cantiere_titolo` e `cantiere_testo` (testo del cartello, vedi `cantiere`). Esempio: `"titolo_eventi": "Prossimi appuntamenti"`. La chiave `hero_sottotitolo` non è più usata.
 
 ```json
 "testi": {"titolo_notizie": "Novità", "sub_notizie": "Dal negozio e dai nostri fornitori."}
@@ -223,6 +223,14 @@ Per avvisare se il passo del Maloja (o altro) è chiuso, con catene/limitazioni 
 
 ```json
 "passi": [{"nome": "Passo del Maloja", "stato": "chiuso", "testo": "neve", "url": "https://www.strassen.gr.ch", "verificata_il": "2026-11-08"}]
+```
+
+### `cantiere` — Cartello "Bots at work" (lista di sezioni, facoltativa)
+
+Mostra il cartello con il robottino in coda a una sezione ancora incompleta. Il cartello compare **da solo** al posto del messaggio quando una sezione è vuota; con `cantiere` si può mostrarlo anche in una sezione che ha già qualche voce. Per toglierlo basta cancellare la sezione dalla lista. Sezioni ammesse: `notizie`, `eventi`, `vetrina`, `chiusure`, `social`. Il testo si cambia in `testi` con `cantiere_titolo` (predefinito "Bots at work") e `cantiere_testo` (predefinito "Qui stiamo ancora lavorando: torna a trovarci presto.").
+
+```json
+"cantiere": ["vetrina", "social"]
 ```
 
 ### `meteo.json` — Meteo di Chiavenna (automatico, non si modifica a mano)

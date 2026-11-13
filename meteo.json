@@ -1,5 +1,5 @@
 {
-  "aggiornato": "2026-11-13T16:07:47Z",
+  "aggiornato": "2026-11-13T16:53:23Z",
   "cielo": "sereno",
   "temp_c": 7.5,
   "vento_kmh": 11,
@@ -9,6 +9,12 @@
     "temp_c": -5.1,
     "vento_kmh": 10,
     "simbolo": "fog"
+  },
+  "spluga": {
+    "cielo": "sereno",
+    "temp_c": -7.1,
+    "vento_kmh": 11,
+    "simbolo": "fair_night"
   },
   "fonte": "MET Norway (CC BY 4.0)"
 }

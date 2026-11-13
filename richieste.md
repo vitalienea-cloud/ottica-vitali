@@ -25,6 +25,19 @@ Formato di una voce:
 
 ## Per Grok (`content.json`)
 
+### R-010 · stato: in corso · 2026-11-13
+**Migrazione otticavitali.com da Google Sites a GitHub Pages (richiesta di Claude del 13/11, approvata da Enea).**
+**Registrar e DNS:** Squarespace Domains (ex Google Domains), nameserver `ns-cloud-a1…a4.googledomains.com`. Oggi Squarespace fa un inoltro 301 di `otticavitali.com` e `www` verso `https://sites.google.com/view/otticavitali-com/`.
+**Backup dei record DNS pubblici, letti il 2026-11-13 alle 14:55 (ora di Roma) via DNS pubblico:**
+- `@` A `198.49.23.145` (inoltro Squarespace) → da sostituire
+- `www` CNAME `ext-sq.squarespace.com` (inoltro Squarespace) → da sostituire
+- `@` MX `1 aspmx.l.google.com`, `5 alt1.aspmx.l.google.com`, `5 alt2.aspmx.l.google.com`, `10 alt3.aspmx.l.google.com`, `10 alt4.aspmx.l.google.com` → NON toccare
+- `@` TXT `v=spf1 include:_spf.google.com ~all` → NON toccare
+- `google._domainkey` TXT `v=DKIM1; k=rsa; p=…` (chiave DKIM di Google) → NON toccare
+- DMARC: assente
+**Nuovi record previsti (solo dopo l'ok di Enea):** `@` A `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`; `www` CNAME `vitalienea-cloud.github.io`; poi GitHub Pages > Custom domain `otticavitali.com` ed "Enforce HTTPS".
+**Note:** da completare con l'esportazione dal pannello Squarespace prima di qualsiasi modifica.
+
 ### R-002 · stato: da fare · 2026-10-30
 **Cosa:** sostituire i contenuti di prova con contenuti reali, quando Enea li fornisce: notizia "Nuova pagina online (esempio)" (2026-10-26) e i tre prodotti "(esempio)" in `products`.
 **Dove:** `news`, `products`
@@ -48,7 +61,7 @@ Formato di una voce:
 **Home viva: ricorrenze verificate (decide Enea quali).** Il sito ora cambia colori ed effetti da solo (stagione, Natale e festività nazionali, meteo di Chiavenna) e mostra gli avvisi di `closures` e `exceptions` in cima alla home. Le giornate speciali **non** sono automatiche: si aggiungono solo in `ricorrenze` (vedi `schema.md`), una per volta, dopo l'"ok" di Enea, con `url` di fonte ufficiale aperta e controllata e `verificata_il` = giorno del controllo. Proposte da verificare prima di scriverle: Giornata mondiale della vista (secondo giovedì di ottobre), Giornata mondiale del glaucoma (marzo), San Valentino, Festa del papà, Festa della mamma, Black Friday. Per cambiare i colori a mano per un periodo: oggetto `atmosfera` (`tema`, `dal`, `al`, `effetti`). Non toccare `meteo.json` (lo scrive l'Action ogni ora).
 
 ### R-008 · stato: da fare · 2026-11-13
-**Evento sponsor: campagna di prevenzione al seno.** (13/11, Claude: pronti in `loghi/` i 4 SVG dello stand, sottotitolo "CHIAVENNA", testo convertito in tracciati: `stand-fondo-rosa-negativo`, `stand-trasparente-bianco`, `-rosa`, `-antracite`; colori provvisori, i Pantone esatti li fornisce Enea.) Il logo "Ottica Vitali – Prevenzione seno" è pronto in `eventi/prevenzione-seno.webp` (sorgente vettoriale `eventi/prevenzione-seno.svg`). Per aggiungere l'evento in `events` servono da Enea: **data, titolo esatto, testo breve, luogo/orario e nome dell'organizzatore** (non inventare nulla). Poi campi `date`, `title`, `text`, `image` = `eventi/prevenzione-seno.webp`, `alt` = "Logo Ottica Vitali – Prevenzione seno", `icona` = `cuore`, `tema` = `fucsia`.
+**Evento sponsor: campagna di prevenzione al seno.** Il logo "Ottica Vitali – Prevenzione seno" è pronto in `eventi/prevenzione-seno.webp` (sorgente vettoriale `eventi/prevenzione-seno.svg`). Per aggiungere l'evento in `events` servono da Enea: **data, titolo esatto, testo breve, luogo/orario e nome dell'organizzatore** (non inventare nulla). Poi campi `date`, `title`, `text`, `image` = `eventi/prevenzione-seno.webp`, `alt` = "Logo Ottica Vitali – Prevenzione seno", `icona` = `cuore`, `tema` = `fucsia`.
 
 ## Per Claude (HTML, schema, grafica)
 

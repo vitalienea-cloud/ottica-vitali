@@ -36,7 +36,7 @@ RULES = {
   "exceptions": {"date": (DATE, True), "text": (STR, True), **COMMON_VIS},
   "products":   {"name": (STR, True), "brand": (STR, False), "price": (STR, False), "text": (STR, False), "dettagli": (STR, False), "rotazione": ("rot", False), "fotogrammi": ("int", False), **IMGF},
   "ricorrenze": {"from": (DATE, True), "to": (DATE, False), "title": (STR, True), "text": (STR, False), "url": (HTTPS, True), "verificata_il": (DATE, True), "atmosfera": ("atm", False)},
-  "passi":      {"nome": (STR, True), "stato": ("pass", True), "testo": (STR, False), "al": (DATE, False), "url": (HTTPS, True), "verificata_il": (DATE, True)},
+  "passi":      {"nome": (STR, True), "stato": ("pass", True), "testo": (STR, False), "al": (DATE, False), "url": (HTTPS, True), "verificata_il": (DATE, True), "stagionale": ("bool", False)},
   "social":     {"title": (STR, True), "network": (STR, False), "date": (DATE, False), "url": (HTTPS, False), "text": (STR, False), **COMMON_VIS, **IMGF},
 }
 CARD = {"titolo": (STR, True), "icona": (ICON, False), "tema": (TEMA, False), "evidenza": (STR, False), "testo": (STR, False),
@@ -64,6 +64,8 @@ def check_value(path, kind, v):
         if not (isinstance(v, str) and re.match(r"https://[^\s]+$", v)): err(path, "deve essere un link che inizia con https://")
     elif kind == "atm":
         if v not in ATM_TEMI: err(path, f"tema non valido ({v!r}). Validi: {', '.join(ATM_TEMI)}")
+    elif kind == "bool":
+        if not isinstance(v, bool): err(path, "deve essere true o false")
     elif kind == "pass":
         if v not in ("chiuso", "limitato", "aperto"): err(path, "valori ammessi: chiuso, limitato, aperto")
     elif kind == "fx":

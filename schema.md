@@ -210,7 +210,7 @@ Forza i colori della home per un periodo. Priorità dei colori: `atmosfera` manu
 
 ### `passi` — Stato dei passi (lista, scritto a mano con fonte)
 
-Per avvisare se il passo del Maloja (o altro) è chiuso, con catene/limitazioni o aperto. **Non è automatico**: lo stato si scrive solo guardando una fonte ufficiale e si mostra in home per 3 giorni dalla `verificata_il`, poi sparisce da solo (meglio nessuna informazione che una vecchia). Massimo 2 passi mostrati.
+Per mostrare in home **Aperto, Chiuso o Limitato** nella casella del passo (Maloja e Spluga hanno una casella con il meteo; il nome deve contenere "Maloja" o "Spluga"/"Splügen") e per avvisare se un altro passo è chiuso, con catene/limitazioni o aperto. **Non è automatico**: lo stato si scrive solo guardando una fonte ufficiale e si mostra in home per 3 giorni dalla `verificata_il`, poi sparisce da solo (meglio nessuna informazione che una vecchia). Massimo 3 voci mostrate.
 
 | Campo | Tipo | Obbl. | Note |
 |---|---|---|---|
@@ -220,8 +220,9 @@ Per avvisare se il passo del Maloja (o altro) è chiuso, con catene/limitazioni 
 | `al` | data | no | ultimo giorno di validità, se la fonte indica la fine |
 | `url` | link | sì | fonte `https://…` (mostrata come "fonte"); vedi le fonti accettate sotto |
 | `verificata_il` | data | sì | giorno in cui è stata guardata la fonte |
+| `stagionale` | `true`/`false` | no | `true` per una chiusura invernale prevista: la voce resta visibile 14 giorni dalla `verificata_il` invece di 3 |
 
-**Fonti accettate per Maloja e Spluga** (controllate il 13/11/2026; nessuna offre un feed automatico né condizioni d'uso per il riuso, quindi si leggono a mano e non si copiano i loro testi): TCS, `https://www.tcs.ch/de/tools/verkehrsinfo-verkehrslage/paesse-in-der-schweiz.php` (tempo reale, fonte principale); Provincia di Sondrio / Valtellina, `https://www.valtellina.it/it/situazione-passi` (riscontro italiano); Canton Grigioni, `https://www.strassen.gr.ch/` (ufficiale, per comunicati su lavori e chiusure); IAP Alpenpässe, `https://alpen-paesse.ch/alpenpaesse/malojapass/` (stato con data di validità, utile come riscontro). Il Maloja è di norma aperto tutto l'anno: ha senso inserire una voce soprattutto per `chiuso` o `limitato` (neve, catene, lavori). Lo Spluga ha invece una chiusura invernale abituale (TCS indica da novembre a marzo): finché il passo è chiuso, una voce `chiuso` (`nome`: "Passo dello Spluga") con `testo` "chiusura invernale" va rinnovata guardando la fonte ogni 3 giorni, oppure si lascia solo l'etichetta meteo.
+**Fonti accettate per Maloja e Spluga** (controllate il 13/11/2026; nessuna offre un feed automatico né condizioni d'uso per il riuso, quindi si leggono a mano e non si copiano i loro testi): TCS, `https://www.tcs.ch/de/tools/verkehrsinfo-verkehrslage/paesse-in-der-schweiz.php` (tempo reale, fonte principale); Provincia di Sondrio / Valtellina, `https://www.valtellina.it/it/situazione-passi` (riscontro italiano); Canton Grigioni, `https://www.strassen.gr.ch/` (ufficiale, per comunicati su lavori e chiusure); IAP Alpenpässe, `https://alpen-paesse.ch/alpenpaesse/malojapass/` (stato con data di validità, utile come riscontro). Il Maloja è di norma aperto tutto l'anno: ha senso inserire una voce soprattutto per `chiuso` o `limitato` (neve, catene, lavori). Lo Spluga ha invece una chiusura invernale abituale (TCS indica da novembre a marzo): finché il passo è chiuso, una voce `chiuso` (`nome`: "Passo dello Spluga") con `testo` "chiusura invernale" e `stagionale: true` resta visibile 14 giorni e va rinnovata guardando la fonte almeno ogni due settimane (la casella mostra il fiocco di neve).
 
 ```json
 "passi": [{"nome": "Passo del Maloja", "stato": "chiuso", "testo": "neve", "url": "https://www.strassen.gr.ch", "verificata_il": "2026-11-08"}]

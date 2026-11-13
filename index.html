@@ -216,6 +216,10 @@ html[data-atm] body{background-image:linear-gradient(var(--grid) 1px,transparent
 .chip.av{--cc:255,176,60;background:rgba(60,34,4,.9)}
 .chip.ri{--cc:var(--a1,25,200,245)}
 .chip.me{--cc:159,176,198;font-weight:500;color:#dbe6f4}
+.chip.st-chiuso{--cc:255,107,107;background:rgba(58,12,16,.92)}
+.chip.st-limitato{--cc:255,176,60;background:rgba(60,34,4,.92)}
+.chip.st-aperto{--cc:61,255,176;background:rgba(6,44,32,.92)}
+.chip b{font-weight:700}
 .chip a,.chip button{color:#fff;font:inherit;font-weight:500;text-decoration:underline;background:none;border:0;padding:0;cursor:pointer}
 .fxsel{font-size:.85rem;color:var(--mute)}
 .fxsel button{font:inherit;color:var(--brand);background:none;border:0;text-decoration:underline;cursor:pointer;padding:2px 4px}
@@ -724,7 +728,7 @@ const atmInit = D => {
     avvisi.push({d, t: (d === 0 ? "Oggi: " : fmtS(x.date) + ": ") + x.text}); });
   avvisi.sort((a, b) => a.d - b.d);
   /* passi (stato scritto a mano con fonte): solo chiuso/limitato/aperto verificati negli ultimi 3 giorni */
-  const passi = (Array.isArray(D && D.passi) ? D.passi : []).filter(p => p && typeof p.nome === "string" && p.nome && ["chiuso","limitato","aperto"].includes(p.stato) && /^https:\/\//.test(p.url || "") && isYmd(p.verificata_il) && dd(p.verificata_il, oggi) >= 0 && dd(p.verificata_il, oggi) <= 3 && (!isYmd(p.al) || oggi <= p.al)).slice(0, 2);
+  const passi = (Array.isArray(D && D.passi) ? D.passi : []).filter(p => p && typeof p.nome === "string" && p.nome && ["chiuso","limitato","aperto"].includes(p.stato) && /^https:\/\//.test(p.url || "") && isYmd(p.verificata_il) && dd(p.verificata_il, oggi) >= 0 && dd(p.verificata_il, oggi) <= (p.stagionale === true ? 14 : 3) && (!isYmd(p.al) || oggi <= p.al)).slice(0, 3);
   /* preferenza del visitatore e controlli */
   let pref = null; try { pref = localStorage.getItem("ov_fx"); } catch (e) {}
   const off = /[?&]atm=off\b/.test(location.search), cn = navigator.connection;
@@ -744,8 +748,15 @@ const atmInit = D => {
     let h = "";
     if (ric) h += chip("ri", '<use href="#ic-occhio"/>', (ric.from === (isYmd(ric.to) ? ric.to : ric.from) ? "Oggi: " : "In corso: ") + esc(ric.title) + ' <small>' + (ric.text ? '<button type="button" data-ric>dettagli</button> · ' : "") + '<a href="' + esc(ric.url) + '" target="_blank" rel="noopener">fonte</a></small>');
     if (M) h += chip("me", ICO[M.cielo], "Chiavenna · " + String(Math.round(M.temp_c)).replace("-", "−") + " °C · " + CIELI[M.cielo] + (vento === "calmo" ? "" : " · vento " + (vento === "forte" ? "forte" : "moderato")));
-    PS.forEach((p, i) => { h += chip("me", ICO[p.cielo], p.nome + " " + String(Math.round(p.temp_c)).replace("-", "−") + " °C · " + CIELI[p.cielo] + (i === PS.length - 1 ? ' <small><a href="https://www.tcs.ch/de/tools/verkehrsinfo-verkehrslage/paesse-in-der-schweiz.php" target="_blank" rel="noopener">stato strade</a></small>' : "")); });
-    passi.forEach(p => { h += chip(p.stato === "aperto" ? "me" : "av", ICO.nebbia, esc(p.nome) + " " + p.stato + (p.testo ? ": " + esc(p.testo) : "") + ' <small>verificato il ' + fmtS(p.verificata_il) + ' · <a href="' + esc(p.url) + '" target="_blank" rel="noopener">fonte</a></small>'); });
+    /* ogni passo con meteo ha la sua casella; se c'è uno stato verificato a mano (passi) mostra Aperto / Chiuso / Limitato in evidenza */
+    const KEY = {Maloja: /maloja/i, Spluga: /spl[uü]g/i}, usati = new Set(), grado = p => String(Math.round(p.temp_c)).replace("-", "−") + " °C";
+    const ST = {aperto:"Aperto", chiuso:"Chiuso", limitato:"Limitato"}, ICS = {aperto:'<path d="M14 34l14 14 24-28"/>', chiuso:'<path d="M16 16l32 32M48 16L16 48"/>', limitato:'<path d="M32 12v26M32 50v.5"/>'};
+    const stIco = (x, cielo) => x.stato === "chiuso" && (/inverna|neve/i.test(x.testo || "") || cielo === "neve") ? ICO.neve : ICS[x.stato];
+    const stLink = x => ' <small>verificato il ' + x.verificata_il.slice(8) + "/" + x.verificata_il.slice(5, 7) + ' · <a href="' + esc(x.url) + '" target="_blank" rel="noopener">fonte</a></small>';
+    PS.forEach((p, i) => { const x = passi.find(q => KEY[p.nome].test(q.nome)); const last = i === PS.length - 1 ? ' <small><a href="https://www.tcs.ch/de/tools/verkehrsinfo-verkehrslage/paesse-in-der-schweiz.php" target="_blank" rel="noopener">stato strade</a></small>' : "";
+      if (x) { usati.add(x); h += chip("st-" + x.stato, stIco(x, p.cielo), "<b>" + p.nome + " " + ST[x.stato].toLowerCase() + "</b>" + (x.testo ? " (" + esc(x.testo) + ")" : "") + " · " + grado(p) + stLink(x)); }
+      else h += chip("me", ICO[p.cielo], p.nome + " " + grado(p) + " · " + CIELI[p.cielo] + last); });
+    passi.filter(x => !usati.has(x)).forEach(x => { h += chip("st-" + x.stato, stIco(x, ""), "<b>" + esc(x.nome) + " " + ST[x.stato].toLowerCase() + "</b>" + (x.testo ? " (" + esc(x.testo) + ")" : "") + stLink(x)); });
     $("#atmbar").innerHTML = h;
     const n = $("#atmbar").children.length; const home = $("#home"); home.classList.toggle("atm-on", n > 0); home.classList.toggle("atm-2", n > 1); home.classList.toggle("atm-3", n > 3);
     const cm = $("#credit-meteo"); if (cm) cm.hidden = !M;

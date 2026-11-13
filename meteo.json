@@ -1,13 +1,13 @@
 {
-  "aggiornato": "2026-11-13T10:22:22Z",
+  "aggiornato": "2026-11-13T12:10:31Z",
   "cielo": "sereno",
   "temp_c": 10.8,
   "vento_kmh": 14,
   "simbolo": "partlycloudy_day",
   "maloja": {
     "cielo": "nebbia",
-    "temp_c": -1.8,
-    "vento_kmh": 11,
+    "temp_c": -2.2,
+    "vento_kmh": 10,
     "simbolo": "fog"
   },
   "fonte": "MET Norway (CC BY 4.0)"

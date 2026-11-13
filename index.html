@@ -186,9 +186,9 @@ dialog#pd[open]{animation:pdin .25s ease-out}
 #atm .veil{position:absolute;inset:0;transition:opacity 1.2s ease;opacity:var(--veil,0);background:linear-gradient(180deg,rgba(120,140,165,.55),rgba(60,80,110,.15))}
 #atm .frost{position:absolute;inset:0;opacity:0;transition:opacity 1.2s;box-shadow:inset 0 0 90px 10px rgba(170,225,255,.15),inset 0 0 220px rgba(140,200,255,.08)}
 #atm .heat{position:absolute;left:0;right:0;bottom:0;height:45%;opacity:0;transition:opacity 1.2s;background:linear-gradient(0deg,rgba(255,170,60,.20),transparent)}
-#atm .sun{position:absolute;right:-10%;top:-14%;width:70vmax;height:70vmax;border-radius:50%;opacity:0;transition:opacity 1.2s;background:radial-gradient(circle,rgba(255,226,140,.28),rgba(255,200,90,.09) 40%,transparent 68%);animation:atmsol 9s ease-in-out infinite}
-@keyframes atmsol{50%{transform:scale(1.06);opacity:.85}}
-#atm .moon{position:absolute;right:5%;top:21%;width:50px;height:50px;border-radius:50%;opacity:0;transition:opacity 1.2s;background:radial-gradient(circle at 35% 35%,#fff,#dfe8ff 55%,#a9b8dd);box-shadow:0 0 40px 10px rgba(190,210,255,.35)}
+#atm .sun{position:absolute;left:50%;top:12vh;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;opacity:0;transition:opacity 1.5s,left 4s linear,top 4s linear,background 3s,box-shadow 3s;background:rgb(var(--sc,255,226,140));box-shadow:0 0 36px 14px rgba(var(--sc,255,226,140),.35),0 0 150px 60px rgba(var(--sc,255,226,140),.13)}
+#atm .moon{position:absolute;left:50%;top:12vh;width:44px;height:44px;margin:-22px 0 0 -22px;opacity:0;transition:opacity 1.5s,left 4s linear,top 4s linear;filter:drop-shadow(0 0 14px rgba(190,210,255,.45))}
+#atm .moon svg{display:block;width:100%;height:100%}
 #atm .cl{position:absolute;width:60vmax;height:22vmax;border-radius:50%;filter:blur(40px);opacity:0;transition:opacity 1.5s;background:rgba(150,170,200,.16);animation:atmnuv 70s linear infinite}
 #atm .cl:nth-of-type(2){top:18%;animation-duration:95s;animation-delay:-40s;height:18vmax}
 #atm .cl:nth-of-type(3){top:48%;animation-duration:120s;animation-delay:-70s}
@@ -197,12 +197,10 @@ dialog#pd[open]{animation:pdin .25s ease-out}
 @keyframes atmfog{to{transform:translateX(8%)}}
 #atm canvas{position:absolute;inset:0;width:100%;height:100%}
 html[data-sky="nuvoloso"] #atm .cl,html[data-sky="pioggia"] #atm .cl,html[data-sky="neve"] #atm .cl{opacity:1}
-html[data-sky="sereno"][data-day="1"] #atm .sun{opacity:1}
-html[data-sky="sereno"][data-day="0"] #atm .moon{opacity:1}
 html[data-sky="nebbia"] #atm .fog{opacity:1}
 html[data-temp="freddo"] #atm .frost{opacity:1}
 html[data-temp="caldo"] #atm .heat{opacity:1}
-html[data-fx="off"] #atm .cl,html[data-fx="off"] #atm .sun,html[data-fx="off"] #atm .fog{animation:none}
+html[data-fx="off"] #atm .cl,html[data-fx="off"] #atm .fog{animation:none}
 html[data-fx="off"] #atm canvas{display:none}
 html[data-atm] body{background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px)}
 #home{position:relative}
@@ -224,7 +222,7 @@ html[data-atm] body{background-image:linear-gradient(var(--grid) 1px,transparent
 .fxsel{font-size:.85rem;color:var(--mute)}
 .fxsel button{font:inherit;color:var(--brand);background:none;border:0;text-decoration:underline;cursor:pointer;padding:2px 4px}
 .fxsel button[aria-pressed="true"]{color:#fff;text-decoration:none;font-weight:600}
-@media (prefers-reduced-motion:reduce){#atm .sun,#atm .cl,#atm .fog{animation:none}}
+@media (prefers-reduced-motion:reduce){#atm .cl,#atm .fog{animation:none}#atm .sun,#atm .moon{transition:opacity 1.5s}}
 @media (max-width:700px){
 #home.atm-on .hero svg.art,#home.atm-on svg.art{width:min(560px,66%);margin-bottom:14px}
 #home.atm-2{padding-top:36px}
@@ -715,6 +713,22 @@ const atmInit = D => {
       if (cw < -1) return true; if (cw > 1) continue;
       const w = Math.acos(cw) / (2 * Math.PI); if (J >= Jt - w && J <= Jt + w) return true;
     } return false; };
+  /* sole e luna: posizione reale a Chiavenna secondo l'ora (altezza del sole, alba, tramonto, fase lunare) */
+  const rad = Math.PI / 180;
+  const sunAlt = t => { const n = t / 864e5 + 2440587.5 - 2451545, L = 280.46 + 0.9856474 * n, g = (357.528 + 0.9856003 * n) * rad, lam = (L + 1.915 * Math.sin(g) + 0.02 * Math.sin(2 * g)) * rad, eps = 23.439 * rad,
+      dec = Math.asin(Math.sin(eps) * Math.sin(lam)), ra = Math.atan2(Math.cos(eps) * Math.sin(lam), Math.cos(lam)) / rad;
+    let H = (280.46061837 + 360.98564736629 * n + LON - ra) % 360; if (H > 180) H -= 360; if (H < -180) H += 360;
+    return Math.asin(Math.sin(LAT * rad) * Math.sin(dec) + Math.cos(LAT * rad) * Math.cos(dec) * Math.cos(H * rad)) / rad; };
+  const sky = () => { const now = Date.now(), up = sunAlt(now) > -0.83, STEP = 600e3; let a = now, b = now;
+    for (let i = 0; i < 160 && (sunAlt(a - STEP) > -0.83) === up; i++) a -= STEP;   /* inizio della fase attuale (alba o tramonto) */
+    for (let i = 0; i < 160 && (sunAlt(b + STEP) > -0.83) === up; i++) b += STEP;   /* fine della fase attuale */
+    const f = Math.min(1, Math.max(0, (now - a) / Math.max(1, b - a + STEP)));
+    return {up, f, alt: sunAlt(now)}; };
+  const moonAge = t => (((t / 864e5 + 2440587.5 - 2451550.1) / 29.530588853) % 1 + 1) % 1;
+  const moonSvg = k => { const c = Math.cos(2 * Math.PI * k), r = 20, rx = Math.abs(c) * r, waxing = k < .5, thin = c > 0;   /* c>0: falce, c<0: gibbosa */
+    const lit = waxing ? 1 : 0, top = "M22 2", sweepOuter = lit, sweepInner = (waxing ? (thin ? 0 : 1) : (thin ? 1 : 0));
+    const d = `${top}A${r} ${r} 0 0 ${sweepOuter} 22 42A${rx.toFixed(2)} ${r} 0 0 ${sweepInner} 22 2Z`;
+    return `<svg viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="20" fill="#1c2c47" opacity=".75"/><path d="${d}" fill="#eef3ff"/></svg>`; };
   /* tema manuale, ricorrenza verificata */
   const A = D && typeof D.atmosfera === "object" && D.atmosfera ? D.atmosfera : {};
   const aOk = (!isYmd(A.dal) || oggi >= A.dal) && (!isYmd(A.al) || oggi <= A.al);
@@ -740,6 +754,11 @@ const atmInit = D => {
     const pal = man || (ric && ATM_TEMI.includes(ric.atmosfera) ? ric.atmosfera : null) || festa(oggi) || stagione, P = PAL[pal], day = M ? (isDay(Date.now()) ? 1 : 0) : 1;
     const temp = !M ? "nd" : M.temp_c <= 2 ? "freddo" : M.temp_c >= 30 ? "caldo" : "mite", vento = !M ? "calmo" : M.vento_kmh >= 35 ? "forte" : M.vento_kmh >= 15 ? "vivace" : "calmo";
     R.dataset.atm = pal; R.dataset.fx = fxEff(); R.dataset.sky = M ? M.cielo : "nd"; R.dataset.temp = temp; R.dataset.day = day;
+    const sk = sky(), dim = M ? ({sereno:1, nuvoloso:.5, neve:.3, nebbia:.3, pioggia:.14})[M.cielo] : .65, sunEl = $("#atm .sun"), moonEl = $("#atm .moon");
+    if (sk.up) { const sf = Math.min(1, Math.max(0, (sk.alt - 2) / 18)), mix = (a, b) => Math.round(a + (b - a) * sf);
+      sunEl.style.left = (10 + 80 * sk.f) + "%"; sunEl.style.top = (16 - 12 * Math.min(1, Math.max(0, sk.alt / 50))) + "vh";
+      sunEl.style.setProperty("--sc", mix(255, 255) + "," + mix(140, 228) + "," + mix(60, 150)); sunEl.style.opacity = dim; moonEl.style.opacity = 0; }
+    else { const k = moonAge(Date.now()); moonEl.innerHTML = moonSvg(k); moonEl.style.left = (10 + 80 * sk.f) + "%"; moonEl.style.top = (16 - 10 * Math.sin(Math.PI * sk.f)) + "vh"; moonEl.style.opacity = dim; sunEl.style.opacity = 0; }
     R.style.setProperty("--a1", P.a1); R.style.setProperty("--a2", P.a2); R.style.setProperty("--grid", P.grid);
     R.style.setProperty("--lux", !M ? 1 : M.cielo === "sereno" ? (day ? .95 : .7) : ({nuvoloso:.6, pioggia:.45, neve:.7, nebbia:.5})[M.cielo]);
     R.style.setProperty("--veil", !M ? 0 : ({nuvoloso:.10, pioggia:.14, nebbia:.08, neve:.08, sereno:0})[M.cielo]);

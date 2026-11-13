@@ -1,13 +1,13 @@
 {
-  "aggiornato": "2026-11-12T23:58:33Z",
+  "aggiornato": "2026-11-13T01:28:57Z",
   "cielo": "pioggia",
-  "temp_c": 12.2,
+  "temp_c": 11.7,
   "vento_kmh": 8,
   "simbolo": "lightrain",
   "maloja": {
     "cielo": "pioggia",
-    "temp_c": 3.0,
-    "vento_kmh": 8,
+    "temp_c": 2.6,
+    "vento_kmh": 9,
     "simbolo": "rain"
   },
   "fonte": "MET Norway (CC BY 4.0)"

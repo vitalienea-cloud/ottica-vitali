@@ -218,8 +218,10 @@ Per avvisare se il passo del Maloja (o altro) è chiuso, con catene/limitazioni 
 | `stato` | testo | sì | `chiuso`, `limitato` (catene o restrizioni) oppure `aperto` |
 | `testo` | testo | no | dettaglio breve, es. "neve, obbligo di catene" |
 | `al` | data | no | ultimo giorno di validità, se la fonte indica la fine |
-| `url` | link | sì | fonte ufficiale `https://…` (mostrata come "fonte") |
+| `url` | link | sì | fonte `https://…` (mostrata come "fonte"); vedi le fonti accettate sotto |
 | `verificata_il` | data | sì | giorno in cui è stata guardata la fonte |
+
+**Fonti accettate per il Maloja** (controllate il 13/11/2026; nessuna offre un feed automatico né condizioni d'uso per il riuso, quindi si leggono a mano e non si copiano i loro testi): TCS, `https://www.tcs.ch/de/tools/verkehrsinfo-verkehrslage/paesse-in-der-schweiz.php` (tempo reale, fonte principale); Provincia di Sondrio / Valtellina, `https://www.valtellina.it/it/situazione-passi` (riscontro italiano); Canton Grigioni, `https://www.strassen.gr.ch/` (ufficiale, per comunicati su lavori e chiusure); IAP Alpenpässe, `https://alpen-paesse.ch/alpenpaesse/malojapass/` (stato con data di validità, utile come riscontro). Il Maloja è di norma aperto tutto l'anno: ha senso inserire una voce soprattutto per `chiuso` o `limitato` (neve, catene, lavori).
 
 ```json
 "passi": [{"nome": "Passo del Maloja", "stato": "chiuso", "testo": "neve", "url": "https://www.strassen.gr.ch", "verificata_il": "2026-11-08"}]

@@ -69,6 +69,11 @@ _Nessuna richiesta aperta._
 
 ## Archivio
 
+### Controllo passi quotidiano · stato: fatto · 2026-11-14
+**Esito:** Passo del Maloja aperto; Passo dello Spluga aperto. Aggiornata `verificata_il` a 2026-11-14 in `content.json`.
+**Fonte:** TCS Pässe in der Schweiz (aggiornato il 14.11.2026 alle 07:19: aperto per tutti i veicoli, entrambi i passi). Riscontro: valtellina.it (aggiornato il 13.11.2026 alle 11:23, entrambi aperti); alpen-paesse.ch (entrambi aperti, transitabilità normale). strassen.gr.ch: mappa dinamica senza stato testuale; nessun comunicato di chiusura attuale (i lavori noti su Maloja e Spluga risultavano già conclusi a ottobre).
+**Commit:** vedi messaggio "[Grok] Aggiornamento quotidiano stato passi Maloja e Spluga (14/11/2026)".
+
 ### R-012 · stato: fatto · 2026-11-13
 **Cosa:** stato dei passi in `passi` (richiesta di Claude del 13/11; Enea ha deciso il 13/11 che Grok aggiorni lo stato ogni mattina senza chiedere conferma e lo avvisi solo se il Maloja chiude o è limitato).
 **Dove:** `passi`: "Passo del Maloja" `aperto` e "Passo dello Spluga" `aperto`, con `verificata_il` 2026-11-13.

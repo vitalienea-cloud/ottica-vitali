@@ -223,6 +223,23 @@ html[data-atm] body{background-image:linear-gradient(var(--grid) 1px,transparent
 .fxsel button{font:inherit;color:var(--brand);background:none;border:0;text-decoration:underline;cursor:pointer;padding:2px 4px}
 .fxsel button[aria-pressed="true"]{color:#fff;text-decoration:none;font-weight:600}
 @media (prefers-reduced-motion:reduce){#atm .cl,#atm .fog{animation:none}#atm .sun,#atm .moon{transition:opacity 1.5s}}
+
+/* desktop: ogni categoria su un'unica riga, scorrevole in orizzontale con frecce */
+@media (min-width:701px){
+section .wrap{max-width:min(1320px,94vw)}
+section .wrap{position:relative}
+.grid{display:flex;flex-wrap:nowrap;gap:14px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;padding:4px 2px 16px;margin:0 -2px;scrollbar-width:thin;scrollbar-color:rgba(25,200,245,.5) transparent}
+.grid>*{flex:0 0 clamp(236px,21vw,296px);scroll-snap-align:start;min-width:0}
+.grid>.empty{flex:1 1 auto}
+.org{align-items:stretch}
+.grid::-webkit-scrollbar{height:8px}.grid::-webkit-scrollbar-thumb{background:rgba(25,200,245,.45);border-radius:8px}
+.rowarr{position:absolute;top:44px;right:20px;display:none;gap:8px}
+.rowarr.on{display:flex}
+.rowarr button{width:38px;height:38px;border-radius:50%;border:1px solid rgba(25,200,245,.6);background:rgba(8,20,42,.85);color:var(--brand);cursor:pointer;font-size:1.2rem;line-height:1;box-shadow:0 0 12px rgba(25,200,245,.25)}
+.rowarr button:disabled{opacity:.3;cursor:default}
+.rowarr button:focus-visible{outline:2px solid #fff;outline-offset:2px}
+}
+@media (max-width:700px){.rowarr{display:none!important}}
 @media (max-width:700px){
 #home.atm-on .hero svg.art,#home.atm-on svg.art{width:min(560px,66%);margin-bottom:14px}
 #home.atm-2{padding-top:36px}
@@ -848,6 +865,30 @@ const atmInit = D => {
       PS = [["maloja", "Maloja"], ["spluga", "Spluga"]].map(([k, n]) => { const x = m[k]; return x && CIELI[x.cielo] && Number.isFinite(x.temp_c) ? {nome:n, cielo:x.cielo, temp_c:x.temp_c} : null; }).filter(Boolean); apply(); }
   }).catch(() => {});
 };
+
+/* frecce per le righe scorrevoli (solo desktop): compaiono se la riga è più larga dello spazio */
+(function rows() {
+  const mq = matchMedia("(min-width:701px)"), reduce = matchMedia("(prefers-reduced-motion:reduce)");
+  const ctl = new Map();
+  function setup() {
+    document.querySelectorAll("section .grid").forEach(g => {
+      let c = ctl.get(g);
+      if (!c) { const w = g.closest(".wrap"), box = document.createElement("div"); box.className = "rowarr"; box.setAttribute("role", "group");
+        const nm = (w.querySelector("h2") || {}).textContent || "sezione"; box.setAttribute("aria-label", "Scorri " + nm);
+        box.innerHTML = '<button type="button" aria-label="Indietro">‹</button><button type="button" aria-label="Avanti">›</button>';
+        w.appendChild(box); const [a, b] = box.querySelectorAll("button");
+        const go = d => g.scrollBy({left: d * Math.max(240, g.clientWidth * .8), behavior: reduce.matches ? "auto" : "smooth"});
+        a.onclick = () => go(-1); b.onclick = () => go(1); c = {box, a, b}; ctl.set(g, c);
+        g.addEventListener("scroll", () => upd(g), {passive: true}); }
+      upd(g);
+    });
+  }
+  function upd(g) { const c = ctl.get(g); if (!c) return; const more = g.scrollWidth > g.clientWidth + 4;
+    c.box.classList.toggle("on", mq.matches && more); c.a.disabled = g.scrollLeft < 4; c.b.disabled = g.scrollLeft + g.clientWidth >= g.scrollWidth - 4; }
+  addEventListener("resize", () => ctl.forEach((c, g) => upd(g)));
+  new MutationObserver(() => requestAnimationFrame(setup)).observe(document.querySelector("main") || document.body, {childList: true, subtree: true});
+  setup();
+})();
 
 fetch("content.json", {cache:"no-store"})
   .then(r => { if(!r.ok) throw 0; return r.json(); })

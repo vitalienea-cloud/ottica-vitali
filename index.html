@@ -722,6 +722,7 @@ const vistaFit = () => { const hm = document.getElementById("home"); if (!hm) re
     w = narrow ? vw / .75 : Math.min(vw * .94, 1400, innerHeight * .9 * 16 / 9), sh = w * 9 / 16, bar = document.getElementById("atmbar");
   if (!narrow) hm.style.minHeight = Math.round(sh * 1.3) + "px"; else hm.style.minHeight = "";
   const top = narrow ? Math.max(0, (bar && bar.offsetHeight ? bar.getBoundingClientRect().bottom - r.top : 150) - 8) : hm.clientHeight - sh;
+  const t1 = document.querySelector("#home h1"); if (t1) { t1.style.marginTop = ""; if (!narrow) { t1.style.marginTop = "6px"; const peak = hm.clientHeight - sh + .055 * sh, d = peak / 2 - (t1.offsetTop + t1.offsetHeight / 2); t1.style.marginTop = Math.max(6, 6 + d) + "px"; } }
   const sc = document.getElementById("scorc"); if (sc) sc.style.marginTop = narrow ? Math.round(sh) + "px" : "";
   ["vista", "vpass"].forEach(id => { const e = document.getElementById(id); e.style.left = -r.left + "px"; e.style.width = vw + "px"; e.style.right = "auto"; });
   document.querySelectorAll(".vs").forEach(e => { e.style.width = w + "px"; e.style.left = (vw - w) / 2 + "px"; e.style.bottom = "auto"; e.style.top = top + "px"; });

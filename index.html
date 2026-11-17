@@ -216,6 +216,11 @@ html[data-fx="off"] #vista img{transition:none}
 .pb{position:absolute;transform:translate(-50%,-100%);display:flex;justify-content:center;pointer-events:auto;width:max-content;max-width:46vw}
 .pb:empty{display:none}
 .pb .chip{font-size:.76rem;padding:3px 9px;gap:6px;flex-wrap:wrap;justify-content:center}
+@media (min-width:701px){
+#home{display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:26px}
+.hero h1{display:flex;align-items:baseline;justify-content:center;gap:.3em;margin-top:auto;margin-bottom:12px}
+.hero h1 svg.art{height:.74em!important;width:auto!important;margin:0 .12em 0 0!important;flex:none;align-self:baseline}
+}
 @media (max-width:700px){.pb .chip{font-size:.7rem;padding:2px 8px}.pb .chip small{display:none}}
 .atm-bar{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:5px 6px;margin:0 0 10px}
 .atm-bar:empty{display:none}
@@ -709,12 +714,15 @@ const NEON_BLOOM = {"#0d4f7a":"#19c8f5","#6e0f5c":"#ff2bd6","#0f6150":"#3dffb0",
 /* ===== Atmosfera: colori e effetti della home secondo avvisi, ricorrenze, meteo e stagione. Priorità e campi: schema.md ===== */
 const ATM_TEMI = ["neutro","inverno","primavera","estate","autunno","natale","vista","amore","festa"];
 const vistaFit = () => { const hm = document.getElementById("home"); if (!hm) return; const vw = document.documentElement.clientWidth, r = hm.getBoundingClientRect(), narrow = vw <= 700,
-    w = narrow ? vw / .62 : Math.min(vw, 1600), sh = w * 9 / 16, bar = document.getElementById("atmbar");
-  if (!narrow) hm.style.minHeight = Math.round(sh * .95) + "px"; else hm.style.minHeight = "";
+    w = narrow ? vw / .62 : Math.min(vw * .94, 1400, innerHeight * .9 * 16 / 9), sh = w * 9 / 16, bar = document.getElementById("atmbar");
+  if (!narrow) hm.style.minHeight = Math.round(sh * 1.12) + "px"; else hm.style.minHeight = "";
   const top = narrow ? Math.max(0, (bar && bar.offsetHeight ? bar.getBoundingClientRect().bottom - r.top : 150) - 8) : hm.clientHeight - sh;
   ["vista", "vpass"].forEach(id => { const e = document.getElementById(id); e.style.left = -r.left + "px"; e.style.width = vw + "px"; e.style.right = "auto"; });
   document.querySelectorAll(".vs").forEach(e => { e.style.width = w + "px"; e.style.left = (vw - w) / 2 + "px"; e.style.bottom = "auto"; e.style.top = top + "px"; });
   document.querySelectorAll(".pb").forEach(e => { e.style.marginLeft = "0px"; const b = e.getBoundingClientRect(); if (!b.width) return; e.style.marginLeft = (b.left < 8 ? 8 - b.left : b.right > vw - 8 ? vw - 8 - b.right : 0) + "px"; }); };
+try { const mq = matchMedia("(min-width:701px)"), gl = document.querySelector("#home svg.art"), h1 = document.querySelector("#home h1");
+  const place = () => { if (!gl || !h1) return; if (mq.matches) h1.insertBefore(gl, h1.firstChild); else h1.parentNode.insertBefore(gl, h1); try { vistaFit(); } catch (e) {} };
+  place(); mq.addEventListener ? mq.addEventListener("change", place) : mq.addListener(place); } catch (e) {}
 try { vistaFit(); addEventListener("resize", vistaFit); if (window.ResizeObserver) new ResizeObserver(vistaFit).observe(document.getElementById("home")); } catch (e) {}
 const atmInit = D => {
   const R = document.documentElement, RMQ = matchMedia("(prefers-reduced-motion:reduce)"), $ = s => document.querySelector(s);

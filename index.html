@@ -775,9 +775,9 @@ const atmInit = D => {
     R.dataset.atm = pal; R.dataset.fx = fxEff(); R.dataset.sky = M ? M.cielo : "nd"; R.dataset.temp = temp; R.dataset.day = day;
     const sk = sky(), dim = M ? ({sereno:1, nuvoloso:.5, neve:.3, nebbia:.3, pioggia:.14})[M.cielo] : .65, sunEl = $("#atm .sun"), moonEl = $("#atm .moon");
     if (sk.up) { const sf = Math.min(1, Math.max(0, (sk.alt - 2) / 18)), mix = (a, b) => Math.round(a + (b - a) * sf);
-      sunEl.style.left = (10 + 80 * sk.f) + "%"; sunEl.style.top = (16 - 12 * Math.min(1, Math.max(0, sk.alt / 50))) + "vh";
+      sunEl.style.left = (90 - 80 * sk.f) + "%"; sunEl.style.top = (16 - 12 * Math.min(1, Math.max(0, sk.alt / 50))) + "vh";
       sunEl.style.setProperty("--sc", mix(255, 255) + "," + mix(140, 228) + "," + mix(60, 150)); sunEl.style.opacity = dim; moonEl.style.opacity = 0; }
-    else { const k = moonAge(Date.now()); moonEl.innerHTML = moonSvg(k); moonEl.style.left = (10 + 80 * sk.f) + "%"; moonEl.style.top = (16 - 10 * Math.sin(Math.PI * sk.f)) + "vh"; moonEl.style.opacity = dim; sunEl.style.opacity = 0; }
+    else { const k = moonAge(Date.now()); moonEl.innerHTML = moonSvg(k); moonEl.style.left = (90 - 80 * sk.f) + "%"; moonEl.style.top = (16 - 10 * Math.sin(Math.PI * sk.f)) + "vh"; moonEl.style.opacity = dim; sunEl.style.opacity = 0; }
     R.style.setProperty("--a1", P.a1); R.style.setProperty("--a2", P.a2); R.style.setProperty("--grid", P.grid);
     R.style.setProperty("--lux", !M ? 1 : M.cielo === "sereno" ? (day ? .95 : .7) : ({nuvoloso:.6, pioggia:.45, neve:.7, nebbia:.5})[M.cielo]);
     R.style.setProperty("--veil", !M ? 0 : ({nuvoloso:.10, pioggia:.14, nebbia:.08, neve:.08, sereno:0})[M.cielo]);

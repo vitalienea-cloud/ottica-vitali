@@ -31,7 +31,7 @@ COMMON_VIS = {"icona": (ICON, False), "tema": (TEMA, False)}
 IMGF = {"image": (IMG, False), "alt": (STR, False)}
 RULES = {
   "news":       {"date": (DATE, True), "title": (STR, True), "text": (STR, False), "source": (STR, False), "url": (HTTPS, False), **COMMON_VIS, **IMGF},
-  "events":     {"date": (DATE, True), "title": (STR, True), "text": (STR, False), **COMMON_VIS, **IMGF},
+  "events":     {"date": (DATE, False), "prossimamente": ("bool", False), "title": (STR, True), "text": (STR, False), "url": (HTTPS, False), "link_testo": (STR, False), **COMMON_VIS, **IMGF},
   "closures":   {"from": (DATE, True), "to": (DATE, False), "reason": (STR, True), **COMMON_VIS},
   "exceptions": {"date": (DATE, True), "text": (STR, True), **COMMON_VIS},
   "products":   {"name": (STR, True), "brand": (STR, False), "price": (STR, False), "text": (STR, False), "dettagli": (STR, False), "rotazione": ("rot", False), "fotogrammi": ("int", False), **IMGF},
@@ -153,6 +153,11 @@ for sec in CARDS:
                     else:
                         for j, e in enumerate(c["elenco"]): check_obj(f"{p}.elenco[{j}]", e, CARD_ITEM)
                 if bool(c.get("link_testo")) != bool(c.get("link_url")): warn(p, "link_testo e link_url vanno insieme: altrimenti il link non appare")
+for i, e in enumerate(D.get("events", []) if isinstance(D.get("events"), list) else []):
+    if isinstance(e, dict):
+        if "date" not in e and e.get("prossimamente") is not True: err(f"events[{i}]", "serve `date` oppure `prossimamente: true`")
+        if "date" in e and "prossimamente" in e: err(f"events[{i}]", "usare `date` oppure `prossimamente`, non entrambi")
+        if "link_testo" in e and "url" not in e: warn(f"events[{i}].link_testo", "`link_testo` senza `url`")
 if "cantiere" in D:
     if not isinstance(D["cantiere"], list): err("cantiere", "deve essere una lista di sezioni")
     else:

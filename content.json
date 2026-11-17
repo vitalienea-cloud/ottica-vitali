@@ -13,6 +13,7 @@
     {"date": "2026-10-26", "title": "Nuova pagina online (esempio)", "text": "Qui compariranno le novità del negozio."}
   ],
   "events": [
+    {"prossimamente": true, "title": "Salute in Comune: prevenzione al seno", "text": "Ottica Vitali sostiene la campagna di prevenzione al seno Salute in Comune. Data, luogo e orari saranno comunicati appena disponibili.", "url": "https://saluteincomune.com/", "link_testo": "Vai al sito della campagna", "image": "eventi/prevenzione-seno.webp", "alt": "Logo Ottica Vitali – Prevenzione seno", "icona": "cuore", "tema": "fucsia"},
     {"date": "2026-11-14", "title": "Controllo vista gratuito", "text": "Controllo gratuito su appuntamento. Contenuto di prova.", "tema": "blu", "icona": "forottero"},
     {"date": "2026-10-30", "title": "Serata pizza", "text": "Serata pizza di prova in negozio. Tutti invitati.", "tema": "ambra", "icona": "pizza"}
   ],

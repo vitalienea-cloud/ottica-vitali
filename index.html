@@ -380,12 +380,13 @@ const ICONE = ["pizza","festa","regalo","sole","cuore","stella","caffe","natale"
 /* Icona piccola per i post social: campo "icona" oppure una generica in base al canale. */
 const icoSocial = s => { const n = ICONE.includes(s.icona) ? s.icona : (/insta/i.test(s.network||"") ? "foto" : /face/i.test(s.network||"") ? "persone" : "link"); return `<svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><use href="#ic-${n}"/></svg>`; };
 const poster = e => {
-  const d = new Date(e.date+"T12:00:00");
-  if (isNaN(d)) return "";
+  const nodate = !e.date && e.prossimamente === true;
+  const d = new Date((e.date || "") + "T12:00:00");
+  if (isNaN(d) && !nodate) return "";
   const col = TEMI[e.tema] || TEMI.blu;
-  const giorno = d.toLocaleDateString("it-IT",{weekday:"long"}).toUpperCase();
-  const mese = d.toLocaleDateString("it-IT",{month:"long",year:"numeric"}).toUpperCase();
-  return `<svg class="poster" viewBox="0 0 320 150" role="img" aria-label="${esc(e.title)}, ${esc(fmt(e.date))}"><rect width="320" height="150" rx="10" fill="${col}"/><g color="${NEON[e.tema] || NEON.blu}" opacity="${ICONE.includes(e.icona) ? ".85" : ".4"}" style="filter:drop-shadow(0 0 3px ${NEON[e.tema] || NEON.blu})">${ICONE.includes(e.icona) ? `<use href="#ic-${e.icona}" x="206" y="12" width="100" height="100"/>` : `<use href="#gl" x="168" y="14" width="140" height="56"/>`}</g><g fill="#fff" style="font-family:Inter,system-ui,sans-serif"><text x="22" y="40" font-size="14" font-weight="600" letter-spacing="2" opacity=".85">${esc(giorno)}</text><text x="20" y="108" font-size="72" font-weight="700">${d.getDate()}</text><text x="22" y="132" font-size="15" font-weight="600" letter-spacing="2">${esc(mese)}</text></g></svg>`;
+  const giorno = nodate ? "" : d.toLocaleDateString("it-IT",{weekday:"long"}).toUpperCase();
+  const mese = nodate ? "" : d.toLocaleDateString("it-IT",{month:"long",year:"numeric"}).toUpperCase();
+  return `<svg class="poster" viewBox="0 0 320 150" role="img" aria-label="${esc(e.title)}, ${nodate ? "prossimamente" : esc(fmt(e.date))}"><rect width="320" height="150" rx="10" fill="${col}"/><g color="${NEON[e.tema] || NEON.blu}" opacity="${ICONE.includes(e.icona) ? ".85" : ".4"}" style="filter:drop-shadow(0 0 3px ${NEON[e.tema] || NEON.blu})">${ICONE.includes(e.icona) ? `<use href="#ic-${e.icona}" x="206" y="12" width="100" height="100"/>` : `<use href="#gl" x="168" y="14" width="140" height="56"/>`}</g><g fill="#fff" style="font-family:Inter,system-ui,sans-serif">${nodate ? `<text x="20" y="98" font-size="26" font-weight="700" letter-spacing=".5">PROSSIMAMENTE</text><text x="22" y="128" font-size="14" font-weight="600" letter-spacing="2" opacity=".85">DATA IN ARRIVO</text>` : `<text x="22" y="40" font-size="14" font-weight="600" letter-spacing="2" opacity=".85">${esc(giorno)}</text><text x="20" y="108" font-size="72" font-weight="700">${d.getDate()}</text><text x="22" y="132" font-size="15" font-weight="600" letter-spacing="2">${esc(mese)}</text>`}</g></svg>`;
 };
 const paras = t => String(t||"").split(/\n+/).filter(x => x.trim()).map(x => `<p>${esc(x)}</p>`).join("");
 const DEF_SERVIZI = [{"titolo": "Progressione miopica", "icona": "bambino", "testo": "Gestione della progressione miopica, per rallentarne l’avanzamento nei più giovani."}, {"titolo": "Esami optometrici", "icona": "forottero", "testo": "Esami optometrici approfonditi, con topografia corneale e studio del film lacrimale."}, {"titolo": "Occhiali progressivi", "icona": "lente", "testo": "Occhiali progressivi di alta precisione, con lenti ZEISS."}, {"titolo": "Contattologia", "icona": "occhio", "testo": "Contattologia specialistica: lenti morbide, semi-rigide, multifocali, sclerali per cheratocono."}, {"titolo": "Consulenza", "icona": "occhiali", "testo": "Consulenza d’immagine e tecnica per occhiali da vista e da sole."}, {"titolo": "Assistenza", "icona": "assistenza", "testo": "Assistenza e riparazioni, comprese le saldature."}];
@@ -573,12 +574,13 @@ function render(D){
   testi(D); blocchi(D);
   /* Voci non valide (non oggetti, o con data richiesta non AAAA-MM-GG) vengono saltate e segnalate in console: una voce sbagliata non svuota la pagina. Regole: schema.md */
   const DATED = {news:"date", events:"date", exceptions:"date", closures:"from"};
-  const L = k => { if (!Array.isArray(D[k])) return []; return D[k].filter((x, i) => { const f = DATED[k]; const ok = x && typeof x === "object" && (!f || (/^\d{4}-\d{2}-\d{2}$/.test(x[f] || "") && ymd(new Date(x[f] + "T12:00:00")) === x[f])); if (!ok) console.warn("content.json: voce ignorata in " + k + "[" + i + "] (vedi schema.md)"); return ok; }); };
+  const L = k => { if (!Array.isArray(D[k])) return []; return D[k].filter((x, i) => { const f = DATED[k]; const ok = x && typeof x === "object" && (!f || (k === "events" && !x.date && x.prossimamente === true) || (/^\d{4}-\d{2}-\d{2}$/.test(x[f] || "") && ymd(new Date(x[f] + "T12:00:00")) === x[f])); if (!ok) console.warn("content.json: voce ignorata in " + k + "[" + i + "] (vedi schema.md)"); return ok; }); };
   put("news", [...L("news")].sort((a,b)=>b.date.localeCompare(a.date)),
     n => { const u = /^https:\/\//.test(n.url||"") ? esc(n.url) : ""; const ic = ICONE.includes(n.icona) ? n.icona : "novita";
       return `<div class="card"><div class="pic">${img(n)}${poster({...n, icona: ic})}</div><span class="date">${n.source?esc(n.source)+" · ":""}${fmt(n.date)}</span><h3>${esc(n.title)}</h3><p>${esc(n.text)}</p>${u?`<a class="go" href="${u}" target="_blank" rel="noopener">Leggi la fonte</a>`:""}</div>`; }, "Nessuna notizia al momento.");
-  put("events", L("events").filter(e=>e.date>=today).sort((a,b)=>a.date.localeCompare(b.date)),
-    e => `<div class="card"><div class="pic">${img(e)}${poster(e)}</div><span class="date">${fmt(e.date)}</span><h3>${esc(e.title)}</h3><p>${esc(e.text)}</p></div>`, "Nessun evento in programma.");
+  put("events", L("events").filter(e => e.date ? e.date >= today : e.prossimamente === true).sort((a, b) => (a.date || "9999").localeCompare(b.date || "9999")),
+    e => { const u = /^https:\/\//.test(e.url || "") ? esc(e.url) : "";
+      return `<div class="card"><div class="pic">${img(e)}${poster(e)}</div><span class="date">${e.date ? fmt(e.date) : "Prossimamente"}</span><h3>${esc(e.title)}</h3><p>${esc(e.text)}</p>${u ? `<a class="go" href="${u}" target="_blank" rel="noopener">${esc(e.link_testo || "Scopri di più")}</a>` : ""}</div>`; }, "Nessun evento in programma.");
   const items = [
     ...L("closures").filter(c=>(c.to||c.from)>=today).map(c=>({from:c.from,to:c.to||c.from,label:"Chiuso",title:c.reason,tema:c.tema||"ambra",icona:c.icona})),
     ...L("exceptions").filter(x=>x.date>=today).map(x=>({from:x.date,to:x.date,label:"Orario speciale",title:x.text,tema:x.tema||"blu",icona:x.icona}))

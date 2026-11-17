@@ -51,16 +51,22 @@ Quando si parla di visite o controlli: `forottero`. Per avvisi e chiusure: `novi
 
 | Campo | Tipo | Obbl. | Note |
 |---|---|---|---|
-| `date` | data | sì | giorno dell'evento |
+| `date` | data | sì\* | giorno dell'evento |
+| `prossimamente` | `true` | sì\* | per un evento senza data ancora: la scheda mostra "Prossimamente" e non scade |
 | `title` | testo | sì | |
 | `text` | testo | no | |
+| `url` | link | no | `https://…`, mostra un link sotto il testo |
+| `link_testo` | testo | no | scritta del link (predefinita "Scopri di più") |
 | `icona` | icona | no | |
 | `tema` | tema | no | |
 | `image` | percorso | no | |
 | `alt` | testo | no | |
 
+\* Serve **uno solo** tra `date` e `prossimamente`. Appena la data è nota si sostituisce `prossimamente` con `date`.
+
 ```json
 {"date": "2026-11-14", "title": "Giornata controllo vista", "text": "Controllo gratuito su appuntamento.", "icona": "forottero", "tema": "verde"}
+{"prossimamente": true, "title": "Serata in negozio", "text": "Data in arrivo.", "url": "https://www.otticavitali.com", "link_testo": "Scopri di più"}
 ```
 
 ### `closures` — Chiusure (lista; le passate spariscono da sole)

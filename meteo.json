@@ -1,20 +1,20 @@
 {
-  "aggiornato": "2026-11-17T09:21:58Z",
+  "aggiornato": "2026-11-17T11:16:31Z",
   "cielo": "pioggia",
-  "temp_c": 10.7,
-  "vento_kmh": 11,
+  "temp_c": 9.8,
+  "vento_kmh": 9,
   "simbolo": "rain",
   "maloja": {
-    "cielo": "neve",
-    "temp_c": 2.3,
-    "vento_kmh": 12,
-    "simbolo": "sleet"
+    "cielo": "pioggia",
+    "temp_c": 2.0,
+    "vento_kmh": 14,
+    "simbolo": "rain"
   },
   "spluga": {
     "cielo": "neve",
-    "temp_c": -1.0,
-    "vento_kmh": 16,
-    "simbolo": "heavysnow"
+    "temp_c": -1.1,
+    "vento_kmh": 15,
+    "simbolo": "snow"
   },
   "fonte": "MET Norway (CC BY 4.0)"
 }

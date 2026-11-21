@@ -69,10 +69,10 @@ _Nessuna richiesta aperta._
 
 ## Archivio
 
-### Controllo passi quotidiano · stato: fatto · 2026-11-20
-**Esito:** Passo del Maloja aperto; Passo dello Spluga aperto. Aggiornata `verificata_il` a 2026-11-20 in `content.json` (rimosso il testo "neve" sul Maloja: oggi TCS non indica più la strada innevata).
-**Fonte:** TCS Pässe in der Schweiz (aggiornato il 20.11.2026 alle 06:46: entrambi aperti per tutti i veicoli). Riscontro: alpen-paesse.ch (Maloja aperto, transitabilità normale, aggiornato il 19.11.2026 alle 13:19; Spluga aperto, transitabilità normale, elenco del sito aggiornato il 19.11.2026 alle 16:00). valtellina.it e strassen.gr.ch non leggibili oggi (HTTP 403).
-**Commit:** vedi messaggio "[Grok] Aggiornamento quotidiano stato passi Maloja e Spluga (20/11/2026)".
+### Controllo passi quotidiano · stato: fatto · 2026-11-21
+**Esito:** Passo del Maloja aperto; Passo dello Spluga aperto, testo "neve". Aggiornata `verificata_il` a 2026-11-21 in `content.json`.
+**Fonte:** TCS Pässe in der Schweiz (aggiornato il 21.11.2026 alle 06:48: Maloja aperto per tutti i veicoli; Spluga aperto per tutti i veicoli, strada innevata). Riscontro: alpen-paesse.ch (Maloja aperto, transitabilità normale, aggiornato il 21.11.2026 alle 05:31; Spluga aperto, strada innevata con rischio di ghiaccio, aggiornato il 20.11.2026 alle 12:07; chiusura invernale annunciata da lunedì 23.11.2026 alle 08:00). valtellina.it: entrambi aperti (ultimo aggiornamento 16.11.2026 alle 11:58). strassen.gr.ch non leggibile oggi (HTTP 403 / URL rejected).
+**Commit:** vedi messaggio "[Grok] Aggiornamento quotidiano stato passi Maloja e Spluga (21/11/2026)".
 
 ### R-012 · stato: fatto · 2026-11-13
 **Cosa:** stato dei passi in `passi` (richiesta di Claude del 13/11; Enea ha deciso il 13/11 che Grok aggiorni lo stato ogni mattina senza chiedere conferma e lo avvisi solo se il Maloja chiude o è limitato).

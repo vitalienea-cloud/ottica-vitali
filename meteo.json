@@ -1,19 +1,19 @@
 {
-  "aggiornato": "2026-11-21T09:05:19Z",
+  "aggiornato": "2026-11-21T10:06:14Z",
   "cielo": "sereno",
-  "temp_c": 10.4,
-  "vento_kmh": 8,
+  "temp_c": 12.0,
+  "vento_kmh": 6,
   "simbolo": "fair_day",
   "maloja": {
-    "cielo": "nebbia",
-    "temp_c": -5.1,
+    "cielo": "sereno",
+    "temp_c": -2.4,
     "vento_kmh": 6,
-    "simbolo": "fog"
+    "simbolo": "partlycloudy_day"
   },
   "spluga": {
     "cielo": "nebbia",
-    "temp_c": -5.3,
-    "vento_kmh": 8,
+    "temp_c": -4.0,
+    "vento_kmh": 6,
     "simbolo": "fog"
   },
   "fonte": "MET Norway (CC BY 4.0)"

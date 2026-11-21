@@ -1,5 +1,5 @@
 {
-  "aggiornato": "2026-11-21T11:04:57Z",
+  "aggiornato": "2026-11-21T12:00:00Z",
   "cielo": "sereno",
   "temp_c": 12.8,
   "vento_kmh": 5,
@@ -12,8 +12,8 @@
   },
   "spluga": {
     "cielo": "nebbia",
-    "temp_c": -3.4,
-    "vento_kmh": 5,
+    "temp_c": -3.1,
+    "vento_kmh": 4,
     "simbolo": "fog"
   },
   "fonte": "MET Norway (CC BY 4.0)"

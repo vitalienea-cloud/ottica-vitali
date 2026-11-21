@@ -1,20 +1,20 @@
 {
-  "aggiornato": "2026-11-21T00:02:38Z",
+  "aggiornato": "2026-11-21T01:35:19Z",
   "cielo": "sereno",
-  "temp_c": 6.1,
-  "vento_kmh": 4,
+  "temp_c": 5.2,
+  "vento_kmh": 5,
   "simbolo": "partlycloudy_night",
   "maloja": {
     "cielo": "neve",
-    "temp_c": -4.6,
+    "temp_c": -5.7,
     "vento_kmh": 4,
-    "simbolo": "lightsnowshowers_night"
+    "simbolo": "snowshowers_night"
   },
   "spluga": {
     "cielo": "neve",
-    "temp_c": -7.7,
-    "vento_kmh": 4,
-    "simbolo": "snowshowers_night"
+    "temp_c": -9.8,
+    "vento_kmh": 5,
+    "simbolo": "lightsnowshowers_night"
   },
   "fonte": "MET Norway (CC BY 4.0)"
 }

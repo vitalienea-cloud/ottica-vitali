@@ -1,18 +1,18 @@
 {
-  "aggiornato": "2026-11-23T23:12:31Z",
+  "aggiornato": "2026-11-24T00:06:13Z",
   "cielo": "sereno",
-  "temp_c": 4.4,
+  "temp_c": 3.7,
   "vento_kmh": 5,
-  "simbolo": "partlycloudy_night",
+  "simbolo": "fair_night",
   "maloja": {
     "cielo": "sereno",
-    "temp_c": -4.6,
+    "temp_c": -5.9,
     "vento_kmh": 5,
     "simbolo": "partlycloudy_night"
   },
   "spluga": {
     "cielo": "nebbia",
-    "temp_c": -7.9,
+    "temp_c": -8.3,
     "vento_kmh": 5,
     "simbolo": "fog"
   },

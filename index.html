@@ -834,7 +834,7 @@ const vistaFit = () => { const hm = document.getElementById("home"); if (!hm) re
   if (bar) { bar.classList.toggle("side", wide); bar.style.left = bar.style.top = ""; }
   pbs.forEach(p => { if (p.e) p.e.style.width = wide ? COL + "px" : ""; });
   const ava = vw - (X0 + COL + 24) - 16, w = wide ? Math.min(ava, 1400, innerHeight * .8 * 16 / 9) : narrow ? vw / .75 : Math.min(vw * .94, 1400, innerHeight * .78 * 16 / 9), sh = w * 9 / 16,
-    L = (vw - w) / 2, bh = Math.max(0, ...pbs.map(p => p.e && p.e.firstChild ? p.e.offsetHeight : 0)), k = w / 960, clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+    L = wide ? (X0 + COL + (vw - 120)) / 2 - w / 2 : (vw - w) / 2, bh = Math.max(0, ...pbs.map(p => p.e && p.e.firstChild ? p.e.offsetHeight : 0)), k = w / 960, clamp = (v, a, b) => Math.max(a, Math.min(b, v));
   let y = 12;
   if (wide) { ck.style.left = (X0 - r.left) + "px"; ck.style.top = y + "px"; y += ck.offsetHeight + GAP;
     pbs.forEach(p => { const e = p.e; if (!e || !e.firstChild) return; e.style.left = X0 + "px"; e.style.top = y + "px"; y += e.offsetHeight + GAP; });

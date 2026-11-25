@@ -974,10 +974,10 @@ const atmInit = D => {
     const FULL = {Maloja: "Passo del Maloja", Spluga: "Passo dello Spluga"};
     const BIG = {aperto: '<circle cx="32" cy="32" r="29" fill="rgba(75,224,160,.16)" stroke="#4be0a0" stroke-width="3.5"/><path d="M17 33l10 10 20-23" fill="none" stroke="#4be0a0" stroke-width="7"/>', chiuso: '<circle cx="32" cy="32" r="30" fill="#ff5a6e"/><rect x="13" y="26" width="38" height="12" rx="3" fill="#fff" stroke="none"/>', limitato: '<path d="M32 5L60 55H4z" fill="#ffd24a" stroke="#ffd24a" stroke-width="4" stroke-linejoin="round"/><path d="M32 22v17" fill="none" stroke="#3a2a00" stroke-width="6"/><circle cx="32" cy="47" r="3.6" fill="#3a2a00" stroke="none"/>'};
     PS.forEach((p) => { const x = passi.find(q => KEY[p.nome].test(q.nome)), slot = $("#pb-" + p.nome.toLowerCase()); let c;
-      const meteo = '<div class="pw-m"><svg viewBox="0 0 64 64" aria-hidden="true">' + ICO[p.cielo] + "</svg><span>" + grado(p) + " · " + CIELI[p.cielo] + "</span></div>";
+      const meteo = p.cielo ? '<div class="pw-m"><svg viewBox="0 0 64 64" aria-hidden="true">' + ICO[p.cielo] + "</svg><span>" + grado(p) + " · " + CIELI[p.cielo] + "</span></div>" : "";
       if (x) { usati.add(x); c = '<div class="pw st-' + x.stato + '"' + (x.testo ? ' title="' + esc(x.testo) + '"' : "") + '><svg class="pw-i" viewBox="0 0 64 64" role="img" aria-label="' + ST[x.stato] + '">' + BIG[x.stato] + '</svg><div class="pw-b"><div class="pw-n">' + FULL[p.nome] + '</div><div class="pw-s">' + ST[x.stato] + "</div>" + meteo + stLink(x) + "</div></div>"; }
       else c = '<div class="pw"><div class="pw-b"><div class="pw-n">' + FULL[p.nome] + "</div>" + meteo + "</div></div>";
-      const pm = $("#pm-" + p.nome.toLowerCase()); if (pm) pm.innerHTML = '<div class="pmk' + (x ? " st-" + x.stato : "") + '">' + (x ? '<svg class="pm-s" viewBox="0 0 64 64" aria-hidden="true">' + BIG[x.stato] + "</svg>" : "") + '<svg class="pm-w" viewBox="0 0 64 64" aria-hidden="true">' + ICO[p.cielo] + "</svg></div>";
+      const pm = $("#pm-" + p.nome.toLowerCase()); if (pm) pm.innerHTML = '<div class="pmk' + (x ? " st-" + x.stato : "") + '">' + (x ? '<svg class="pm-s" viewBox="0 0 64 64" aria-hidden="true">' + BIG[x.stato] + "</svg>" : "") + (p.cielo ? '<svg class="pm-w" viewBox="0 0 64 64" aria-hidden="true">' + ICO[p.cielo] + "</svg>" : "") + "</div>";
       if (slot) slot.innerHTML = c; else h += c; });
     passi.filter(x => !usati.has(x)).forEach(x => { h += chip("st-" + x.stato, stIco(x, ""), "<b>" + esc(x.nome) + " " + ST[x.stato].toLowerCase() + "</b>" + (x.testo ? " (" + esc(x.testo) + ")" : "") + stLink(x)); });
     $("#atmbar").innerHTML = h;
@@ -1054,8 +1054,9 @@ const atmInit = D => {
   fetch("meteo.json", {cache:"no-store"}).then(r => { if (!r.ok) throw 0; return r.json(); }).then(m => {
     const t = Date.parse(m && m.aggiornato);
     if (m && Number.isFinite(t) && Date.now() - t < 4 * 3600e3 && Date.now() - t > -600e3 && CIELI[m.cielo] && Number.isFinite(m.temp_c) && Number.isFinite(m.vento_kmh) && m.vento_kmh >= 0) { M = {cielo:m.cielo, temp_c:m.temp_c, vento_kmh:m.vento_kmh};
-      PS = [["maloja", "Maloja"], ["spluga", "Spluga"]].map(([k, n]) => { const x = m[k]; return x && CIELI[x.cielo] && Number.isFinite(x.temp_c) ? {nome:n, cielo:x.cielo, temp_c:x.temp_c} : null; }).filter(Boolean); apply(); }
-  }).catch(() => {});
+      PS = [["maloja", "Maloja"], ["spluga", "Spluga"]].map(([k, n]) => { const x = m[k]; return x && CIELI[x.cielo] && Number.isFinite(x.temp_c) ? {nome:n, cielo:x.cielo, temp_c:x.temp_c} : null; }).filter(Boolean); apply(); return; }
+    throw 0;
+  }).catch(() => { /* meteo assente o vecchio: i widget dei passi restano, con il solo stato verificato */ PS = [{nome:"Maloja", cielo:null}, {nome:"Spluga", cielo:null}]; try { apply(); } catch (e) {} });
 };
 
 /* frecce per le righe scorrevoli (solo desktop): compaiono se la riga è più larga dello spazio */

@@ -57,7 +57,8 @@ ul.s{padding-left:20px;margin:0}ul.s li{margin:8px 0}
 .ot.cl::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2.6em;background:linear-gradient(transparent,var(--card));pointer-events:none}
 .card.open .ot{max-height:none}.card.open .ot::after{display:none}
 .more[hidden]{display:none}.more{display:block;margin-top:8px;background:none;border:0;padding:0;font:inherit;font-weight:600;font-size:.9rem;color:var(--brand);text-decoration:underline;cursor:pointer}
-table.h{border-collapse:collapse;width:100%;max-width:460px;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+table.h{border-collapse:collapse;width:100%;background:none;border:0;border-radius:10px;overflow:hidden}
+.hcard{max-width:480px}.hcard .note{margin:10px 2px 0}
 table.h td{padding:9px 16px;border-top:1px solid var(--line)}table.h tr:first-child td{border-top:0}
 table.h td:first-child{font-weight:600;color:var(--brand)}table.h tr.today td{background:var(--line)}
 table.h small{font-weight:400;color:var(--mute);font-size:.8rem}table.h td.sp{color:var(--accent);font-weight:600}table.h td.sp s{color:var(--mute);font-weight:400;font-size:.85rem}
@@ -700,7 +701,8 @@ function render(D){
     for (let i = 0; i < 7; i++) { const d = new Date(); d.setDate(d.getDate()+i); nextDate[names[d.getDay()]] = ymd(d); }
     const exc = {}; L("exceptions").forEach(x => { exc[x.date] = x.text; });
     const clo = dt => L("closures").find(c => c.from <= dt && dt <= (c.to||c.from));
-    hoursEl.innerHTML = '<table class="h">' + days.map(([k,l]) => {
+    const hban = `<svg class="poster" viewBox="0 0 320 150" role="img" aria-label="Orari di apertura"><rect width="320" height="150" rx="10" fill="${TEMI.blu}"/><g color="${NEON.blu}" opacity=".85" style="filter:drop-shadow(0 0 3px ${NEON.blu})"><use href="#ic-orologio" x="206" y="12" width="100" height="100"/></g><text x="22" y="124" fill="#fff" font-size="24" font-weight="700" style="font-family:Inter,system-ui,sans-serif">Orari di apertura</text></svg>`;
+    hoursEl.innerHTML = '<div class="card hcard"><div class="pic">' + hban + '</div><table class="h">' + days.map(([k,l]) => {
       const v = H[k] == null ? "" : String(H[k]);
       const closed = !v || /chius/i.test(v);
       const dt = nextDate[k], isToday = dt === today;
@@ -715,7 +717,7 @@ function render(D){
       const when = `<br><small>${new Date(dt+"T12:00:00").toLocaleDateString("it-IT",{day:"numeric",month:"short"})}</small>`;
       return `<tr${isToday?' class="today"':''}${extra&&!isToday?extra:''}><td>${l}${when}</td>${cell}</tr>`;
     }).join("") + '</table>'
-    + (D.hours_note ? `<p class="note">${esc(D.hours_note)}</p>` : "");
+    + (D.hours_note ? `<p class="note">${esc(D.hours_note)}</p>` : "") + '</div>';
   } else {
     hoursEl.innerHTML = '<p class="empty">Orari in aggiornamento.</p>';
   }

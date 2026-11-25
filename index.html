@@ -253,11 +253,11 @@ html[data-fx="off"] #vista img{transition:none}
 .rb.open .rb-say{display:none}
 .rb-ring{position:absolute;left:0;top:0;width:0;height:0}
 .rb-ring[hidden]{display:none}
-.rb-it{position:absolute;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;width:74px;height:74px;margin:-37px 0 0 -37px;border-radius:50%;text-decoration:none;color:#fff;font-size:.68rem;font-weight:700;pointer-events:auto;background:rgba(8,20,42,.92);border:1.5px solid rgb(var(--c));box-shadow:0 0 14px rgba(var(--c),.55);animation:rbin .28s ease-out both}
-.rb-it svg{width:26px;height:26px;stroke:rgb(var(--c));fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.rb-it{position:absolute;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;width:104px;height:104px;margin:-52px 0 0 -52px;border-radius:50%;text-decoration:none;color:#fff;font-size:.86rem;font-weight:700;pointer-events:auto;background:rgba(8,20,42,.92);border:1.5px solid rgb(var(--c));box-shadow:0 0 14px rgba(var(--c),.55);animation:rbin .28s ease-out both}
+.rb-it svg{width:40px;height:40px;stroke:rgb(var(--c));fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
 .rb-it:hover,.rb-it:focus-visible{background:rgba(var(--c),.28);outline:none}
 @keyframes rbin{from{opacity:0;transform:scale(.3)}to{opacity:1;transform:none}}
-@media (max-width:700px){.rb-b{left:-22px;top:-54px;width:44px;height:54px}.rb-say{bottom:60px;font-size:.7rem;padding:4px 9px}.rb-it{width:58px;height:58px;margin:-29px 0 0 -29px;font-size:.58rem}.rb-it svg{width:20px;height:20px}}
+@media (max-width:700px){.rb-b{left:-22px;top:-54px;width:44px;height:54px}.rb-say{bottom:60px;font-size:.7rem;padding:4px 9px}.rb-it{width:70px;height:70px;margin:-35px 0 0 -35px;font-size:.66rem}.rb-it svg{width:28px;height:28px}}
 @media (prefers-reduced-motion:reduce){.rb-b,.rb-ar,.rb-al,.rb-led,.rb-say,.rb-it{animation:none!important}}
 .pm{position:absolute;display:none;pointer-events:none;width:max-content}
 html.wide .pm{display:block}
@@ -822,7 +822,7 @@ try { const mq = matchMedia("(min-width:701px)"), gl = document.querySelector("#
   place(); mq.addEventListener ? mq.addEventListener("change", place) : mq.addListener(place); } catch (e) {}
 try { const rb = document.getElementById("rb"), bt = document.getElementById("rb-b"), ring = document.getElementById("rb-ring");
   const close = () => { rb.classList.remove("open"); ring.hidden = true; bt.setAttribute("aria-expanded", "false"); ring.innerHTML = ""; };
-  const open = () => { const src = [...document.querySelectorAll("#scorc a.sc")], n = src.length, R = innerWidth <= 700 ? 92 : 124; ring.innerHTML = "";
+  const open = () => { const src = [...document.querySelectorAll("#scorc a.sc")], n = src.length, R = innerWidth <= 700 ? 112 : 168; ring.innerHTML = "";
     src.forEach((a, i) => { const ang = -Math.PI / 2 + i * 2 * Math.PI / n, el = document.createElement("a"); el.className = "rb-it"; el.setAttribute("role", "menuitem"); el.href = a.getAttribute("href"); el.style.cssText = "--c:" + (a.style.getPropertyValue("--c") || "25,200,245") + ";left:" + Math.round(Math.cos(ang) * R) + "px;top:" + Math.round(Math.sin(ang) * R - 36) + "px;animation-delay:" + i * 25 + "ms";
       el.innerHTML = a.querySelector("svg").outerHTML + "<span>" + a.textContent.trim() + "</span>"; el.addEventListener("click", close); ring.appendChild(el); });
     ring.hidden = false; rb.classList.add("open"); bt.setAttribute("aria-expanded", "true"); };

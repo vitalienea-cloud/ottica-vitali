@@ -313,15 +313,21 @@ html.wide .atm-bar.side{position:absolute!important;justify-content:flex-start;m
 @media (min-width:701px){
 section .wrap{max-width:min(1320px,94vw)}
 section .wrap{position:relative}
+@media (min-width:1100px){section .wrap{max-width:min(1320px,calc(100vw - 290px))}}
 .grid{display:flex;flex-wrap:nowrap;gap:14px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;padding:4px 2px 16px;margin:0 -2px;scrollbar-width:thin;scrollbar-color:rgba(25,200,245,.5) transparent}
-.grid>*{flex:0 0 clamp(236px,21vw,296px);scroll-snap-align:start;min-width:0}
+.grid>*{flex:0 0 var(--cw,clamp(236px,21vw,296px));scroll-snap-align:start;min-width:0}
+.grid.paged{scroll-snap-type:x mandatory;scrollbar-width:none;margin-left:62px;margin-right:62px}
+.grid.paged::-webkit-scrollbar{display:none}
 .grid>.empty{flex:1 1 auto}
 .org{align-items:stretch}
 .grid::-webkit-scrollbar{height:8px}.grid::-webkit-scrollbar-thumb{background:rgba(25,200,245,.45);border-radius:8px}
-.rowarr{position:absolute;top:44px;right:20px;display:none;gap:8px}
-.rowarr.on{display:flex}
-.rowarr button{width:38px;height:38px;border-radius:50%;border:1px solid rgba(25,200,245,.6);background:rgba(8,20,42,.85);color:var(--brand);cursor:pointer;font-size:1.2rem;line-height:1;box-shadow:0 0 12px rgba(25,200,245,.25)}
-.rowarr button:disabled{opacity:.3;cursor:default}
+.rowarr{display:none}
+.rowarr.on{display:block}
+.rowarr button{position:absolute;width:50px;padding:0;border-radius:18px;border:1.5px solid rgba(25,200,245,.7);background:rgba(8,20,42,.88);color:var(--brand);cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 0 16px rgba(25,200,245,.35),inset 0 0 12px rgba(25,200,245,.1);transition:background .2s,opacity .2s}
+.rowarr button svg{width:30px;height:30px;stroke:currentColor;fill:none;stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 6px currentColor)}
+.rowarr button:hover:not(:disabled){background:rgba(25,200,245,.22)}
+.rowarr .rp{left:0}.rowarr .rn{right:0}
+.rowarr button:disabled{opacity:.28;cursor:default;box-shadow:none}
 .rowarr button:focus-visible{outline:2px solid #fff;outline-offset:2px}
 }
 @media (max-width:700px){.rowarr{display:none!important}}
@@ -1023,15 +1029,20 @@ const atmInit = D => {
       let c = ctl.get(g);
       if (!c) { const w = g.closest(".wrap"), box = document.createElement("div"); box.className = "rowarr"; box.setAttribute("role", "group");
         const nm = (w.querySelector("h2") || {}).textContent || "sezione"; box.setAttribute("aria-label", "Scorri " + nm);
-        box.innerHTML = '<button type="button" aria-label="Indietro">‹</button><button type="button" aria-label="Avanti">›</button>';
+        box.innerHTML = '<button type="button" class="rp" aria-label="Indietro"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4l-8 8 8 8"/></svg></button><button type="button" class="rn" aria-label="Avanti"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4l8 8-8 8"/></svg></button>';
         w.appendChild(box); const [a, b] = box.querySelectorAll("button");
-        const go = d => g.scrollBy({left: d * Math.max(240, g.clientWidth * .8), behavior: reduce.matches ? "auto" : "smooth"});
+        const go = d => { const k = c.step || Math.max(240, g.clientWidth * .8); g.scrollBy({left: d * k, behavior: reduce.matches ? "auto" : "smooth"}); };
         a.onclick = () => go(-1); b.onclick = () => go(1); c = {box, a, b}; ctl.set(g, c);
         g.addEventListener("scroll", () => upd(g), {passive: true}); }
       upd(g);
     });
   }
-  function upd(g) { const c = ctl.get(g); if (!c) return; const more = g.scrollWidth > g.clientWidth + 4;
+  function layout(g, c) { const w = g.closest(".wrap"); g.classList.remove("paged"); g.style.removeProperty("--cw"); c.step = 0; if (!mq.matches) return;
+    const n = [...g.children].filter(x => !x.classList.contains("empty")).length, cs = getComputedStyle(w), pl = parseFloat(cs.paddingLeft) || 0, pr = parseFloat(cs.paddingRight) || 0, W = w.clientWidth - pl - pr, GAP = 14, MIN = 236, N = Math.max(1, Math.floor((W + GAP) / (MIN + GAP)));
+    if (n <= N) return; const A = W - 124 - 4, K = Math.max(1, Math.floor((A + GAP) / (MIN + GAP))), cw = (A - GAP * (K - 1)) / K;
+    g.classList.add("paged"); g.style.setProperty("--cw", cw + "px"); c.step = K * (cw + GAP);
+    const h = (g.children[0] || {}).offsetHeight || 0, t = g.offsetTop + 4; c.a.style.left = pl + "px"; c.b.style.right = pr + "px"; c.a.style.top = c.b.style.top = t + "px"; c.a.style.height = c.b.style.height = h + "px"; }
+  function upd(g) { const c = ctl.get(g); if (!c) return; layout(g, c); const more = g.scrollWidth > g.clientWidth + 4;
     c.box.classList.toggle("on", mq.matches && more); c.a.disabled = g.scrollLeft < 4; c.b.disabled = g.scrollLeft + g.clientWidth >= g.scrollWidth - 4; }
   addEventListener("resize", () => ctl.forEach((c, g) => upd(g)));
   new MutationObserver(() => requestAnimationFrame(setup)).observe(document.querySelector("main") || document.body, {childList: true, subtree: true});

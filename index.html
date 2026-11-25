@@ -122,6 +122,8 @@ nav a.on{background:transparent;color:#fff;box-shadow:none;text-shadow:0 0 8px r
 .soc-b::-webkit-scrollbar{display:none}.soc-b .igv{margin:0}.soc-b .igv svg{width:48px;height:38px;margin-bottom:-10px}
 .soc:not(.open) .soc-b{visibility:hidden;transition:visibility 0s .3s}.soc.open .soc-b{visibility:visible}
 @media (prefers-reduced-motion:reduce){.soc,.soc-h svg{transition:none}}
+/* desktop: pulsanti social sempre visibili, niente cassetto */
+@media (min-width:701px){.soc{transform:none!important;transition:none}.soc-h{display:none}.soc-b{visibility:visible!important}}
 
 /* pulsanti fluttuanti: tutti della stessa larghezza */
 .wa .igv .btn,.soc-b .igv .btn{box-sizing:border-box;width:96px;padding-left:0;padding-right:0;text-align:center}
@@ -1076,7 +1078,7 @@ fetch("content.json", {cache:"no-store"})
 /* cassetto social: apri/chiudi con click sulla linguetta o trascinando (sinistra = apre, destra = chiude) */
 (function(){
   var soc=document.getElementById("soc"),h=soc.querySelector(".soc-h"),x0=null,moved=false;
-  function set(o){soc.classList.toggle("open",o);h.setAttribute("aria-expanded",o);h.setAttribute("aria-label",o?"Nascondi i social":"Mostra i social");}
+  function set(o){if(matchMedia("(min-width:701px)").matches)o=true;soc.classList.toggle("open",o);h.setAttribute("aria-expanded",o);h.setAttribute("aria-label",o?"Nascondi i social":"Mostra i social");}
   soc.addEventListener("pointerdown",function(e){x0=e.clientX;moved=false;});
   soc.addEventListener("pointerup",function(e){if(x0===null)return;var d=e.clientX-x0;x0=null;if(d<-25){set(true);moved=true;}else if(d>25){set(false);moved=true;}});
   soc.addEventListener("pointercancel",function(){x0=null;});

@@ -237,6 +237,30 @@ html[data-fx="off"] #vista img{transition:none}
 .ck-w .chip svg{width:22px;height:22px}
 .pb{position:absolute;left:0;top:0;width:max-content;max-width:47vw;pointer-events:auto}
 .pb:empty{display:none}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;margin:0;padding:0;list-style:none}
+:root{--tkh:0px}
+html.has-tk{--tkh:38px}
+.tk{position:fixed;left:0;right:0;bottom:0;height:38px;z-index:15;display:flex;align-items:stretch;background:rgba(6,16,36,.94);border-top:1.5px solid rgba(25,200,245,.7);box-shadow:0 -4px 22px rgba(25,200,245,.25);;padding-right:132px}
+.tk[hidden]{display:none}
+html.has-tk body{padding-bottom:calc(var(--tkh) + 80px)}
+.tk-l{flex:none;display:flex;align-items:center;gap:8px;padding:0 16px 0 12px;font-weight:800;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:linear-gradient(100deg,#ff2bd6,#c42fb5);clip-path:polygon(0 0,100% 0,calc(100% - 14px) 100%,0 100%);padding-right:26px;white-space:nowrap}
+.tk-l i{width:9px;height:9px;border-radius:50%;background:#fff;box-shadow:0 0 8px #fff;animation:tkb 1.2s ease-in-out infinite}
+@keyframes tkb{50%{opacity:.25}}
+.tk-v{flex:1;min-width:0;overflow:hidden;position:relative;display:flex;align-items:center;-webkit-mask-image:linear-gradient(90deg,transparent,#000 24px,#000 calc(100% - 24px),transparent);mask-image:linear-gradient(90deg,transparent,#000 24px,#000 calc(100% - 24px),transparent)}
+.tk-t{display:flex;width:max-content;white-space:nowrap;animation:tkm var(--tkd,60s) linear infinite;will-change:transform}
+.tk-t a{display:inline-flex;align-items:center;gap:10px;color:#eaffff;text-decoration:none;font-size:.9rem;font-weight:600;padding:0 6px}
+.tk-t a b{color:var(--c,#19c8f5);letter-spacing:.08em;text-transform:uppercase;font-size:.74rem;font-weight:800}
+.tk-t a:hover,.tk-t a:focus-visible{text-decoration:underline;outline:none}
+.tk-t .sp{color:#ff4fe0;padding:0 14px;font-size:.8rem}
+.tk-v:hover .tk-t,.tk-v:focus-within .tk-t,.tk.paused .tk-t{animation-play-state:paused}
+@keyframes tkm{to{transform:translateX(-50%)}}
+.tk-p{flex:none;width:40px;border:0;background:none;color:#9fb0c6;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.tk-p svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.tk-p .pl{display:none}.tk.paused .tk-p .pp{display:none}.tk.paused .tk-p .pl{display:block}
+.tk-p:focus-visible{outline:2px solid #fff;outline-offset:-3px}
+@media (max-width:700px){.tk{height:34px;padding-right:0}html.has-tk .wa{bottom:calc(16px + 34px + env(safe-area-inset-bottom,0px))}html.has-tk{--tkh:34px}.tk-l{font-size:.64rem;padding-left:9px;padding-right:20px}.tk-t a{font-size:.8rem}.tk-p{width:30px}
+html.has-tk{--bm:calc(16px + 34px + env(safe-area-inset-bottom,0px))}}
+@media (prefers-reduced-motion:reduce){.tk-t{animation:none;overflow-x:auto}.tk-v{overflow-x:auto}.tk-l i{animation:none}}
 .sn{display:none}
 html.wide .sn:not([hidden]){display:block;position:absolute!important;margin:0!important;text-align:left;box-sizing:border-box;width:290px;padding:14px 16px 12px;border-radius:20px;background:rgba(8,20,42,.8);border:1.5px solid rgba(255,79,224,.6);box-shadow:0 0 20px rgba(255,79,224,.28),inset 0 0 14px rgba(255,79,224,.07);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
 .sn h3{margin:0 0 8px;text-align:left;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:#ff9be9;font-weight:800}
@@ -457,6 +481,7 @@ section .wrap{position:relative}
 
 <dialog id="pd" aria-labelledby="pd-t"><div class="pd-in"><button class="pd-x" type="button" aria-label="Chiudi">×</button><div id="pd-b"></div></div></dialog>
 
+<div class="tk" id="tk" role="region" aria-label="Ultime notizie" hidden><span class="tk-l"><i aria-hidden="true"></i>Ottica Vitali Chiavenna</span><div class="tk-v" id="tk-v"><div class="tk-t" id="tk-t" aria-hidden="true"></div></div><ul class="sr-only" id="tk-sr"></ul><button type="button" class="tk-p" id="tk-p" aria-label="Metti in pausa le notizie scorrevoli" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="pp" d="M8 5v14M16 5v14"/><path class="pl" d="M8 5l11 7-11 7z"/></svg></button></div>
 <aside class="soc" id="soc" aria-label="Social e contatti"><button class="soc-h" type="button" aria-expanded="false" aria-controls="soc-b" aria-label="Mostra i social"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="soc-b" id="soc-b"><a class="igv" style="--c:255,79,224" href="https://www.instagram.com/ottica_vitali_chiavenna/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#ic-foto"/></svg><span class="btn">Insta</span></a><a class="igv" style="--c:90,160,255" href="https://www.facebook.com/profile.php?id=100087631992649" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#ic-persone"/></svg><span class="btn">fb</span></a><a class="igv" style="--c:25,200,245" href="mailto:servizioclienti@otticavitali.com" aria-label="Mail"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#ic-mail"/></svg><span class="btn">Mail</span></a></div></aside>
 <div class="wa"><a class="igv" style="--c:255,233,77" href="tel:+393738155967" aria-label="Chiama"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#ic-telefono"/></svg><span class="btn">Chiama</span></a><a class="igv" style="--c:57,255,120" href="https://wa.me/393738155967?text=Buongiorno%2C%20vorrei%20informazioni%20o%20un%20appuntamento." target="_blank" rel="noopener" aria-label="Scrivici su WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.7 7.1L4 20.5l1.4-5A8 8 0 1 1 21 12z"/><path d="M9 10c0 2.8 2.2 5 5 5l1.2-1.3-1.8-1-.8.7a3.6 3.6 0 0 1-1.5-1.5l.7-.8-1-1.8z" fill="currentColor" stroke="none"/></svg><span class="btn">Scrivi</span></a></div>
 
@@ -1062,6 +1087,19 @@ const atmInit = D => {
   setup();
 })();
 
+const ticker = D => { const bar = document.getElementById("tk"), t = document.getElementById("tk-t"); if (!bar || !t) return; const isD = x => /^\d{4}-\d{2}-\d{2}$/.test(x || ""), A = k => Array.isArray(D[k]) ? D[k].filter(x => x && typeof x === "object") : [], sh = d => new Date(d + "T12:00:00").toLocaleDateString("it-IT", {day: "numeric", month: "short"}), add = n => { const d = new Date(); d.setDate(d.getDate() + n); return ymd(d); }, lim = add(45), it = [];
+  A("exceptions").filter(x => isD(x.date) && x.date >= today && x.date <= lim).sort((a, b) => a.date < b.date ? -1 : 1).forEach(x => it.push({k: "Orario speciale", t: sh(x.date) + ": " + (x.text || ""), h: "#chiusure", c: "#ffd24a"}));
+  A("closures").filter(c => isD(c.from) && (isD(c.to) ? c.to : c.from) >= today && c.from <= lim).sort((a, b) => a.from < b.from ? -1 : 1).forEach(c => it.push({k: "Chiusura", t: (c.from === c.to || !isD(c.to) ? sh(c.from) : sh(c.from) + " – " + sh(c.to)) + ": " + (c.reason || c.title || ""), h: "#chiusure", c: "#ff5a6e"}));
+  A("events").filter(e => (isD(e.date) && e.date >= today) || (!e.date && e.prossimamente === true)).sort((a, b) => (a.date || "9") < (b.date || "9") ? -1 : 1).forEach(e => it.push({k: e.date ? "Evento" : "Prossimamente", t: (e.date ? sh(e.date) + ": " : "") + (e.title || ""), h: "#eventi", c: "#3dffb0"}));
+  A("news").filter(n => isD(n.date) && n.date <= today && n.title).sort((a, b) => a.date < b.date ? 1 : -1).slice(0, 3).forEach(n => it.push({k: "Notizia", t: n.title, h: "#notizie", c: "#19c8f5"}));
+  A("social").filter(p => isD(p.date) && p.date <= today && p.title).sort((a, b) => a.date < b.date ? 1 : -1).slice(0, 2).forEach(p => it.push({k: p.network || "Post", t: p.title, h: "#social", c: "#ff4fe0"}));
+  const li = it.filter(x => x.t && x.t.replace(/[:\s]/g, ""));
+  if (!li.length) { bar.hidden = true; document.documentElement.classList.remove("has-tk"); return; }
+  const one = '<a href="#home"><b style="--c:#ff4fe0">Ottica Vitali Chiavenna</b></a>' + li.map(x => '<span class="sp" aria-hidden="true">◆</span><a href="' + x.h + '"><b style="--c:' + x.c + '">' + esc(x.k) + "</b>" + esc(x.t) + "</a>").join("") + '<span class="sp" aria-hidden="true">◆</span>';
+  t.innerHTML = one + one; document.getElementById("tk-sr").innerHTML = li.map(x => "<li>" + esc(x.k + ": " + x.t) + "</li>").join("");
+  bar.hidden = false; document.documentElement.classList.add("has-tk"); const txtLen = li.reduce((n, x) => n + x.t.length + x.k.length + 6, 24); t.style.setProperty("--tkd", Math.max(30, Math.round(txtLen * .22)) + "s");
+  const p = document.getElementById("tk-p"); if (p && !p._b) { p._b = 1; p.addEventListener("click", () => { const on = bar.classList.toggle("paused"); p.setAttribute("aria-pressed", on); p.setAttribute("aria-label", on ? "Riprendi le notizie scorrevoli" : "Metti in pausa le notizie scorrevoli"); }); }
+  try { vistaFit(); } catch (e) {} };
 const soon = D => { const sn = document.getElementById("sn"); if (!sn) return; const isD = x => /^\d{4}-\d{2}-\d{2}$/.test(x || ""), A = k => Array.isArray(D[k]) ? D[k].filter(x => x && typeof x === "object") : [], fx = d => new Date(d + "T12:00:00"),
     add = n => { const d = new Date(); d.setDate(d.getDate() + n); return ymd(d); }, tm = add(1), lim = add(14), it = [];
   const IC = {chiuso: '<path d="M32 6a26 26 0 100 52 26 26 0 000-52zM14 50L50 14"/>', orologio: '<circle cx="32" cy="32" r="26"/><path d="M32 16v17l11 7"/>', cal: '<rect x="8" y="12" width="48" height="44" rx="6"/><path d="M8 26h48M20 6v12M44 6v12"/>', post: '<path d="M10 14h44v30H30l-12 10V44h-8z"/>', news: '<path d="M12 10h34v44H12zM46 22h8v28a4 4 0 01-8 0M20 22h18M20 32h18M20 42h12"/>'};
@@ -1078,7 +1116,7 @@ const soon = D => { const sn = document.getElementById("sn"); if (!sn) return; c
   sn.hidden = false; try { vistaFit(); } catch (e) {} };
 fetch("content.json", {cache:"no-store"})
   .then(r => { if(!r.ok) throw 0; return r.json(); })
-  .then(D => { render(D); bloom(); reveal(); try { atmInit(D); } catch (e) {} try { soon(D); } catch (e) {} })
+  .then(D => { render(D); bloom(); reveal(); try { atmInit(D); } catch (e) {} try { soon(D); } catch (e) {} try { ticker(D); } catch (e) {} })
   .catch(() => { render({}); bloom(); reveal(); try { atmInit({}); } catch (e) {} });
 
 /* battito: effetti brevi a turno e asincroni, nel colore originale di ciascun elemento */

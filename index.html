@@ -1039,7 +1039,7 @@ const atmInit = D => {
   }
   function layout(g, c) { const w = g.closest(".wrap"); g.classList.remove("paged"); g.style.removeProperty("--cw"); c.step = 0; if (!mq.matches) return;
     const n = [...g.children].filter(x => !x.classList.contains("empty")).length, cs = getComputedStyle(w), pl = parseFloat(cs.paddingLeft) || 0, pr = parseFloat(cs.paddingRight) || 0, W = w.clientWidth - pl - pr, GAP = 14, MIN = 236, N = Math.max(1, Math.floor((W + GAP) / (MIN + GAP)));
-    if (n <= N) return; const A = W - 124 - 4, K = Math.max(1, Math.floor((A + GAP) / (MIN + GAP))), cw = (A - GAP * (K - 1)) / K;
+    if (n <= N && g.scrollWidth <= g.clientWidth + 4) return; const A = W - 124 - 4, K = Math.max(1, Math.floor((A + GAP) / (MIN + GAP))), cw = (A - GAP * (K - 1)) / K;
     g.classList.add("paged"); g.style.setProperty("--cw", cw + "px"); c.step = K * (cw + GAP);
     const h = (g.children[0] || {}).offsetHeight || 0, t = g.offsetTop + 4; c.a.style.left = pl + "px"; c.b.style.right = pr + "px"; c.a.style.top = c.b.style.top = t + "px"; c.a.style.height = c.b.style.height = h + "px"; }
   function upd(g) { const c = ctl.get(g); if (!c) return; layout(g, c); const more = g.scrollWidth > g.clientWidth + 4;

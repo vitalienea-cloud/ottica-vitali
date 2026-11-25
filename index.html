@@ -124,7 +124,7 @@ nav a.on{background:transparent;color:#fff;box-shadow:none;text-shadow:0 0 8px r
 .soc:not(.open) .soc-b{visibility:hidden;transition:visibility 0s .3s}.soc.open .soc-b{visibility:visible}
 @media (prefers-reduced-motion:reduce){.soc,.soc-h svg{transition:none}}
 /* desktop: pulsanti social sempre visibili, niente cassetto */
-@media (min-width:701px){.soc{transform:none!important;transition:none}.soc-h{display:none}.soc-b{visibility:visible!important}}
+@media (min-width:701px){.soc{transform:none!important;transition:none}.soc-b{background:none;border:0;backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:none}.soc-h{display:none}.soc-b{visibility:visible!important}}
 
 /* pulsanti fluttuanti: tutti della stessa larghezza */
 .wa .igv .btn,.soc-b .igv .btn{box-sizing:border-box;width:96px;padding-left:0;padding-right:0;text-align:center}
@@ -834,7 +834,7 @@ const vistaFit = () => { const hm = document.getElementById("home"); if (!hm) re
   if (bar) { bar.classList.toggle("side", wide); bar.style.left = bar.style.top = ""; }
   pbs.forEach(p => { if (p.e) p.e.style.width = wide ? COL + "px" : ""; });
   const ava = vw - (X0 + COL + 24) - 16, w = wide ? Math.min(ava, 1400, innerHeight * .8 * 16 / 9) : narrow ? vw / .75 : Math.min(vw * .94, 1400, innerHeight * .78 * 16 / 9), sh = w * 9 / 16,
-    L = wide ? X0 + COL + 24 + (ava - w) / 2 : (vw - w) / 2, bh = Math.max(0, ...pbs.map(p => p.e && p.e.firstChild ? p.e.offsetHeight : 0)), k = w / 960, clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+    L = (vw - w) / 2, bh = Math.max(0, ...pbs.map(p => p.e && p.e.firstChild ? p.e.offsetHeight : 0)), k = w / 960, clamp = (v, a, b) => Math.max(a, Math.min(b, v));
   let y = 12;
   if (wide) { ck.style.left = (X0 - r.left) + "px"; ck.style.top = y + "px"; y += ck.offsetHeight + GAP;
     pbs.forEach(p => { const e = p.e; if (!e || !e.firstChild) return; e.style.left = X0 + "px"; e.style.top = y + "px"; y += e.offsetHeight + GAP; });

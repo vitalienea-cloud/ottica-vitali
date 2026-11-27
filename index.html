@@ -849,7 +849,7 @@ const vistaFit = () => { const hm = document.getElementById("home"); if (!hm) re
   if (wide) { ck.style.left = (X0 - r.left) + "px"; ck.style.top = y + "px"; y += ck.offsetHeight + GAP;
     pbs.forEach(p => { const e = p.e; if (!e || !e.firstChild) return; e.style.left = X0 + "px"; e.style.top = y + "px"; y += e.offsetHeight + GAP; });
     if (bar) { bar.style.left = (X0 - r.left) + "px"; bar.style.top = y + "px"; y += bar.offsetHeight ? bar.offsetHeight + GAP : 0; }
-    const sn = document.getElementById("sn"); if (sn && !sn.hidden) { sn.style.removeProperty("display"); sn.style.left = (X0 - r.left) + "px"; sn.style.top = y + "px"; if (y + sn.offsetHeight > scr - tkH - 12) sn.style.setProperty("display", "none", "important"); else y += sn.offsetHeight + GAP; }
+    const sn = document.getElementById("sn"); if (sn && !sn.hidden) { sn.style.removeProperty("display"); sn.style.left = (X0 - r.left) + "px"; sn.style.top = y + "px"; const lis = [...sn.querySelectorAll("li")]; lis.forEach(l => l.style.display = ""); for (let i = lis.length - 1; i > 0 && y + sn.offsetHeight > scr - tkH - 12; i--) lis[i].style.display = "none"; if (y + sn.offsetHeight > scr - tkH - 12) sn.style.setProperty("display", "none", "important"); else y += sn.offsetHeight + GAP; }
     hm.style.minHeight = Math.round(Math.max(sh + 40, y + 12 + tkH, scr)) + "px"; }
   else if (!narrow) hm.style.minHeight = Math.round(Math.max(sh * .945 + 190, scr)) + "px"; else hm.style.minHeight = "";
   if (ck && !wide && !narrow) { ck.style.marginTop = "6px"; const peak = hm.clientHeight - sh + .055 * sh, d = peak / 2 - (ck.offsetTop + ck.offsetHeight / 2); ck.style.marginTop = Math.max(6, 6 + d) + "px"; }

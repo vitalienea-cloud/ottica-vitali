@@ -983,7 +983,7 @@ const atmInit = D => {
     $("#atmbar").innerHTML = h;
     const n = $("#atmbar").children.length; const home = $("#home"); home.classList.toggle("atm-on", n > 0); home.classList.toggle("atm-2", n > 1); home.classList.toggle("atm-3", n > 3);
     try { vistaFit(); } catch (e) {}
-    const cm = $("#credit-meteo"); if (cm) cm.hidden = !M;
+    const cm = $("#credit-meteo"); if (cm) cm.hidden = !(M || MS);
     ctl(); build();
   }
   /* controllo "Effetti" nel fondo pagina */
@@ -1051,7 +1051,15 @@ const atmInit = D => {
   setInterval(() => { if (!document.hidden) apply(); }, 600000);
   size(); apply();
   /* meteo di Chiavenna: file meteo.json scritto dall'Action ogni ora; più vecchio di 4 ore o non valido = si usa la stagione */
-  fetch("meteo.json", {cache:"no-store"}).then(r => { if (!r.ok) throw 0; return r.json(); }).then(m => {
+  /* meteo letto direttamente dal browser (MET Norway, nessuna chiave); copia di 30 minuti in localStorage; se non risponde si usa meteo.json */
+  const MPT = {chiavenna: [46.3195, 9.4017, 333], maloja: [46.4045, 9.6955, 1815], spluga: [46.5035, 9.3325, 2113]};
+  const cieloMet = c => { c = String(c).split("_")[0]; return c === "clearsky" || c === "fair" || c === "partlycloudy" ? "sereno" : c === "cloudy" ? "nuvoloso" : c === "fog" ? "nebbia" : /snow|sleet/.test(c) ? "neve" : /rain/.test(c) ? "pioggia" : "nuvoloso"; };
+  const meteoUna = ([la, lo, al]) => fetch("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=" + la + "&lon=" + lo + "&altitude=" + al, {headers: {Accept: "application/json"}}).then(r => { if (!r.ok) throw 0; return r.json(); }).then(j => { const ts = j.properties.timeseries[0], det = ts.data.instant.details, nx = ts.data.next_1_hours || ts.data.next_6_hours || {}, sym = nx.summary && nx.summary.symbol_code;
+    if (!sym || !Number.isFinite(det.air_temperature) || !Number.isFinite(det.wind_speed)) throw 0; return {cielo: cieloMet(sym), temp_c: Math.round(det.air_temperature * 10) / 10, vento_kmh: Math.round(det.wind_speed * 3.6), simbolo: sym, t: Date.parse(ts.time)}; });
+  const meteoLive = () => { try { const c = JSON.parse(localStorage.getItem("ov-meteo") || "null"); if (c && Date.now() - c.at < 30 * 60e3 && Date.now() >= c.at) return Promise.resolve(c.m); } catch (e) {}
+    return Promise.all([meteoUna(MPT.chiavenna), meteoUna(MPT.maloja).catch(() => null), meteoUna(MPT.spluga).catch(() => null)]).then(([c, ma, sp]) => { const m = Object.assign({aggiornato: new Date().toISOString()}, c); if (ma) m.maloja = ma; if (sp) m.spluga = sp; try { localStorage.setItem("ov-meteo", JSON.stringify({at: Date.now(), m})); } catch (e) {} return m; }); };
+  const meteoFile = () => fetch("meteo.json", {cache:"no-store"}).then(r => { if (!r.ok) throw 0; return r.json(); });
+  Promise.race([meteoLive(), new Promise((_, no) => setTimeout(no, 8000))]).catch(meteoFile).then(m => {
     const t = Date.parse(m && m.aggiornato);
     if (m && Number.isFinite(t) && Date.now() - t < 4 * 3600e3 && Date.now() - t > -600e3 && CIELI[m.cielo] && Number.isFinite(m.temp_c) && Number.isFinite(m.vento_kmh) && m.vento_kmh >= 0) { M = {cielo:m.cielo, temp_c:m.temp_c, vento_kmh:m.vento_kmh};
       PS = [["maloja", "Maloja"], ["spluga", "Spluga"]].map(([k, n]) => { const x = m[k]; return x && CIELI[x.cielo] && Number.isFinite(x.temp_c) ? {nome:n, cielo:x.cielo, temp_c:x.temp_c} : null; }).filter(Boolean); apply(); return; }

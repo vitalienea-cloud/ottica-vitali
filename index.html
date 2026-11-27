@@ -247,27 +247,27 @@ html[data-fx="off"] #vista img{transition:none}
 .pb:empty{display:none}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;margin:0;padding:0;list-style:none}
 :root{--tkh:0px}
-html.has-tk{--tkh:38px}
-.tk{position:fixed;left:0;right:0;bottom:0;height:38px;z-index:15;display:flex;align-items:stretch;background:rgba(6,16,36,.94);border-top:1.5px solid rgba(25,200,245,.7);box-shadow:0 -4px 22px rgba(25,200,245,.25);;padding-right:132px}
+html.has-tk{--tkh:57px}
+.tk{position:fixed;left:0;right:0;bottom:0;height:57px;z-index:15;display:flex;align-items:stretch;background:rgba(6,16,36,.94);border-top:1.5px solid rgba(25,200,245,.7);box-shadow:0 -4px 22px rgba(25,200,245,.25);;padding-right:132px}
 .tk[hidden]{display:none}
-html.has-tk body{padding-bottom:calc(var(--tkh) + 80px)}
-.tk-l{flex:none;display:flex;align-items:center;gap:8px;padding:0 16px 0 12px;font-weight:800;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:linear-gradient(100deg,#ff2bd6,#c42fb5);clip-path:polygon(0 0,100% 0,calc(100% - 14px) 100%,0 100%);padding-right:26px;white-space:nowrap}
-.tk-l i{width:9px;height:9px;border-radius:50%;background:#fff;box-shadow:0 0 8px #fff;animation:tkb 1.2s ease-in-out infinite}
+@media (min-width:701px){#home>.tk{position:absolute!important;bottom:0}}
+.tk-l{flex:none;display:flex;align-items:center;gap:12px;padding:0 24px 0 18px;font-weight:800;font-size:1.2rem;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:linear-gradient(100deg,#ff2bd6,#c42fb5);clip-path:polygon(0 0,100% 0,calc(100% - 21px) 100%,0 100%);padding-right:39px;white-space:nowrap}
+.tk-l i{width:13px;height:13px;border-radius:50%;background:#fff;box-shadow:0 0 8px #fff;animation:tkb 1.2s ease-in-out infinite}
 @keyframes tkb{50%{opacity:.25}}
 .tk-v{flex:1;min-width:0;overflow:hidden;position:relative;display:flex;align-items:center;-webkit-mask-image:linear-gradient(90deg,transparent,#000 24px,#000 calc(100% - 24px),transparent);mask-image:linear-gradient(90deg,transparent,#000 24px,#000 calc(100% - 24px),transparent)}
 .tk-t{display:flex;width:max-content;white-space:nowrap;animation:tkm var(--tkd,60s) linear infinite;will-change:transform}
-.tk-t a{display:inline-flex;align-items:center;gap:10px;color:#eaffff;text-decoration:none;font-size:.9rem;font-weight:600;padding:0 6px}
-.tk-t a b{color:var(--c,#19c8f5);letter-spacing:.08em;text-transform:uppercase;font-size:.74rem;font-weight:800}
+.tk-t a{display:inline-flex;align-items:center;gap:15px;color:#eaffff;text-decoration:none;font-size:1.35rem;font-weight:600;padding:0 9px}
+.tk-t a b{color:var(--c,#19c8f5);letter-spacing:.08em;text-transform:uppercase;font-size:1.11rem;font-weight:800}
 .tk-t a:hover,.tk-t a:focus-visible{text-decoration:underline;outline:none}
-.tk-t .sp{color:#ff4fe0;padding:0 14px;font-size:.8rem}
+.tk-t .sp{color:#ff4fe0;padding:0 21px;font-size:1.2rem}
 .tk-v:hover .tk-t,.tk-v:focus-within .tk-t,.tk.paused .tk-t{animation-play-state:paused}
 @keyframes tkm{to{transform:translateX(-50%)}}
-.tk-p{flex:none;width:40px;border:0;background:none;color:#9fb0c6;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.tk-p svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.tk-p{flex:none;width:60px;border:0;background:none;color:#9fb0c6;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.tk-p svg{width:27px;height:27px;stroke:currentColor;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
 .tk-p .pl{display:none}.tk.paused .tk-p .pp{display:none}.tk.paused .tk-p .pl{display:block}
 .tk-p:focus-visible{outline:2px solid #fff;outline-offset:-3px}
-@media (max-width:700px){.tk{height:34px;padding-right:0}html.has-tk .wa{bottom:calc(16px + 34px + env(safe-area-inset-bottom,0px))}html.has-tk{--tkh:34px}.tk-l{font-size:.64rem;padding-left:9px;padding-right:20px}.tk-t a{font-size:.8rem}.tk-p{width:30px}
-html.has-tk{--bm:calc(16px + 34px + env(safe-area-inset-bottom,0px))}}
+@media (max-width:700px){.tk{height:51px;padding-right:0}html.has-tk .wa{bottom:calc(16px + 51px + env(safe-area-inset-bottom,0px))}html.has-tk{--tkh:51px}.tk-l{font-size:.96rem;padding-left:14px;padding-right:30px;gap:9px}.tk-l i{width:11px;height:11px}.tk-t a{font-size:1.2rem;gap:11px}.tk-t a b{font-size:.9rem}.tk-p{width:45px}.tk-p svg{width:22px;height:22px}
+html.has-tk{--bm:calc(16px + 51px + env(safe-area-inset-bottom,0px))}}
 @media (prefers-reduced-motion:reduce){.tk-t{animation:none;overflow-x:auto}.tk-v{overflow-x:auto}.tk-l i{animation:none}}
 .sn{display:none}
 html.wide .sn:not([hidden]){display:block;position:absolute!important;margin:0!important;text-align:left;box-sizing:border-box;width:290px;padding:14px 16px 12px;border-radius:20px;background:rgba(8,20,42,.8);border:1.5px solid rgba(255,79,224,.6);box-shadow:0 0 20px rgba(255,79,224,.28),inset 0 0 14px rgba(255,79,224,.07);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
@@ -843,13 +843,15 @@ const vistaFit = () => { const hm = document.getElementById("home"); if (!hm) re
   pbs.forEach(p => { if (p.e) p.e.style.width = wide ? COL + "px" : ""; });
   const ava = vw - (X0 + COL + 24) - 16, w = wide ? Math.min(ava, 1400, innerHeight * .8 * 16 / 9) : narrow ? vw / .75 : Math.min(vw * .94, 1400, innerHeight * .78 * 16 / 9), sh = w * 9 / 16,
     L = wide ? (X0 + COL + (vw - 120)) / 2 - w / 2 : (vw - w) / 2, bh = Math.max(0, ...pbs.map(p => p.e && p.e.firstChild ? p.e.offsetHeight : 0)), k = w / 960, clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const tk = document.getElementById("tk"), want = narrow ? document.body : hm; if (tk && tk.parentNode !== want) want.appendChild(tk); if (tk) { if (narrow) { tk.style.left = tk.style.width = tk.style.right = ""; } else { tk.style.left = (-r.left) + "px"; tk.style.width = vw + "px"; tk.style.right = "auto"; } }
+  const tkH = tk && !tk.hidden && !narrow ? tk.offsetHeight : 0, scr = narrow ? 0 : innerHeight - (hm.getBoundingClientRect().top + scrollY);   /* la prima schermata è tutta della home: le sezioni compaiono solo con scroll o corona */
   let y = 12;
   if (wide) { ck.style.left = (X0 - r.left) + "px"; ck.style.top = y + "px"; y += ck.offsetHeight + GAP;
     pbs.forEach(p => { const e = p.e; if (!e || !e.firstChild) return; e.style.left = X0 + "px"; e.style.top = y + "px"; y += e.offsetHeight + GAP; });
     if (bar) { bar.style.left = (X0 - r.left) + "px"; bar.style.top = y + "px"; y += bar.offsetHeight ? bar.offsetHeight + GAP : 0; }
-    const sn = document.getElementById("sn"); if (sn && !sn.hidden) { sn.style.left = (X0 - r.left) + "px"; sn.style.top = y + "px"; y += sn.offsetHeight + GAP; }
-    hm.style.minHeight = Math.round(Math.max(sh + 40, y + 12)) + "px"; }
-  else if (!narrow) hm.style.minHeight = Math.round(sh * .945 + 190) + "px"; else hm.style.minHeight = "";
+    const sn = document.getElementById("sn"); if (sn && !sn.hidden) { sn.style.removeProperty("display"); sn.style.left = (X0 - r.left) + "px"; sn.style.top = y + "px"; if (y + sn.offsetHeight > scr - tkH - 12) sn.style.setProperty("display", "none", "important"); else y += sn.offsetHeight + GAP; }
+    hm.style.minHeight = Math.round(Math.max(sh + 40, y + 12 + tkH, scr)) + "px"; }
+  else if (!narrow) hm.style.minHeight = Math.round(Math.max(sh * .945 + 190, scr)) + "px"; else hm.style.minHeight = "";
   if (ck && !wide && !narrow) { ck.style.marginTop = "6px"; const peak = hm.clientHeight - sh + .055 * sh, d = peak / 2 - (ck.offsetTop + ck.offsetHeight / 2); ck.style.marginTop = Math.max(6, 6 + d) + "px"; }
   const base = wide ? 0 : Math.max(bar && bar.offsetHeight ? bar.getBoundingClientRect().bottom - r.top : 0, (ck || bar || hm).getBoundingClientRect().bottom - r.top),
     top = wide ? hm.clientHeight - sh : narrow ? base + (bh ? 8 + bh + 8 : -4) : hm.clientHeight - sh;
